@@ -1,0 +1,42 @@
+/* ==UserStyle==
+@name           ChatGPT Minimal (Refactored)
+@namespace      https://codeberg.org/endercat
+@version        3.1.0
+@description    makes chatgippity look not ugly - refactored into multiple files
+@author         Ava
+@preprocessor 	less
+
+@var checkbox useName "Greeting" 0
+@var text name "Your name" ""
+@var checkbox removeBloat "Remove bloat (ChatGPT Free)" 1
+@var checkbox newChatButtonHack "New Chat Button Hack" 0
+
+@var select themeName "Theme" ["purple:Purple*","grey:Grey","coal:Coal","nord:Nord","fresh:Fresh","custom:Custom"]
+
+@var select codeTheme "Code Theme" ["onedark:One Dark*","intellij:IntelliJ","rosepine:Rosé Pine","catppuccin:Catppuccin","nord:Nord"]
+
+@var color clrBase "Base colour" #121215
+@var color clrTint "Tint colour" #cfbeff
+@var color clrText "Text colour" #e9e4f4
+@var color clrAcc1 "Accent colour 1" #e9e4f4
+@var color clrAcc2 "Accent colour 2" #e9e4f4
+==/UserStyle== */
+
+@-moz-document domain("chatgpt.com") {
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Color+Emoji&family=Rubik:wght@400;600&display=swap');
+
+@import "user-variables.less";
+@import "variables.less";
+@import "code-themes.less";
+@import "bloat.less";
+@import "ui.less";
+@import "chat.less";
+
+code.hljs * {
+color: unset;
+}
+
+.applyCodeThemes();
+
+}
