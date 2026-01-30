@@ -1,0 +1,12 @@
+---
+- repo: https://github.com/thibaudcolas/pre-commit-stylelint
+  rev: v14.4.0
+  hooks:
+  - id: stylelint
+    additional_dependencies:
+    - stylelint@16.26.1
+    - stylelint-config-standard@39.0.1
+    - stylelint-plugin-stylus@1.0.0
+    - stylelint-config-html@1.0.0
+    - postcss-html@1.0.0
+    - postcss-markdown@1.0.0
