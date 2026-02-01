@@ -1,0 +1,167 @@
+applyCodeThemes()
+	if codeTheme == 'onedark'
+		code.hljs
+			display block
+			overflow-x auto
+			padding 1em
+		code.hljs
+			padding 3px 5px
+		.hljs
+			color #abb2bf !important
+			background #282c34
+		.hljs-comment, .hljs-quote
+			color #5c6370 !important
+			font-style italic
+		.hljs-doctag, .hljs-formula, .hljs-keyword
+			color #c678dd !important
+		.hljs-deletion, .hljs-name, .hljs-section, .hljs-selector-tag, .hljs-subst
+			color #e06c75 !important
+		.hljs-literal
+			color #56b6c2 !important
+		.hljs-addition, .hljs-attribute, .hljs-meta .hljs-string, .hljs-regexp, .hljs-string
+			color #98c379 !important
+		.hljs-attr, .hljs-number, .hljs-selector-attr, .hljs-selector-class, .hljs-selector-pseudo, .hljs-template-variable, .hljs-type, .hljs-variable
+			color #d19a66 !important
+		.hljs-bullet, .hljs-link, .hljs-meta, .hljs-selector-id, .hljs-symbol, .hljs-title
+			color #61aeee !important
+		.hljs-built_in, .hljs-class .hljs-title, .hljs-title.class_
+			color #e6c07b !important
+		.hljs-emphasis
+			font-style italic
+		.hljs-strong
+			font-weight 700
+		.hljs-link
+			text-decoration underline
+
+	if codeTheme == 'intellij'
+		code.hljs
+			display block
+			overflow-x auto
+			padding 1em
+		code.hljs
+			padding 3px 5px
+		.hljs
+			color #bcbec4 !important
+			background #2b2b2b
+		.hljs ::selection, .hljs::selection
+			background-color #2b2d30
+			color #a9b7c6 !important
+		.hljs-comment
+			color #7a7e85 !important
+		.hljs-tag
+			color #bcbec4 !important
+		.hljs-operator, .hljs-punctuation, .hljs-subst
+			color #b8babf !important
+		.hljs-operator
+			opacity .7
+		.hljs-bullet, .hljs-deletion, .hljs-name, .hljs-selector-tag, .hljs-template-variable, .hljs-variable
+			color #bd77b2 !important
+		.hljs-attr, .hljs-link, .hljs-literal, .hljs-number, .hljs-symbol, .hljs-variable.constant_
+			color #2aacb8 !important
+		.hljs-class .hljs-title, .hljs-title, .hljs-title.class_
+			color #f2c55c !important
+		.hljs-strong
+			font-weight 700 !important
+			color #f2c55c !important
+		.hljs-addition, .hljs-code, .hljs-string, .hljs-title.class_.inherited__
+			color #67a973 !important
+		.hljs-built_in, .hljs-doctag, .hljs-keyword.hljs-atrule, .hljs-quote, .hljs-regexp
+			color #549059 !important
+		.hljs-attribute, .hljs-function .hljs-title, .hljs-section, .hljs-title.function_, .ruby .hljs-property
+			color #56a8f5 !important
+		.diff .hljs-meta, .hljs-keyword, .hljs-template-tag, .hljs-type
+			color #cf8e6d !important
+		.hljs-emphasis
+			color #cf8e6d !important
+			font-style italic !important
+		.hljs-meta, .hljs-meta .hljs-keyword, .hljs-meta .hljs-string
+			color #6f737a !important
+		.hljs-meta .hljs-keyword, .hljs-meta-keyword
+			font-weight 700 !important
+
+	if codeTheme == 'rosepine'
+		*
+			--color-rosepine-base #191724
+			--color-rosepine-surface #1f1d2e
+			--color-rosepine-overlay #26233a
+			--color-rosepine-muted #6e6a86
+			--color-rosepine-subtle #908caa
+			--color-rosepine-text #e0def4
+			--color-rosepine-love #eb6f92
+			--color-rosepine-gold #f6c177
+			--color-rosepine-rose #ebbcba
+			--color-rosepine-pine #31748f
+			--color-rosepine-foam #9ccfd8
+			--color-rosepine-iris #c4a7e7
+			--color-rosepine-highlight-low #21202e
+			--color-rosepine-highlight-med #403d52
+			--color-rosepine-highlight-high #524f67
+		pre code.hljs
+			display block
+			overflow-x auto
+			padding 1em
+		code.hljs
+			padding 3px 5px
+		.hljs
+			background var(--color-rosepine-overlay)
+		.hljs, .hljs-subst
+			color var(--color-rosepine-text)
+		.hljs-selector-tag
+			color var(--color-rosepine-foam)
+		.hljs-selector-id
+			color var(--color-rosepine-iris)
+			font-weight 700
+		.hljs-selector-attr, .hljs-selector-class
+			color var(--color-rosepine-iris)
+		.hljs-property, .hljs-selector-pseudo
+			color var(--color-rosepine-rose)
+		.hljs-addition
+			background-color rgba(156,207,216,.5)
+		.hljs-deletion
+			background-color rgba(235,111,146,.5)
+		.hljs-built_in, .hljs-class, .hljs-type
+			color var(--color-rosepine-iris)
+		.hljs-function, .hljs-function>.hljs-title, .hljs-title.hljs-function
+			color var(--color-rosepine-rose)
+		.hljs-keyword, .hljs-literal, .hljs-symbol
+			color var(--color-rosepine-foam)
+		.hljs-number
+			color var(--color-rosepine-gold)
+		.hljs-regexp
+			color var(--color-rosepine-gold)
+		.hljs-string
+			color var(--color-rosepine-foam)
+		.hljs-title
+			color var(--color-rosepine-iris)
+		.hljs-params
+			color var(--color-rosepine-text)
+		.hljs-bullet
+			color var(--color-rosepine-foam)
+		.hljs-code
+			color var(--color-rosepine-iris)
+		.hljs-emphasis
+			font-style italic
+		.hljs-formula
+			color var(--color-rosepine-iris)
+		.hljs-strong
+			font-weight 700
+		.hljs-link:hover
+			text-decoration underline
+		.hljs-comment, .hljs-quote
+			color var(--color-rosepine-muted)
+		.hljs-doctag
+			color var(--color-rosepine-iris)
+		.hljs-meta, .hljs-meta .hljs-keyword
+			color var(--color-rosepine-pine)
+		.hljs-meta .hljs-string
+			color var(--color-rosepine-foam)
+		.hljs-attr
+			color var(--color-rosepine-gold)
+		.hljs-attribute
+			color var(--color-rosepine-gold)
+
+	if codeTheme == 'catppuccin'
+		// Catppuccin placeholder
+
+	if codeTheme == 'nord'
+		// Nord placeholder

@@ -1,0 +1,58 @@
+// Colour presets
+themes = {
+	purple: {
+		base: #121215,
+		tint: #cfbeff,
+		text: #e9e4f4,
+		acc1: #cba6f7,
+		acc2: #f5c2e7
+	},
+	grey: {
+		base: #181818,
+		tint: #ffffff,
+		text: #d0d0d0,
+		acc1: #79ffab,
+		acc2: #bababa
+	},
+	coal: {
+		base: #0e0d0d,
+		tint: #a59191,
+		text: #bfbfbf,
+		acc1: #ff8d79,
+		acc2: #ffb57d
+	},
+	nord: {
+		base: #2e3440,
+		tint: #88c0d0,
+		text: #e5e9f0,
+		acc1: #8fbcbb,
+		acc2: #88c0d0
+	},
+	fresh: {
+		base: #0d0d0f,
+		tint: #f0e7ff,
+		text: #d5cdd3,
+		acc1: #9eabff,
+		acc2: #b7f0f7
+	},
+	custom: {
+		base: clrBase,
+		tint: clrTint,
+		text: clrText,
+		acc1: clrAcc1,
+		acc2: clrAcc2
+	}
+}
+
+currentTheme = themes[themeName]
+
+clr-base = currentTheme['base']
+clr-tint = currentTheme['tint']
+clr-text = currentTheme['text']
+clr-acc1 = currentTheme['acc1']
+clr-acc2 = currentTheme['acc2']
+
+font-text = 'Rubik', sans-serif, 'Noto Color Emoji', 'FiraCode Nerd Font'
+font-code = 'JetBrains Mono', monospace, font-text
+
+splash = useName == 0 ? "ChatGPT" : "Hello, " + name + "!"

@@ -22,19 +22,17 @@
 @var color clrAcc2 "Accent colour 2" #e9e4f4
 ==/UserStyle== */
 
-@-moz-document domain("chatgpt.com") {
-  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Color+Emoji&family=Rubik:wght@400;600&display=swap');
+@-moz-document domain("chatgpt.com")
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Color+Emoji&family=Rubik:wght@400;600&display=swap')
 
-  @import 'user-variables.less';
-  @import 'variables.less';
-  @import 'code-themes.less';
-  @import 'bloat.less';
-  @import 'ui.less';
-  @import 'chat.less';
+  @require 'user-variables'
+  @require 'variables'
+  @require 'code-themes'
+  @require 'bloat'
+  @require 'ui'
+  @require 'chat'
 
-  code.hljs * {
-    color: unset;
-  }
+  code.hljs *
+    color unset
 
-  .applyCodeThemes();
-}
+  applyCodeThemes()
