@@ -1,10 +1,10 @@
 /* ==UserStyle==
-@name           ChatGPT Minimal (Refactored)
-@namespace      https://codeberg.org/endercat
+@name           ChatGPT violet-void-theme by aaronedev
+@namespace      https://github.com/aaronedev/violet-void-theme_chatgpt
 @version        3.1.0
 @description    makes chatgippity look not ugly - refactored into multiple files
-@author         Ava
-@preprocessor 	less
+@author         aaronedev
+@preprocessor 	stylus
 
 @var checkbox useName "Greeting" 0
 @var text name "Your name" ""
@@ -23,20 +23,18 @@
 ==/UserStyle== */
 
 @-moz-document domain("chatgpt.com") {
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Color+Emoji&family=Rubik:wght@400;600&display=swap');
 
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Color+Emoji&family=Rubik:wght@400;600&display=swap');
+  @import 'user-variables.less';
+  @import 'variables.less';
+  @import 'code-themes.less';
+  @import 'bloat.less';
+  @import 'ui.less';
+  @import 'chat.less';
 
-@import "user-variables.less";
-@import "variables.less";
-@import "code-themes.less";
-@import "bloat.less";
-@import "ui.less";
-@import "chat.less";
+  code.hljs * {
+    color: unset;
+  }
 
-code.hljs * {
-color: unset;
-}
-
-.applyCodeThemes();
-
+  .applyCodeThemes();
 }
