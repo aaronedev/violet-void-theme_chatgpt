@@ -9,21 +9,25 @@
     "type": "git",
     "url": "https://github.com/aaronedev/violet-void-theme.git"
   },
+  "userStyle": {
+    "namespace": "github.com/aaronedev/violet-void-theme_chatgpt",
+    "version": "20260202.13.05"
+  },
   "scripts": {
     "build": "node scripts/build.js",
-    "watch": "stylus -w src/main.styl -o dist/main.css",
-    "lint": "stylint src",
-    "lint:fix": "stylint src",
-    "format": "prettier --write \"**/*.{js,json,styl}\""
+    "watch": "stylus -u autoprefixer-stylus src/main.styl -o dist/main.css --watch",
+    "lint": "stylelint \"src/**/*.styl\"",
+    "lint:fix": "stylelint \"src/**/*.styl\" --fix",
+    "format": "prettier --write \"**/*.{js,json}\" && stylelint --fix \"src/**/*.styl\""
   },
   "devDependencies": {
+    "autoprefixer-stylus": "^1.0.0",
     "prettier": "^3.6.2",
-    "stylelint": "^15.11.0",
-    "stylelint-config-html": "^1.1.0",
+    "stylelint": "^16.26.1",
     "stylelint-config-recommended": "^17.0.0",
-    "stylelint-config-standard": "^34.0.0",
+    "stylelint-config-standard": "^39.0.1",
     "stylelint-plugin-stylus": "^1.0.0",
-    "stylint": "^2.0.0",
-    "stylus": "^0.64.0"
+    "stylus": "^0.64.0",
+    "stylus-loader": "^8.1.2"
   }
 }

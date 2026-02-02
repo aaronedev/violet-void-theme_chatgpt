@@ -1,59 +1,23 @@
 {
-  "extends": [
-    "stylelint-config-standard",
-    "stylelint-plugin-stylus/standard",
-    "stylelint-config-html"
-  ],
+  "extends": ["stylelint-config-standard", "stylelint-plugin-stylus/standard"],
   "rules": {
     "color-hex-length": "long",
     "declaration-property-value-no-unknown": null,
     "stylus/selector-list-comma": null,
-    "stylus/declaration-colon": "never",
-    "stylus/single-line-comment": "always",
-    "property-no-vendor-prefix": null,
-    "selector-class-pattern": null,
-    "at-rule-no-vendor-prefix": null,
-    "stylus/no-at-require": null,
-    "selector-no-vendor-prefix": null,
-    "font-family-no-missing-generic-family-keyword": null,
-    "value-keyword-case": null,
     "color-function-notation": null,
     "alpha-value-notation": null,
     "color-function-alias-notation": null,
     "import-notation": "string",
     "media-feature-range-notation": null,
+    "stylus/declaration-colon": "never",
+    "stylus/single-line-comment": "always",
+    "selector-class-pattern": null,
+    "at-rule-no-vendor-prefix": null,
+    "property-no-vendor-prefix": null,
     "at-rule-no-deprecated": null,
     "no-invalid-position-at-import-rule": null,
     "no-descending-specificity": null,
     "nesting-selector-no-missing-scoping-root": null,
     "no-invalid-position-declaration": null
-  },
-  "overrides": [
-    {
-      "files": ["*.css"],
-      "rules": {
-        "stylus/declaration-colon": null,
-        "stylus/single-line-comment": null
-      }
-    },
-    {
-      "files": [
-        "*.html",
-        "**/*.html",
-        "*.vue",
-        "**/*.vue",
-        "*.svelte",
-        "**/*.svelte",
-        "*.astro",
-        "**/*.astro",
-        "*.php",
-        "**/*.php"
-      ],
-      "customSyntax": "postcss-html"
-    },
-    {
-      "files": ["*.md", "**/*.md"],
-      "customSyntax": "postcss-markdown"
-    }
-  ]
+  }
 }
