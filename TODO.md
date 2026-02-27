@@ -4,17 +4,19 @@
 
 ## 🔥 High Priority
 
-- [ ] **Modern CSS Feature Audit**
-  - Check for @layer, @property, @scope support
-  - Add :has() selector usage
-  - Implement scroll-snap where applicable
+- [x] **Modern CSS Feature Audit** ✅ 2026-02-27
+  - Added @layer for cascade control (reset, variables, base, components, utilities)
+  - Added @property for typed CSS custom properties (colors)
+  - Implemented :has() selector enhancements for better UI targeting
+  - Added scroll-snap for sidebar navigation
+  - All wrapped in @css{} for Stylus compatibility
 
 ## 🟡 Medium Priority
 
-- [ ] **Accessibility Review**
-  - prefers-reduced-motion support
-  - prefers-reduced-transparency support
-  - Focus ring consistency
+- [x] **Accessibility Review** ✅ 2026-02-27
+  - Added prefers-reduced-motion media query
+  - Added prefers-reduced-transparency media query
+  - Improved focus-visible indicators
 
 - [ ] **Code Quality**
   - Check for hardcoded colors
