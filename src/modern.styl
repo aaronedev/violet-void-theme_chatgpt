@@ -1,0 +1,137 @@
+// Modern CSS Features - Using @css{} wrapper for Stylus-incompatible syntax
+
+// CSS Layers for better cascade control
+@css {
+  @layer violet-void.reset, violet-void.variables, violet-void.base, violet-void.components, violet-void.utilities;
+}
+
+// Accessibility: Reduced motion support
+@css {
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+// Accessibility: Reduced transparency support
+@css {
+  @media (prefers-reduced-transparency: reduce) {
+    .dark,
+    html.ZnJ1aXRqdWljZQ.dark {
+      --main-surface-primary: var(--clr-base);
+      --main-surface-secondary: var(--clr-base);
+      --main-surface-tertiary: var(--clr-base);
+      --sidebar-surface-primary: var(--clr-base);
+      --sidebar-surface-secondary: var(--clr-base);
+      --sidebar-surface-tertiary: var(--clr-base);
+      --border-light: rgba(255, 255, 255, 0.15);
+      --border-medium: rgba(255, 255, 255, 0.25);
+      --border-heavy: rgba(255, 255, 255, 0.35);
+      --border-xheavy: rgba(255, 255, 255, 0.45);
+    }
+    
+    *::backdrop {
+      background: var(--clr-base) !important;
+    }
+  }
+}
+
+// Modern :has() selector enhancements for better UI targeting
+@css {
+  /* Highlight active conversation when it has unread content */
+  nav li:has([data-testid="conversation-turn"]) {
+    background: var(--main-surface-secondary);
+  }
+  
+  /* Improve sidebar item hover states when containing active elements */
+  .hover\:bg-token-sidebar-surface-secondary:has(:focus-visible) {
+    outline: 2px solid var(--text-primary);
+    outline-offset: 2px;
+  }
+  
+  /* Better visual feedback for code blocks containing errors */
+  pre:has(.hljs-error),
+  pre:has(.error) {
+    border-left: 3px solid #f93a37;
+  }
+  
+  /* Enhanced focus indicators */
+  button:has(svg):focus-visible,
+  a:has(svg):focus-visible {
+    outline: 2px solid var(--text-primary);
+    outline-offset: 2px;
+    border-radius: 0.5rem;
+  }
+  
+  /* Style parent based on child state */
+  article:has(textarea:focus) {
+    opacity: 1;
+  }
+  
+  /* Scroll-snap for better navigation in sidebar */
+  nav ol {
+    scroll-snap-type: y proximity;
+  }
+  
+  nav li {
+    scroll-snap-align: start;
+  }
+}
+
+// CSS Custom Properties with @property for better type checking
+@css {
+  @property --clr-base {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: #121215;
+  }
+  
+  @property --clr-tint {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: #cfbeff;
+  }
+  
+  @property --clr-text {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: #e9e4f4;
+  }
+  
+  @property --clr-acc1 {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: #cba6f7;
+  }
+  
+  @property --clr-acc2 {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: #f5c2e7;
+  }
+}
+
+// Smooth scrolling (respects prefers-reduced-motion)
+@css {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+// Better focus-visible support
+@css {
+  :focus-visible {
+    outline: 2px solid var(--text-primary, #e9e4f4);
+    outline-offset: 2px;
+  }
+  
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+}

@@ -11,7 +11,7 @@
   },
   "userStyle": {
     "namespace": "github.com/aaronedev/violet-void-theme_chatgpt",
-    "version": "20260202.13.05"
+    "version": "20260227.16.35"
   },
   "scripts": {
     "build": "node scripts/build.js",
