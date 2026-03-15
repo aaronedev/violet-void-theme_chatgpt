@@ -2,7 +2,7 @@
 
 // CSS Layers for better cascade control
 @css {
-  @layer violet-void.reset, violet-void.variables, violet-void.base, violet-void.components, violet-void.utilities;
+  @layer violet-void.reset, violet-void.variables, violet-void.base, violet-void.components, violet-void.utilities
 }
 
 // Accessibility: Reduced motion support
@@ -35,7 +35,7 @@
       --border-heavy: rgba(255, 255, 255, 0.35);
       --border-xheavy: rgba(255, 255, 255, 0.45);
     }
-    
+
     *::backdrop {
       background: var(--clr-base) !important;
     }
@@ -48,19 +48,19 @@
   nav li:has([data-testid="conversation-turn"]) {
     background: var(--main-surface-secondary);
   }
-  
+
   /* Improve sidebar item hover states when containing active elements */
   .hover\:bg-token-sidebar-surface-secondary:has(:focus-visible) {
     outline: 2px solid var(--text-primary);
     outline-offset: 2px;
   }
-  
+
   /* Better visual feedback for code blocks containing errors */
   pre:has(.hljs-error),
   pre:has(.error) {
     border-left: 3px solid #f93a37;
   }
-  
+
   /* Enhanced focus indicators */
   button:has(svg):focus-visible,
   a:has(svg):focus-visible {
@@ -68,17 +68,17 @@
     outline-offset: 2px;
     border-radius: 0.5rem;
   }
-  
+
   /* Style parent based on child state */
   article:has(textarea:focus) {
     opacity: 1;
   }
-  
+
   /* Scroll-snap for better navigation in sidebar */
   nav ol {
     scroll-snap-type: y proximity;
   }
-  
+
   nav li {
     scroll-snap-align: start;
   }
@@ -91,25 +91,25 @@
     inherits: true;
     initial-value: #121215;
   }
-  
+
   @property --clr-tint {
     syntax: '<color>';
     inherits: true;
     initial-value: #cfbeff;
   }
-  
+
   @property --clr-text {
     syntax: '<color>';
     inherits: true;
     initial-value: #e9e4f4;
   }
-  
+
   @property --clr-acc1 {
     syntax: '<color>';
     inherits: true;
     initial-value: #cba6f7;
   }
-  
+
   @property --clr-acc2 {
     syntax: '<color>';
     inherits: true;
@@ -130,7 +130,7 @@
     outline: 2px solid var(--text-primary, #e9e4f4);
     outline-offset: 2px;
   }
-  
+
   :focus:not(:focus-visible) {
     outline: none;
   }
