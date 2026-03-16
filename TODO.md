@@ -26,10 +26,16 @@
 
 ## 🔮 Future
 
-- [ ] **Relative color syntax**
+- [x] **Relative color syntax** ✅ 2026-03-16
+  - Added oklch-based color variants (lighter/darker) using `from` keyword
+  - Added color-mix() variants for blending colors
+  - Added alpha variants using color-mix
+  - Added accent color variations (success, warning, info, error)
+  - Commit: b860a04
+
 - [ ] **View Transitions API**
 - [ ] **CSS nesting migration path**
 
 ---
 
-*Last updated: 2026-03-15*
+*Last updated: 2026-03-16*

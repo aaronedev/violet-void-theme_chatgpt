@@ -1,5 +1,73 @@
 // Modern CSS Features - Using @css{} wrapper for Stylus-incompatible syntax
 
+// Relative Color Syntax (CSS Color Level 5) for programmatic color variations
+// Provides lighter/darker/tinted variants without relying solely on Stylus functions
+@css {
+  /* Relative color syntax - lighter variants using oklch */
+  :root,
+  .dark,
+  html.ZnJ1aXRqdWljZQ.dark {
+    --clr-base-lighter: oklch(from var(--clr-base) 98% c h);
+    --clr-base-light: oklch(from var(--clr-base) 95% c h);
+    --clr-base-dark: oklch(from var(--clr-base) 90% c h);
+    --clr-base-darker: oklch(from var(--clr-base) 80% c h);
+    --clr-text-light: oklch(from var(--clr-text) 95% c h);
+    --clr-text-lighter: oklch(from var(--clr-text) 110% c h);
+    --clr-tint-darker: oklch(from var(--clr-tint) 70% c h);
+    --clr-tint-dark: oklch(from var(--clr-tint) 85% c h);
+    --clr-acc1-light: oklch(from var(--clr-acc1) 90% c h);
+    --clr-acc1-lighter: oklch(from var(--clr-acc1) 80% c h);
+    --clr-acc1-dark: oklch(from var(--clr-acc1) l c h);
+    --clr-acc2-light: oklch(from var(--clr-acc2) 90% c h);
+    --clr-acc2-lighter: oklch(from var(--clr-acc2) 80% c h);
+    --clr-acc2-dark: oklch(from var(--clr-acc2) l c h);
+  }
+
+  /* color-mix() for blending colors - lighter variants */
+  :root,
+  .dark,
+  html.ZnJ1aXRqdWljZQ.dark {
+    --mix-base-tint-90: color-mix(in srgb, var(--clr-base), var(--clr-tint) 10%);
+    --mix-base-tint-85: color-mix(in srgb, var(--clr-base), var(--clr-tint) 15%);
+    --mix-base-tint-80: color-mix(in srgb, var(--clr-base), var(--clr-tint) 20%);
+    --mix-base-tint-70: color-mix(in srgb, var(--clr-base), var(--clr-tint) 30%);
+    --mix-base-tint-60: color-mix(in srgb, var(--clr-base), var(--clr-tint) 40%);
+    --mix-text-white-90: color-mix(in srgb, var(--clr-text), white 10%);
+    --mix-text-white-80: color-mix(in srgb, var(--clr-text), white 20%);
+    --mix-text-white-70: color-mix(in srgb, var(--clr-text), white 30%);
+    --mix-text-black-90: color-mix(in srgb, var(--clr-text), black 10%);
+    --mix-text-black-80: color-mix(in srgb, var(--clr-text), black 20%);
+    --mix-acc1-white-80: color-mix(in srgb, var(--clr-acc1), white 20%);
+    --mix-acc1-white-90: color-mix(in srgb, var(--clr-acc1), white 10%);
+    --mix-acc2-white-80: color-mix(in srgb, var(--clr-acc2), white 20%);
+    --mix-acc2-white-90: color-mix(in srgb, var(--clr-acc2), white 10%);
+  }
+
+  /* Alpha variants using relative color syntax */
+  :root,
+  .dark,
+  html.ZnJ1aXRqdWljZQ.dark {
+    --alpha-text-10: color-mix(in srgb, var(--clr-text), transparent 90%);
+    --alpha-text-15: color-mix(in srgb, var(--clr-text), transparent 85%);
+    --alpha-text-20: color-mix(in srgb, var(--clr-text), transparent 80%);
+    --alpha-text-25: color-mix(in srgb, var(--clr-text), transparent 75%);
+    --alpha-text-30: color-mix(in srgb, var(--clr-text), transparent 70%);
+    --alpha-base-5: color-mix(in srgb, var(--clr-base), transparent 95%);
+    --alpha-base-10: color-mix(in srgb, var(--clr-base), transparent 90%);
+    --alpha-base-15: color-mix(in srgb, var(--clr-base), transparent 85%);
+  }
+
+  /* Accent color variations using color-mix */
+  :root,
+  .dark,
+  html.ZnJ1aXRqdWljZQ.dark {
+    --accent-success: color-mix(in srgb, var(--clr-acc1), #79ffab 30%);
+    --accent-warning: color-mix(in srgb, var(--clr-acc2), #ffb57d 30%);
+    --accent-info: color-mix(in srgb, var(--clr-tint), #88c0d0 30%);
+    --accent-error: color-mix(in srgb, var(--clr-acc1), #f93a37 40%);
+  }
+}
+
 // CSS Layers for better cascade control
 @css {
   @layer violet-void.reset, violet-void.variables, violet-void.base, violet-void.components, violet-void.utilities
