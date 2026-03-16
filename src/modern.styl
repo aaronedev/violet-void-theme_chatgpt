@@ -204,6 +204,206 @@
   }
 }
 
+// CSS Nesting Migration Path
+// Native CSS nesting (no preprocessor required) - supported in all modern browsers
+// This provides a migration path from Stylus nesting to native CSS nesting
+@css {
+  /*
+   * CSS Nesting Migration Guide:
+   *
+   * Stylus:                    Native CSS:
+   * .parent {                 .parent {
+   *   .child {                  & .child {
+   *     color: red                color: red;
+   *   }                        }
+   * }                        }
+   *
+   * The & symbol references the parent selector.
+   * This allows full nesting without a preprocessor.
+   */
+
+  /* Example: Nested selectors using native CSS nesting */
+  .dark {
+    & .sidebar {
+      background: var(--clr-base);
+
+      & .item {
+        color: var(--clr-text);
+
+        &:hover {
+          background: var(--main-surface-secondary);
+        }
+
+        &.active {
+          background: var(--clr-tint);
+        }
+      }
+    }
+
+    & button {
+      background: var(--clr-acc1);
+
+      &:hover {
+        filter: brightness(1.1);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--clr-tint);
+      }
+    }
+  }
+
+  /* Nested media queries */
+  .dark {
+    @media (max-width: 768px) {
+      & .sidebar {
+        width: 100%;
+      }
+
+      & button {
+        padding: 0.5rem 1rem;
+      }
+    }
+  }
+
+  /* Nested @supports */
+  .dark {
+    @supports (backdrop-filter: blur(10px)) {
+      & .modal {
+        backdrop-filter: blur(10px);
+      }
+    }
+  }
+
+  /* Complex nesting example: conversation items */
+  nav {
+    & ol {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      & li {
+        margin: 0.5rem 0;
+
+        & a {
+          display: block;
+          padding: 0.75rem;
+          border-radius: 0.5rem;
+          color: var(--text-secondary);
+
+          &:hover {
+            background: var(--sidebar-surface-secondary);
+          }
+
+          &[aria-current="page"] {
+            background: var(--clr-tint);
+            color: var(--clr-base);
+          }
+        }
+      }
+    }
+  }
+
+  /* Nesting with pseudo-classes and pseudo-elements */
+  button {
+    &:hover {
+      background: var(--clr-acc1);
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+
+    &::before {
+      content: '';
+      display: inline-block;
+    }
+
+    &.primary {
+      background: var(--clr-tint);
+      color: var(--clr-base);
+
+      &:hover {
+        filter: brightness(1.15);
+      }
+    }
+  }
+
+  /* Responsive nesting pattern */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+
+    @media (min-width: 640px) {
+      padding: 1.5rem;
+    }
+
+    @media (min-width: 1024px) {
+      padding: 2rem;
+
+      & .grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  }
+
+  /* Layer integration with nesting */
+  @layer components {
+    .card {
+      background: var(--main-surface-primary);
+      border-radius: 0.75rem;
+      padding: 1rem;
+
+      & .header {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+
+        & .title {
+          color: var(--text-primary);
+        }
+      }
+
+      & .body {
+        color: var(--text-secondary);
+      }
+
+      & .footer {
+        margin-top: 1rem;
+        padding-top: 0.5rem;
+        border-top: 1px solid var(--border-light);
+      }
+    }
+  }
+
+  /* Modern :is() and :where() with nesting */
+  .dark {
+    & :is(.btn, .button, button) {
+      cursor: pointer;
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    }
+
+    & :where(.btn-primary) {
+      background: var(--clr-tint);
+      color: var(--clr-base);
+    }
+  }
+}
+
+// Note: Native CSS nesting is supported in:
+// - Chrome 112+ (2023)
+// - Firefox 110+ (2023)
+// - Safari 16.4+ (2023)
+// - Edge 112+ (2023)
+//
+// For older browsers, continue using Stylus or a build step.
+// The @css{} wrapper ensures this works in Stylus builds today
+// while providing native CSS output for modern deployments.
+
 // View Transitions API for smooth page/state transitions
 // Enables animated transitions when navigating between conversations or updating content
 @css {
