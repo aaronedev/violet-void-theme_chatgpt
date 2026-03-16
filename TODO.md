@@ -42,7 +42,14 @@
   - Added code block scale animations
   - Respects prefers-reduced-motion
 
-- [ ] **CSS nesting migration path**
+- [x] **CSS nesting migration path** ✅ 2026-03-16
+  - Added native CSS nesting examples with & reference syntax
+  - Included nested media queries and @supports patterns
+  - Added complex nesting for nav, buttons, containers
+  - Integrated @layer with nesting for components
+  - Added :is() and :where() with nesting examples
+  - Browser support documentation
+  - Commit: 1e40b52
 
 ---
 
