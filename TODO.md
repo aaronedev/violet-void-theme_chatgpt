@@ -33,7 +33,15 @@
   - Added accent color variations (success, warning, info, error)
   - Commit: b860a04
 
-- [ ] **View Transitions API**
+- [x] **View Transitions API** ✅ 2026-03-16
+  - Added ::view-transition-old/new(root) for smooth page transitions
+  - Added fade-in/fade-out keyframe animations
+  - Added conversation list transitions
+  - Added message appear animations (slide up)
+  - Added sidebar transitions
+  - Added code block scale animations
+  - Respects prefers-reduced-motion
+
 - [ ] **CSS nesting migration path**
 
 ---

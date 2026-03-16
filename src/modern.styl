@@ -203,3 +203,104 @@
     outline: none;
   }
 }
+
+// View Transitions API for smooth page/state transitions
+// Enables animated transitions when navigating between conversations or updating content
+@css {
+  /* Enable view transitions globally */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.3s;
+    animation-timing-function: ease-out;
+  }
+
+  /* Custom transition for root container */
+  ::view-transition-old(root) {
+    animation-name: fade-out;
+  }
+
+  ::view-transition-new(root) {
+    animation-name: fade-in;
+  }
+
+  @keyframes fade-out {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Conversation list transitions */
+  ::view-transition-old(conversation-list),
+  ::view-transition-new(conversation-list) {
+    animation-duration: 0.25s;
+  }
+
+  /* Message transitions - slide up for new messages */
+  ::view-transition-new(message) {
+    animation-name: message-appear;
+    animation-duration: 0.2s;
+    animation-timing-function: ease-out;
+  }
+
+  @keyframes message-appear {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Sidebar transitions */
+  ::view-transition-old(sidebar),
+  ::view-transition-new(sidebar) {
+    animation-duration: 0.2s;
+  }
+
+  /* Code block transitions */
+  ::view-transition-new(code-block) {
+    animation-name: code-appear;
+    animation-duration: 0.15s;
+  }
+
+  @keyframes code-appear {
+    from {
+      opacity: 0;
+      transform: scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* Respect reduced motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    ::view-transition-old(root),
+    ::view-transition-new(root),
+    ::view-transition-old(conversation-list),
+    ::view-transition-new(conversation-list),
+    ::view-transition-new(message),
+    ::view-transition-new(code-block) {
+      animation: none;
+    }
+  }
+}
