@@ -4,7 +4,7 @@ const fs = require('node:fs/promises')
 const os = require('node:os')
 const path = require('node:path')
 const test = require('node:test')
-const { cachedStatus, fetchOfficialRelease, resolveCachedExtension, selectChromiumMv3Asset, validateArchiveEntry, validateAssetUrl, verifyAssetBytes } = require('../scripts/setup-stylus')
+const { cachedStatus, fetchOfficialRelease, resolveCachedExtension, selectChromiumMv3Asset, validateArchiveEntry, validateAssetUrl, validateExtensionManifest, verifyAssetBytes } = require('../scripts/setup-stylus')
 
 const bytes = Buffer.from('verified Stylus fixture')
 const digest = `sha256:${crypto.createHash('sha256').update(bytes).digest('hex')}`
@@ -42,17 +42,41 @@ test('official release lookup is fully mockable', async () => {
   assert.equal(result.asset.name, release.assets[0].name)
 })
 
-test('cached extension resolution and freshness checks stay within the supplied cache', async () => {
+async function writeCurrentCache(directory, asset = release.assets[0]) {
+  await fs.mkdir(path.join(directory, 'extension'), { recursive: true })
+  await fs.writeFile(path.join(directory, 'extension', 'manifest.json'), '{"manifest_version":3,"name":"Stylus"}')
+  await fs.writeFile(path.join(directory, 'archive.zip'), bytes)
+  await fs.writeFile(path.join(directory, 'release.json'), JSON.stringify({
+    tag_name: release.tag_name,
+    asset_name: asset.name,
+    asset_size: asset.size,
+    asset_digest: asset.digest
+  }))
+}
+
+test('cache freshness requires matching MV3 manifest, metadata, and verified archive', async () => {
   const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'violet-void-stylus-test-'))
   try {
-    await fs.mkdir(path.join(directory, 'extension'))
-    await fs.writeFile(path.join(directory, 'extension', 'manifest.json'), '{"manifest_version":3,"name":"Stylus"}')
-    await fs.writeFile(path.join(directory, 'release.json'), '{"tag_name":"v2.4.9"}')
+    await writeCurrentCache(directory)
     assert.equal(resolveCachedExtension(directory), path.join(directory, 'extension'))
-    assert.equal(cachedStatus(release, directory).state, 'current')
-    await fs.writeFile(path.join(directory, 'release.json'), '{"tag_name":"v2.4.8"}')
-    assert.equal(cachedStatus(release, directory).state, 'outdated')
+    assert.equal(cachedStatus(release, release.assets[0], directory).state, 'current')
+    await fs.writeFile(path.join(directory, 'release.json'), '{bad json')
+    assert.notEqual(cachedStatus(release, release.assets[0], directory).state, 'current')
+    await writeCurrentCache(directory)
+    await fs.writeFile(path.join(directory, 'archive.zip'), 'corrupted')
+    assert.equal(cachedStatus(release, release.assets[0], directory).state, 'corrupt')
+    await fs.writeFile(path.join(directory, 'archive.zip'), bytes)
+    await fs.writeFile(path.join(directory, 'release.json'), JSON.stringify({ tag_name: release.tag_name, asset_name: 'replacement.zip', asset_size: bytes.length, asset_digest: digest }))
+    assert.equal(cachedStatus(release, release.assets[0], directory).state, 'outdated')
+    await writeCurrentCache(directory)
+    await fs.rm(path.join(directory, 'archive.zip'))
+    assert.equal(cachedStatus(release, release.assets[0], directory).state, 'corrupt')
   } finally {
     await fs.rm(directory, { recursive: true, force: true })
   }
+})
+
+test('an MV2 manifest is rejected before cache activation', () => {
+  assert.throws(() => validateExtensionManifest({ manifest_version: 2, name: 'Stylus' }), /MV3/)
+  assert.doesNotThrow(() => validateExtensionManifest({ manifest_version: 3, name: 'Stylus' }))
 })

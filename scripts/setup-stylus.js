@@ -77,6 +77,13 @@ function verifyAssetBytes(bytes, asset) {
   if (actual !== validateDigest(asset.digest)) throw new Error('Downloaded asset SHA-256 mismatch.')
 }
 
+function validateExtensionManifest(manifest) {
+  if (!manifest || manifest.manifest_version !== 3 || typeof manifest.name !== 'string' || !manifest.name.trim()) {
+    throw new Error('Extension manifest must identify a Chromium MV3 extension.')
+  }
+  return manifest
+}
+
 function validateArchiveEntry(entryName) {
   if (!entryName || entryName.includes('\\') || entryName.startsWith('/') || entryName.split('/').includes('..')) {
     throw new Error(`Unsafe archive path: ${entryName}`)
@@ -115,28 +122,40 @@ async function extractZip(archivePath, destination) {
     })
   })
   const manifestPath = path.join(destination, 'manifest.json')
-  const manifest = JSON.parse(await fsp.readFile(manifestPath, 'utf8'))
-  if (!manifest.manifest_version || !manifest.name) throw new Error('Extracted extension manifest is invalid.')
+  return validateExtensionManifest(JSON.parse(await fsp.readFile(manifestPath, 'utf8')))
 }
 
 function resolveCachedExtension(directory = cacheDir) {
   const extension = path.join(directory, 'extension')
   try {
-    const manifest = JSON.parse(fs.readFileSync(path.join(extension, 'manifest.json'), 'utf8'))
-    return manifest.manifest_version === 3 ? extension : null
+    validateExtensionManifest(JSON.parse(fs.readFileSync(path.join(extension, 'manifest.json'), 'utf8')))
+    return extension
   } catch {
     return null
   }
 }
 
-function cachedStatus(release, directory = cacheDir) {
+function metadataMatches(metadata, release, asset) {
+  return metadata &&
+    metadata.tag_name === release.tag_name &&
+    metadata.asset_name === asset.name &&
+    metadata.asset_size === asset.size &&
+    metadata.asset_digest === asset.digest
+}
+
+function cachedStatus(release, asset, directory = cacheDir) {
   const extension = resolveCachedExtension(directory)
-  if (!extension) return { state: 'missing', extension: null }
+  if (!extension) return { state: 'missing', reason: 'valid MV3 extension is absent', extension: null }
   try {
     const metadata = JSON.parse(fs.readFileSync(path.join(directory, 'release.json'), 'utf8'))
-    return { state: metadata.tag_name === release.tag_name ? 'current' : 'outdated', extension, cachedTag: metadata.tag_name }
+    if (!metadataMatches(metadata, release, asset)) {
+      return { state: 'outdated', reason: 'release metadata differs from latest asset', extension, cachedTag: metadata.tag_name }
+    }
+    const archive = fs.readFileSync(path.join(directory, 'archive.zip'))
+    verifyAssetBytes(archive, asset)
+    return { state: 'current', extension, cachedTag: metadata.tag_name }
   } catch {
-    return { state: 'outdated', extension, cachedTag: null }
+    return { state: 'corrupt', reason: 'cached archive is missing or does not match latest asset', extension, cachedTag: null }
   }
 }
 
@@ -154,7 +173,7 @@ async function installRelease(release, asset, directory = cacheDir, fetcher = fe
     for (const child of ['archive.zip', 'extension', 'release.json']) await fsp.rm(path.join(directory, child), { recursive: true, force: true })
     await fsp.rename(archive, path.join(directory, 'archive.zip'))
     await fsp.rename(extracted, path.join(directory, 'extension'))
-    await fsp.writeFile(path.join(directory, 'release.json'), `${JSON.stringify({ tag_name: release.tag_name, asset: asset.name, digest: asset.digest }, null, 2)}\n`)
+    await fsp.writeFile(path.join(directory, 'release.json'), `${JSON.stringify({ tag_name: release.tag_name, asset_name: asset.name, asset_size: asset.size, asset_digest: asset.digest }, null, 2)}\n`)
   } finally {
     await fsp.rm(staging, { recursive: true, force: true })
   }
@@ -169,8 +188,8 @@ async function main(args = process.argv.slice(2), fetcher = fetch) {
   const { release, asset } = await fetchOfficialRelease(fetcher)
   if (args.includes('--dry-run')) return console.log(`${release.tag_name}: ${asset.name} (${asset.size} bytes)`)
   if (args.includes('--check')) {
-    const status = cachedStatus(release)
-    console.log(`${status.state}: latest=${release.tag_name}${status.cachedTag ? ` cached=${status.cachedTag}` : ''}`)
+    const status = cachedStatus(release, asset)
+    console.log(`${status.state}: latest=${release.tag_name} asset=${asset.name}${status.reason ? ` (${status.reason})` : ''}`)
     if (status.state !== 'current') process.exitCode = 2
     return status
   }
@@ -180,4 +199,4 @@ async function main(args = process.argv.slice(2), fetcher = fetch) {
 
 if (require.main === module) main().catch((error) => { console.error(`setup:stylus failed: ${error.message}`); process.exitCode = 1 })
 
-module.exports = { cachedStatus, downloadAsset, fetchOfficialRelease, installRelease, localCacheDir: cacheDir, resolveCachedExtension, selectChromiumMv3Asset, validateArchiveEntry, validateAssetUrl, validateDigest, verifyAssetBytes }
+module.exports = { cachedStatus, downloadAsset, fetchOfficialRelease, installRelease, localCacheDir: cacheDir, metadataMatches, resolveCachedExtension, selectChromiumMv3Asset, validateArchiveEntry, validateAssetUrl, validateDigest, validateExtensionManifest, verifyAssetBytes }
