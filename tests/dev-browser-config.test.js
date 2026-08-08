@@ -1,4 +1,5 @@
 const assert = require('node:assert/strict')
+const path = require('node:path')
 const test = require('node:test')
 const { buildBrowserArguments, buildLaunchArguments, localStyleUrl, resolveConfig } = require('../scripts/dev-browser')
 
@@ -13,6 +14,7 @@ test('dev browser Chromium arguments load only the supplied unpacked extension',
 test('dev browser configuration binds the local UserStyle to loopback', () => {
   const config = resolveConfig({ VIOLET_VOID_PORT: '4812' })
   assert.equal(config.port, 4812)
+  assert.equal(config.artifactPath, path.resolve(__dirname, '../dist/chatgpt-violet-void.user.css'))
   assert.equal(localStyleUrl(config.port), 'http://127.0.0.1:4812/chatgpt-violet-void.user.css')
 })
 

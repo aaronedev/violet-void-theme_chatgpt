@@ -45,7 +45,7 @@ function resolveConfig(environment = process.env, cachedExtensionResolver = reso
   }
 
   return {
-    artifactPath: path.join(root, 'chatgpt-violet-void.user.css'),
+    artifactPath: path.join(root, 'dist', 'chatgpt-violet-void.user.css'),
     browserPath: path.resolve(browserPath),
     extensionPath: environment.STYLUS_EXTENSION_PATH ? path.resolve(environment.STYLUS_EXTENSION_PATH) : cachedExtensionResolver(),
     port,

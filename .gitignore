@@ -1,5 +1,4 @@
 node_modules
-dist
 playwright-report
 test-results
 .violet-void-dev-profile

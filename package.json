@@ -7,16 +7,16 @@
   "homepage": "https://github.com/aaronedev/violet-void-theme_chatgpt",
   "repository": {
     "type": "git",
-    "url": "https://github.com/aaronedev/violet-void-theme.git"
+    "url": "https://github.com/aaronedev/violet-void-theme_chatgpt.git"
   },
   "userStyle": {
     "namespace": "github.com/aaronedev/violet-void-theme_chatgpt",
-    "version": "5.4.3"
+    "version": "5.4.4"
   },
   "scripts": {
     "build": "node scripts/build.js",
     "verify:artifact": "node scripts/verify-artifact.js",
-    "lint": "stylelint \"src/**/*.css\" \"chatgpt-violet-void.user.css\"",
+    "lint": "stylelint \"src/**/*.css\" \"dist/chatgpt-violet-void.user.css\"",
     "test:unit": "node --test tests/*.test.js",
     "test": "npm run test:unit && playwright test",
     "dev:browser": "npm run build && node scripts/dev-browser.js",
