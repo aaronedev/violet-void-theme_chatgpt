@@ -1,6 +1,7 @@
 const fs = require('node:fs')
 const http = require('node:http')
 const path = require('node:path')
+const { spawn } = require('node:child_process')
 const { chromium } = require('@playwright/test')
 const { resolveCachedExtension } = require('./setup-stylus')
 
@@ -10,6 +11,17 @@ function buildLaunchArguments(extensionPath) {
   return [
     `--disable-extensions-except=${extensionPath}`,
     `--load-extension=${extensionPath}`
+  ]
+}
+
+function buildBrowserArguments(config) {
+  return [
+    `--user-data-dir=${config.profilePath}`,
+    ...buildLaunchArguments(config.extensionPath),
+    '--no-first-run',
+    '--no-default-browser-check',
+    localStyleUrl(config.port),
+    'https://chatgpt.com'
   ]
 }
 
@@ -23,12 +35,21 @@ function resolveConfig(environment = process.env, cachedExtensionResolver = reso
     throw new Error('VIOLET_VOID_PORT must be a non-privileged integer between 1024 and 65535.')
   }
 
+  const profilePath = path.resolve(environment.VIOLET_VOID_PROFILE_DIR || path.join(root, '.violet-void-dev-profile'))
+  if (!profilePath.startsWith(`${root}${path.sep}`)) {
+    throw new Error('VIOLET_VOID_PROFILE_DIR must remain inside this repository to protect your normal browser profile.')
+  }
+  const browserPath = environment.VIOLET_VOID_BROWSER_PATH ? environment.VIOLET_VOID_BROWSER_PATH : chromium.executablePath()
+  if (!path.isAbsolute(browserPath)) {
+    throw new Error('VIOLET_VOID_BROWSER_PATH must be an absolute Chromium executable path.')
+  }
+
   return {
     artifactPath: path.join(root, 'chatgpt-violet-void.user.css'),
-    browserPath: chromium.executablePath(),
+    browserPath: path.resolve(browserPath),
     extensionPath: environment.STYLUS_EXTENSION_PATH ? path.resolve(environment.STYLUS_EXTENSION_PATH) : cachedExtensionResolver(),
     port,
-    profilePath: path.resolve(environment.VIOLET_VOID_PROFILE_DIR || path.join(root, '.violet-void-dev-profile'))
+    profilePath
   }
 }
 
@@ -74,15 +95,37 @@ function serveArtifact(artifactPath, port) {
   })
 }
 
+function waitForBrowser(child) {
+  return new Promise((resolve, reject) => {
+    child.once('error', reject)
+    child.once('exit', (code, signal) => {
+      if (code && !signal) {
+        reject(new Error(`Chromium exited early with code ${code}.`))
+        return
+      }
+      resolve({ code, signal })
+    })
+  })
+}
+
+function launchBrowser(config, spawnProcess = spawn) {
+  return waitForBrowser(spawnProcess(config.browserPath, buildBrowserArguments(config), {
+    shell: false,
+    stdio: 'inherit',
+    windowsHide: false
+  }))
+}
+
 function printHelp() {
   console.log(`Usage: npm run dev:browser
 
 Optional: STYLUS_EXTENSION_PATH=/absolute/path/to/unpacked/stylus
-Optional: VIOLET_VOID_PORT=4173 VIOLET_VOID_PROFILE_DIR=./.violet-void-dev-profile
+Optional: VIOLET_VOID_PORT=4173 VIOLET_VOID_PROFILE_DIR=./.violet-void-dev-profile VIOLET_VOID_BROWSER_PATH=/absolute/path/to/chromium
 
-The launcher uses Playwright's bundled Chromium and only the isolated profile above.
+The launcher starts a plain Chromium child process; it is intentionally not Playwright-controlled.
+Close any stuck prior QA Chromium window before starting, so the isolated profile is unlocked.
 It serves the local UserStyle on 127.0.0.1, then opens its installer URL and chatgpt.com.
-Install/update the style and sign in manually. It uses .violet-void-stylus/extension after setup:stylus when no explicit path is set. --dry-run validates paths without launching.`)
+Complete Cloudflare, login, and UserStyle confirmation manually. It uses .violet-void-stylus/extension after setup:stylus when no explicit path is set. --dry-run validates paths without launching.`)
 }
 
 async function main(cliArgs = process.argv.slice(2), environment = process.env) {
@@ -100,31 +143,18 @@ async function main(cliArgs = process.argv.slice(2), environment = process.env) 
       extension: config.extensionPath,
       profile: config.profilePath,
       styleUrl: localStyleUrl(config.port),
-      chromiumArguments: buildLaunchArguments(config.extensionPath)
+      chromiumArguments: buildBrowserArguments(config)
     }, null, 2))
     return
   }
 
   const server = await serveArtifact(config.artifactPath, config.port)
-  let context
-  const shutdown = async () => {
-    await context?.close()
-    await new Promise((resolve) => server.close(resolve))
-  }
-
   try {
-    context = await chromium.launchPersistentContext(config.profilePath, {
-      channel: 'chromium',
-      headless: false,
-      args: buildLaunchArguments(config.extensionPath)
-    })
-    await (await context.newPage()).goto(localStyleUrl(config.port))
-    await (await context.newPage()).goto('https://chatgpt.com')
-    console.log(`Manual QA browser is open with isolated profile: ${config.profilePath}`)
-    console.log('Install/update the local UserStyle and sign in manually; closing Chromium stops the local server.')
-    await new Promise((resolve) => context.once('close', resolve))
+    console.log(`Launching plain Chromium with isolated profile: ${config.profilePath}`)
+    await launchBrowser(config)
+    console.log('Chromium closed; stopping the local UserStyle server.')
   } finally {
-    await shutdown()
+    await new Promise((resolve) => server.close(resolve))
   }
 }
 
@@ -135,4 +165,4 @@ if (require.main === module) {
   })
 }
 
-module.exports = { buildLaunchArguments, localStyleUrl, resolveConfig }
+module.exports = { buildBrowserArguments, buildLaunchArguments, launchBrowser, localStyleUrl, resolveConfig, waitForBrowser }
