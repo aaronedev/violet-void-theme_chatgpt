@@ -3,3 +3,4 @@ dist
 playwright-report
 test-results
 .violet-void-dev-profile
+.violet-void-stylus

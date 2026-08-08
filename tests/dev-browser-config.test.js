@@ -15,3 +15,8 @@ test('dev browser configuration binds the local UserStyle to loopback', () => {
   assert.equal(config.port, 4812)
   assert.equal(localStyleUrl(config.port), 'http://127.0.0.1:4812/chatgpt-violet-void.user.css')
 })
+
+test('dev browser resolves the verified cache when no explicit extension path is set', () => {
+  const config = resolveConfig({}, () => '/tmp/verified-stylus-cache/extension')
+  assert.equal(config.extensionPath, '/tmp/verified-stylus-cache/extension')
+})

@@ -17,15 +17,18 @@
     "build": "node scripts/build.js",
     "verify:artifact": "node scripts/verify-artifact.js",
     "lint": "stylelint \"src/**/*.css\" \"chatgpt-violet-void.user.css\"",
-    "test:unit": "node --test tests/dev-browser-config.test.js",
+    "test:unit": "node --test tests/*.test.js",
     "test": "npm run test:unit && playwright test",
     "dev:browser": "npm run build && node scripts/dev-browser.js",
+    "setup:stylus": "node scripts/setup-stylus.js",
+    "dev:browser:setup": "npm run setup:stylus && npm run dev:browser",
     "check": "npm run build && npm run verify:artifact && npm run lint && npm test"
   },
   "devDependencies": {
     "@playwright/test": "^1.55.0",
     "prettier": "^3.6.2",
     "stylelint": "^16.26.1",
-    "stylelint-config-recommended": "^17.0.0"
+    "stylelint-config-recommended": "^17.0.0",
+    "yauzl": "^3.2.0"
   }
 }

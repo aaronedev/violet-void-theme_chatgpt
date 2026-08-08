@@ -2,6 +2,7 @@ const fs = require('node:fs')
 const http = require('node:http')
 const path = require('node:path')
 const { chromium } = require('@playwright/test')
+const { resolveCachedExtension } = require('./setup-stylus')
 
 const root = path.resolve(__dirname, '..')
 
@@ -16,7 +17,7 @@ function localStyleUrl(port) {
   return `http://127.0.0.1:${port}/chatgpt-violet-void.user.css`
 }
 
-function resolveConfig(environment = process.env) {
+function resolveConfig(environment = process.env, cachedExtensionResolver = resolveCachedExtension) {
   const port = Number(environment.VIOLET_VOID_PORT || 4173)
   if (!Number.isInteger(port) || port < 1024 || port > 65535) {
     throw new Error('VIOLET_VOID_PORT must be a non-privileged integer between 1024 and 65535.')
@@ -25,7 +26,7 @@ function resolveConfig(environment = process.env) {
   return {
     artifactPath: path.join(root, 'chatgpt-violet-void.user.css'),
     browserPath: chromium.executablePath(),
-    extensionPath: environment.STYLUS_EXTENSION_PATH ? path.resolve(environment.STYLUS_EXTENSION_PATH) : null,
+    extensionPath: environment.STYLUS_EXTENSION_PATH ? path.resolve(environment.STYLUS_EXTENSION_PATH) : cachedExtensionResolver(),
     port,
     profilePath: path.resolve(environment.VIOLET_VOID_PROFILE_DIR || path.join(root, '.violet-void-dev-profile'))
   }
@@ -76,12 +77,12 @@ function serveArtifact(artifactPath, port) {
 function printHelp() {
   console.log(`Usage: npm run dev:browser
 
-Required: STYLUS_EXTENSION_PATH=/absolute/path/to/unpacked/stylus
+Optional: STYLUS_EXTENSION_PATH=/absolute/path/to/unpacked/stylus
 Optional: VIOLET_VOID_PORT=4173 VIOLET_VOID_PROFILE_DIR=./.violet-void-dev-profile
 
 The launcher uses Playwright's bundled Chromium and only the isolated profile above.
 It serves the local UserStyle on 127.0.0.1, then opens its installer URL and chatgpt.com.
-Install/update the style and sign in manually. --dry-run validates paths without launching.`)
+Install/update the style and sign in manually. It uses .violet-void-stylus/extension after setup:stylus when no explicit path is set. --dry-run validates paths without launching.`)
 }
 
 async function main(cliArgs = process.argv.slice(2), environment = process.env) {
