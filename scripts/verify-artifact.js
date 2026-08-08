@@ -12,7 +12,7 @@ if (built !== canonical) {
 }
 
 const requiredMetadata = [
-  '@version        5.4.1',
+  '@version        5.4.2',
   '@updateURL      https://raw.githubusercontent.com/aaronedev/violet-void-theme/main/chatgpt-violet-void.user.css',
   '@downloadURL    https://raw.githubusercontent.com/aaronedev/violet-void-theme/main/chatgpt-violet-void.user.css'
 ]

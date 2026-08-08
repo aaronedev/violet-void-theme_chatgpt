@@ -2,7 +2,7 @@
 
 `src/chatgpt-violet-void.user.css` is the sole authored UserStyle. Run `npm run build` to copy it, with normalized LF newlines, to the installable root artifact `chatgpt-violet-void.user.css`. The artifact is deliberately byte-identical to its source; `npm run verify:artifact` checks that invariant and the update metadata.
 
-Use `npm run lint` for plain-CSS linting, `npm test` for the Playwright regression suite, and `npm run check` for the complete deterministic check. The browser fixture loads the canonical stylesheet itself and covers both ChatGPT code-wrapper selector families at desktop and mobile sizes. It verifies that the code header stays viewport-sticky while scrolling, that Copy is visible and clickable, and that header/control contrast remains readable. A legacy `overflow: hidden` control case proves the regression the clipping change prevents.
+Use `npm run lint` for plain-CSS linting, `npm test` for the Playwright regression suite, and `npm run check` for the complete deterministic check. The browser fixture loads the canonical stylesheet itself and covers legacy plus current authenticated ChatGPT normal-header and compact-overlay code blocks at desktop and mobile sizes. It verifies that Copy remains sticky, visible, readable, and clickable while scrolling. A legacy `overflow: hidden` control case proves the clipping regression the theme prevents.
 
 ## Manual live-site QA
 

@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT Violet Void Wide
 @namespace      github.com/aaronedev/violet-void-theme
-@version        5.4.1
+@version        5.4.2
 @license        MIT
 @author         aaronedev
 @homepageURL    https://github.com/aaronedev/violet-void-theme
@@ -1263,6 +1263,51 @@
     :where(.markdown, .prose) [class*="contain-inline-size"]:has(pre) [class*="border"],
     [data-message-author-role] [class*="contain-inline-size"]:has(pre) [class*="border"] {
         border-color: var(--void-border-soft) !important;
+    }
+
+    /* Current authenticated ChatGPT code-block DOM families. */
+    :where(.markdown, .prose) pre[class~="overflow-visible!"][class~="px-0!"] [class~="relative"][class~="h-full"][class~="w-full"][class~="overflow-clip"][class~="rounded-3xl"]:has(> [class~="select-none"][class~="sticky"][class~="z-2"][class~="top-(--sticky-padding-top)"] button[aria-label="Copy"]),
+    [data-message-author-role] pre[class~="overflow-visible!"][class~="px-0!"] [class~="relative"][class~="h-full"][class~="w-full"][class~="overflow-clip"][class~="rounded-3xl"]:has(> [class~="select-none"][class~="sticky"][class~="z-2"][class~="top-(--sticky-padding-top)"] button[aria-label="Copy"]),
+    :where(.markdown, .prose) pre[class~="overflow-visible!"][class~="px-0!"] [class~="h-full"][class~="w-full"][class~="overflow-clip"][class~="rounded-3xl"]:has(> [class~="pointer-events-none"][class~="absolute"][class~="end-1.5"][class~="top-1"][class~="z-2"][class~="md:end-2"][class~="md:top-1"] > button[aria-label="Copy"]),
+    [data-message-author-role] pre[class~="overflow-visible!"][class~="px-0!"] [class~="h-full"][class~="w-full"][class~="overflow-clip"][class~="rounded-3xl"]:has(> [class~="pointer-events-none"][class~="absolute"][class~="end-1.5"][class~="top-1"][class~="z-2"][class~="md:end-2"][class~="md:top-1"] > button[aria-label="Copy"]) {
+        max-inline-size: 100% !important;
+        overflow: clip !important;
+        position: relative !important;
+    }
+
+    :where(.markdown, .prose) pre[class~="overflow-visible!"][class~="px-0!"] [class~="relative"][class~="h-full"][class~="w-full"][class~="overflow-clip"][class~="rounded-3xl"] > [class~="select-none"][class~="sticky"][class~="z-2"][class~="top-(--sticky-padding-top)"]:has(button[aria-label="Copy"]),
+    [data-message-author-role] pre[class~="overflow-visible!"][class~="px-0!"] [class~="relative"][class~="h-full"][class~="w-full"][class~="overflow-clip"][class~="rounded-3xl"] > [class~="select-none"][class~="sticky"][class~="z-2"][class~="top-(--sticky-padding-top)"]:has(button[aria-label="Copy"]) {
+        background:
+            linear-gradient(180deg, var(--void-highlight-faint), transparent),
+            var(--void-code-header-bg) !important;
+        border-bottom: 1px solid var(--void-border-soft) !important;
+        color: var(--void-fg-soft) !important;
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 2 !important;
+    }
+
+    :where(.markdown, .prose) pre[class~="overflow-visible!"][class~="px-0!"] [class~="h-full"][class~="w-full"][class~="overflow-clip"][class~="rounded-3xl"] > [class~="pointer-events-none"][class~="absolute"][class~="end-1.5"][class~="top-1"][class~="z-2"][class~="md:end-2"][class~="md:top-1"]:has(> button[aria-label="Copy"]),
+    [data-message-author-role] pre[class~="overflow-visible!"][class~="px-0!"] [class~="h-full"][class~="w-full"][class~="overflow-clip"][class~="rounded-3xl"] > [class~="pointer-events-none"][class~="absolute"][class~="end-1.5"][class~="top-1"][class~="z-2"][class~="md:end-2"][class~="md:top-1"]:has(> button[aria-label="Copy"]) {
+        align-items: center !important;
+        display: flex !important;
+        inline-size: 36px !important;
+        block-size: 36px !important;
+        margin-inline-start: auto !important;
+        margin-bottom: -36px !important;
+        pointer-events: none !important;
+        position: sticky !important;
+        top: 0.25rem !important;
+        z-index: 3 !important;
+    }
+
+    :where(.markdown, .prose) pre[class~="overflow-visible!"][class~="px-0!"] [class~="h-full"][class~="w-full"][class~="overflow-clip"][class~="rounded-3xl"] button[aria-label="Copy"],
+    [data-message-author-role] pre[class~="overflow-visible!"][class~="px-0!"] [class~="h-full"][class~="w-full"][class~="overflow-clip"][class~="rounded-3xl"] button[aria-label="Copy"] {
+        background: var(--void-code-header-bg) !important;
+        color: var(--void-fg) !important;
+        pointer-events: auto !important;
+        position: relative !important;
+        z-index: 1 !important;
     }
 
     :where(.markdown, .prose) code:not(pre code) {
