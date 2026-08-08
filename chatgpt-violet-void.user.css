@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT Violet Void Wide
 @namespace      github.com/aaronedev/violet-void-theme
-@version        5.4.2
+@version        5.4.3
 @license        MIT
 @author         aaronedev
 @homepageURL    https://github.com/aaronedev/violet-void-theme
@@ -420,6 +420,43 @@
 
     :where(form:has([data-composer-surface="true"]) > div, form:has(#prompt-textarea) > div) {
         max-width: 100% !important;
+    }
+
+    /* Authenticated width shells: keep turns and retained composer sub-shells aligned. */
+    #thread [data-testid^="conversation-turn"] [class~="group/turn-messages"][class~="max-w-(--thread-content-max-width)"] {
+        --thread-content-max-width: var(--void-chat-width) !important;
+        inline-size: min(100%, var(--void-chat-width)) !important;
+        max-inline-size: var(--void-chat-width) !important;
+        margin-inline: auto !important;
+    }
+
+    #thread-bottom-container [class~="max-w-(--thread-content-max-width)"]:has(form [data-composer-surface="true"], form #prompt-textarea, form [contenteditable="true"]) {
+        --thread-content-max-width: var(--void-composer-width) !important;
+        inline-size: min(100%, var(--void-composer-width)) !important;
+        max-inline-size: var(--void-composer-width) !important;
+        margin-inline: auto !important;
+    }
+
+    #thread-bottom-container [class~="max-w-(--thread-content-max-width)"]:has(form [data-composer-surface="true"], form #prompt-textarea, form [contenteditable="true"]) > [class~="w-full"],
+    #thread-bottom-container [class~="max-w-(--thread-content-max-width)"]:has(form [data-composer-surface="true"], form #prompt-textarea, form [contenteditable="true"]) div:has(form [data-composer-surface="true"], form #prompt-textarea, form [contenteditable="true"]) {
+        inline-size: 100% !important;
+        max-inline-size: 100% !important;
+        margin-inline: auto !important;
+    }
+
+    #thread-bottom-container [class~="max-w-(--thread-content-max-width)"]:has(form [data-composer-surface="true"], form #prompt-textarea, form [contenteditable="true"]) div:has(form [data-composer-surface="true"], form #prompt-textarea, form [contenteditable="true"]):has(> :is([data-testid*="attachment" i], [data-testid*="preview" i], img, picture)) {
+        align-items: stretch !important;
+        flex-direction: column !important;
+        inline-size: 100% !important;
+    }
+
+    #thread [data-testid^="conversation-turn"] [class~="group/turn-messages"][class~="max-w-(--thread-content-max-width)"] [data-message-author-role="user"]:has(> :is(img, picture)) {
+        justify-content: flex-end !important;
+        max-inline-size: 100% !important;
+    }
+
+    #thread [data-testid^="conversation-turn"] [class~="group/turn-messages"][class~="max-w-(--thread-content-max-width)"] [data-message-author-role="user"] > :is(img, picture) {
+        max-inline-size: var(--void-user-bubble-width) !important;
     }
 
     @media (max-width: 820px) {
