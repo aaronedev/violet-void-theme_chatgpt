@@ -450,6 +450,10 @@
         inline-size: 100% !important;
     }
 
+    #thread-bottom-container [class~="max-w-(--thread-content-max-width)"]:has(form [data-composer-surface="true"], form #prompt-textarea, form [contenteditable="true"]) div:has(form [data-composer-surface="true"], form #prompt-textarea, form [contenteditable="true"]):has(> :is([data-testid*="attachment" i], [data-testid*="preview" i], img, picture)) > :is([data-testid*="attachment" i], [data-testid*="preview" i], img, picture) {
+        order: -1 !important;
+    }
+
     #thread [data-testid^="conversation-turn"] [class~="group/turn-messages"][class~="max-w-(--thread-content-max-width)"] [data-message-author-role="user"]:has(> :is(img, picture)) {
         justify-content: flex-end !important;
         max-inline-size: 100% !important;
