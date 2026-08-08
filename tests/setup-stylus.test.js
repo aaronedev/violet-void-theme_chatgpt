@@ -60,6 +60,8 @@ test('cache freshness requires matching MV3 manifest, metadata, and verified arc
     await writeCurrentCache(directory)
     assert.equal(resolveCachedExtension(directory), path.join(directory, 'extension'))
     assert.equal(cachedStatus(release, release.assets[0], directory).state, 'current')
+    const sameTagReplacement = { ...release.assets[0], digest: `sha256:${'0'.repeat(64)}` }
+    assert.equal(cachedStatus(release, sameTagReplacement, directory).state, 'outdated')
     await fs.writeFile(path.join(directory, 'release.json'), '{bad json')
     assert.notEqual(cachedStatus(release, release.assets[0], directory).state, 'current')
     await writeCurrentCache(directory)
