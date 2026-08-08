@@ -19,9 +19,9 @@ function userStyleBody() {
   return stylesheet.slice(openingBrace + 1, closingBrace)
 }
 
-function fixture({ disableImageRules = false, screenshotControl = false } = {}) {
-  const imageControl = disableImageRules ? 'style="justify-content: flex-start !important"' : ''
-  const sentImageControl = disableImageRules ? 'style="max-inline-size: none !important"' : ''
+function fixture({ disableImageAlignment = false, disableImageMaxWidth = false, screenshotControl = false } = {}) {
+  const imageControl = disableImageAlignment ? 'style="justify-content: flex-start !important"' : ''
+  const sentImageControl = disableImageMaxWidth ? 'style="max-inline-size: none !important"' : ''
   const outerControl = screenshotControl
     ? 'style="--thread-content-max-width: 40rem !important; inline-size: 40rem !important; margin-inline: 0 !important; max-inline-size: 40rem !important"'
     : ''
@@ -32,7 +32,7 @@ function fixture({ disableImageRules = false, screenshotControl = false } = {}) 
   const nestedControl = screenshotControl
     ? 'style="flex: 0 0 48rem !important; inline-size: 48rem !important; margin-inline: 0 !important; max-inline-size: 48rem !important"'
     : ''
-  const previewControl = screenshotControl ? 'style="order: 0 !important"' : ''
+  const previewControl = screenshotControl ? 'style="margin-block-start: 1rem !important; order: 0 !important"' : ''
 
   return `<!doctype html>
     <html class="dark"><head><meta name="viewport" content="width=device-width, initial-scale=1"><style>
@@ -167,13 +167,22 @@ test('authenticated fullscreen mobile shares the available main-column edges', a
   expect(layout.composer.width).toBeLessThan(retainedComposerWidth)
 })
 
-test('disabling sent-image rules breaks the direct image right-edge alignment', async ({ page }) => {
+test('disabling sent-image alignment breaks the direct image right edge', async ({ page }) => {
   await page.setViewportSize({ width: 1920, height: 1080 })
-  await page.setContent(fixture({ disableImageRules: true }))
+  await page.setContent(fixture({ disableImageAlignment: true }))
   const layout = await geometry(page)
 
   expect(layout.userJustifyContent).toBe('flex-start')
   expect(layout.sentImage.right).toBeLessThan(layout.turn.right - 8)
+})
+
+test('disabling sent-image max width exceeds the computed bubble limit', async ({ page }) => {
+  await page.setViewportSize({ width: 1920, height: 1080 })
+  await page.setContent(fixture({ disableImageMaxWidth: true }))
+  const layout = await geometry(page)
+
+  expect(layout.userJustifyContent).toBe('flex-end')
+  expect(layout.sentImage.width).toBeGreaterThan(layout.userBubbleWidth + 1)
 })
 
 test('screenshot control retains narrow shells and a lower-right overlapping preview', async ({ page }) => {
@@ -188,6 +197,7 @@ test('screenshot control retains narrow shells and a lower-right overlapping pre
   expect(layout.rowDirection).toBe('row')
   expect(layout.attachment.left).toBeGreaterThan(layout.surface.left)
   expect(layout.attachment.left).toBeGreaterThanOrEqual(layout.surface.right - 1)
+  expect(layout.attachment.top).toBeGreaterThan(layout.surface.top)
   expect(layout.attachment.top).toBeLessThan(layout.surface.bottom)
   expect(layout.attachment.bottom).toBeGreaterThan(layout.surface.top)
 })
