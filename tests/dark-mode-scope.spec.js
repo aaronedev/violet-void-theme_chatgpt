@@ -66,6 +66,8 @@ test('light documents retain native colors and content width', async ({ page }) 
   await expect(page.getByTestId('main')).toHaveCSS('background-color', 'rgb(240, 241, 242)')
   await expect(page.getByTestId('main')).toHaveCSS('color', 'rgb(30, 31, 32)')
   await expectWidthBehavior(page.getByTestId('layout'), 672)
+
+  await expect(page.getByTestId('layout')).toHaveJSProperty('offsetLeft', 0)
 })
 
 test('dark documents receive the Violet Void palette and wide layout', async ({ page }) => {
@@ -77,4 +79,12 @@ test('dark documents receive the Violet Void palette and wide layout', async ({ 
   await expect(page.getByTestId('main')).toHaveCSS('background-color', 'rgb(15, 15, 15)')
   await expect(page.getByTestId('main')).toHaveCSS('color', 'rgb(240, 240, 245)')
   await expectWidthBehavior(page.getByTestId('layout'), 1680)
+
+  const centers = await page.locator('[data-testid="layout"], [data-testid="main"]').evaluateAll((elements) =>
+    elements.map((element) => {
+      const rect = element.getBoundingClientRect()
+      return rect.left + rect.width / 2
+    })
+  )
+  expect(Math.abs(centers[0] - centers[1])).toBeLessThanOrEqual(1)
 })

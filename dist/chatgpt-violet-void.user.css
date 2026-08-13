@@ -385,6 +385,7 @@
     :where([class*="chatContainer"], [class*="thread-content-max-width"], [class*="thread-content-container"]) {
         width: min(100%, var(--void-chat-width)) !important;
         max-width: var(--void-chat-width) !important;
+        margin-inline: auto !important;
     }
 
     :where(main [data-testid^="conversation-turn"] > div, main article[data-testid^="conversation-turn"] > div) {
