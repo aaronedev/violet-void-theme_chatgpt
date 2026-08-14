@@ -1,9 +1,9 @@
 # ChatGPT Violet Void
 
-`src/chatgpt-violet-void.user.css` is the sole authored UserStyle. It gives ChatGPT a dark-only
-violet-gray base with Rubik UI text, JetBrains Mono code, a teal block caret, rounded focus frames,
-and sticky Copy controls while leaving ChatGPT's native thread and composer widths authoritative.
-It intentionally adds no custom syntax highlighting.
+`src/chatgpt-violet-void.user.css` is the sole authored UserStyle. It gives ChatGPT an exact
+near-black Violet Void palette with Rubik UI text, JetBrains Mono code, a pink block caret, rounded
+focus frames, and sticky Copy controls while leaving ChatGPT's native thread and composer widths
+authoritative. It intentionally adds no custom syntax highlighting.
 
 Run `npm run build` to copy the source, with normalized LF newlines, to the tracked installable
 artifact `dist/chatgpt-violet-void.user.css`. The artifact is deliberately byte-identical to its

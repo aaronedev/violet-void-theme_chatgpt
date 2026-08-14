@@ -44,6 +44,7 @@ function fixture(documentClass = '') {
       <body>
         <main data-testid="main">
           <div class="thread-content-max-width" data-testid="layout">Native content</div>
+          <div class="bg-token-main-surface-secondary" data-testid="secondary-surface">Surface</div>
           <code data-testid="code">const violetVoid = true</code>
           <div data-testid="composer" contenteditable="true">Compose</div>
         </main>
@@ -82,10 +83,11 @@ test('dark documents receive the Violet Void palette while retaining native layo
   await page.setViewportSize({ width: 1920, height: 1080 })
   await page.setContent(fixture('dark'))
 
-  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(23, 23, 28)')
-  await expect(page.locator('body')).toHaveCSS('color', 'rgb(233, 228, 244)')
-  await expect(page.getByTestId('main')).toHaveCSS('background-color', 'rgb(23, 23, 28)')
-  await expect(page.getByTestId('main')).toHaveCSS('color', 'rgb(233, 228, 244)')
+  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(15, 15, 15)')
+  await expect(page.locator('body')).toHaveCSS('color', 'rgb(240, 240, 245)')
+  await expect(page.getByTestId('main')).toHaveCSS('background-color', 'rgb(15, 15, 15)')
+  await expect(page.getByTestId('main')).toHaveCSS('color', 'rgb(240, 240, 245)')
+  await expect(page.getByTestId('secondary-surface')).toHaveCSS('background-color', 'rgb(24, 24, 24)')
   await expectWidthBehavior(page.getByTestId('layout'), 672)
   await expect(page.getByTestId('layout')).toHaveJSProperty('offsetLeft', 0)
 
@@ -93,9 +95,9 @@ test('dark documents receive the Violet Void palette while retaining native layo
   expect(uiFont).toContain('Rubik')
   const codeFont = await page.getByTestId('code').evaluate((element) => getComputedStyle(element).fontFamily)
   expect(codeFont).toContain('JetBrains Mono')
-  await expect(page.getByTestId('composer')).toHaveCSS('caret-color', 'rgb(8, 189, 186)')
+  await expect(page.getByTestId('composer')).toHaveCSS('caret-color', 'rgb(255, 26, 103)')
   await expect(page.getByTestId('firefox-block-caret')).toHaveCSS('display', 'block')
-  await expect(page.getByTestId('firefox-block-caret')).toHaveCSS('background-color', 'rgb(8, 189, 186)')
+  await expect(page.getByTestId('firefox-block-caret')).toHaveCSS('background-color', 'rgb(255, 26, 103)')
 
   const caret = await page.getByTestId('firefox-block-caret').evaluate((element) => {
     const style = getComputedStyle(element)

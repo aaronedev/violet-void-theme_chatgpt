@@ -8,7 +8,7 @@
 @supportURL     https://github.com/aaronedev/violet-void-theme_chatgpt/issues
 @updateURL      https://raw.githubusercontent.com/aaronedev/violet-void-theme_chatgpt/main/dist/chatgpt-violet-void.user.css
 @downloadURL    https://raw.githubusercontent.com/aaronedev/violet-void-theme_chatgpt/main/dist/chatgpt-violet-void.user.css
-@description    Violet-gray ChatGPT theme with native widths, a teal block caret, rounded focus, sticky Copy controls, and no custom syntax highlighting.
+@description    Exact near-black Violet Void palette with native widths, a pink block caret, rounded focus, sticky Copy controls, and no custom syntax highlighting.
 ==/UserStyle== */
 
 @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Rubik:wght@400;600&display=swap");
@@ -22,26 +22,26 @@
     :scope {
         color-scheme: dark;
 
-        --void-bg: #17171c;
-        --void-bg-2: #121215;
-        --void-bg-glass: rgba(23, 23, 28, 0.94);
+        --void-bg: #0f0f0f;
+        --void-bg-2: #0e0e0e;
+        --void-bg-glass: rgba(15, 15, 15, 0.94);
 
-        --void-surface: #24232c;
-        --void-surface-2: #2e2b38;
-        --void-surface-3: #2e2b38;
+        --void-surface: #181818;
+        --void-surface-2: #1b1b1b;
+        --void-surface-3: #212121;
         --void-surface-hover: var(--void-highlight-soft);
 
-        --void-code-bg: #282c34;
-        --void-code-header-bg: #24232c;
+        --void-code-bg: #181818;
+        --void-code-header-bg: #1b1b1b;
 
-        --void-border-soft: rgba(233, 228, 244, 0.10);
-        --void-border: rgba(233, 228, 244, 0.15);
-        --void-border-strong: rgba(233, 228, 244, 0.20);
+        --void-border-soft: #252525;
+        --void-border: #303030;
+        --void-border-strong: #4c4c4c;
 
-        --void-fg: #e9e4f4;
-        --void-fg-soft: #a39faa;
-        --void-muted: #8b8892;
-        --void-muted-dim: #74727a;
+        --void-fg: #f0f0f5;
+        --void-fg-soft: #b8b8c0;
+        --void-muted: #4c4c4c;
+        --void-muted-dim: #313131;
 
         --void-link: #29adff;
         --void-link-rgb: 41, 173, 255;
@@ -49,13 +49,13 @@
         --void-link-hover-rgb: 0, 255, 249;
         --void-active: #bb7cff;
         --void-active-rgb: 187, 124, 255;
-        --void-cursor: #08bdba;
+        --void-cursor: #ff1a67;
         --void-caret-width: 0.66ch;
         --void-caret-alpha: 0.92;
 
-        /* Barely visible glow source: original teal cursor, a tiny bit brighter than color6. */
-        --void-glow: #08bdba;
-        --void-glow-rgb: 8, 189, 186;
+        /* Barely visible glow source: canonical terminal color6 teal. */
+        --void-glow: #00a8a4;
+        --void-glow-rgb: 0, 168, 164;
         --void-glow-ghost: rgba(var(--void-glow-rgb), 0.012);
         --void-glow-ambient: rgba(var(--void-glow-rgb), 0.020);
         --void-glow-soft: rgba(var(--void-glow-rgb), 0.035);
@@ -67,21 +67,21 @@
         --void-sidebar-glow: inset -1px 0 0 var(--void-glow-border), 8px 0 28px var(--void-glow-ambient);
         --void-header-glow: inset 0 -1px 0 var(--void-glow-line), 0 8px 24px var(--void-glow-ghost);
 
-        /* #00a8a4 mixed down into #0f0f0f for dark, non-neon UI fills */
+        /* Neutral near-black interaction fills with teal retained for accents and focus. */
         --void-accent: #00a8a4;
         --void-accent-rgb: 0, 168, 164;
-        --void-highlight-mix-soft: #0d2121;
-        --void-highlight-mix: #0c2b2a;
-        --void-highlight-mix-strong: #0a3d3c;
+        --void-highlight-mix-soft: #1b1b1b;
+        --void-highlight-mix: #191919;
+        --void-highlight-mix-strong: #212121;
         --void-highlight-soft: var(--void-highlight-mix-soft);
         --void-highlight: var(--void-highlight-mix);
         --void-highlight-strong: var(--void-highlight-mix-strong);
         --void-highlight-faint: rgba(var(--void-accent-rgb), 0.045);
         --void-highlight-border: rgba(var(--void-accent-rgb), 0.24);
         --void-highlight-border-strong: rgba(var(--void-accent-rgb), 0.40);
-        --void-selection-bg: var(--void-highlight-mix);
+        --void-selection-bg: #191919;
         --void-selection-fg: #00fff9;
-        --void-hover-bg: var(--void-highlight-mix-soft);
+        --void-hover-bg: #1b1b1b;
 
         --void-shadow-soft: 0 14px 34px rgba(0, 0, 0, 0.34), 0 0 22px var(--void-glow-ambient);
         --void-shadow-menu: 0 18px 48px rgba(0, 0, 0, 0.45), 0 0 28px var(--void-glow-soft);
@@ -101,7 +101,7 @@
         --void-positive-border: rgba(66, 255, 151, 0.22);
         --void-positive-border-strong: rgba(66, 255, 151, 0.34);
 
-        --void-negative: #f93a37;
+        --void-negative: #ff004b;
         --void-negative-text: #ffd7df;
         --void-negative-bg: rgba(255, 0, 75, 0.10);
         --void-negative-bg-hover: rgba(255, 0, 75, 0.16);
@@ -1516,29 +1516,30 @@
 
     * {
         scrollbar-width: thin !important;
-        scrollbar-color: rgba(192, 255, 209, 0.50) transparent !important;
+        scrollbar-color: var(--void-border) var(--void-bg) !important;
     }
 
     *::-webkit-scrollbar {
-        width: 0.5em !important;
-        height: 0.5em !important;
+        width: 10px !important;
+        height: 10px !important;
     }
 
     *::-webkit-scrollbar-track {
-        background: transparent !important;
+        background: var(--void-bg) !important;
     }
 
     *::-webkit-scrollbar-thumb {
-        background: rgba(192, 255, 209, 0.50) !important;
+        background: var(--void-border) !important;
+        border: 2px solid var(--void-bg) !important;
         border-radius: 999px !important;
     }
 
     *::-webkit-scrollbar-thumb:hover {
-        background: rgba(192, 255, 209, 0.65) !important;
+        background: rgba(var(--void-accent-rgb), 0.32) !important;
     }
 
     *::-webkit-scrollbar-thumb:active {
-        background: rgba(100, 100, 100, 0.61) !important;
+        background: rgba(var(--void-accent-rgb), 0.50) !important;
     }
     }
 }
