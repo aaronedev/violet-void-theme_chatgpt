@@ -1,5 +1,5 @@
 /* ==UserStyle==
-@name           ChatGPT Violet Void Wide
+@name           ChatGPT Violet Void
 @namespace      github.com/aaronedev/violet-void-theme
 @version        5.4.4
 @license        MIT
@@ -8,8 +8,10 @@
 @supportURL     https://github.com/aaronedev/violet-void-theme_chatgpt/issues
 @updateURL      https://raw.githubusercontent.com/aaronedev/violet-void-theme_chatgpt/main/dist/chatgpt-violet-void.user.css
 @downloadURL    https://raw.githubusercontent.com/aaronedev/violet-void-theme_chatgpt/main/dist/chatgpt-violet-void.user.css
-@description    Wide restrained violet void theme for ChatGPT. Exact near-black void palette, dark teal-mixed highlights, restored teal block caret, micro teal-green glow, rounded focus frames, wide threads, no custom syntax highlighting.
+@description    Violet-gray ChatGPT theme with native widths, a teal block caret, rounded focus, sticky Copy controls, and no custom syntax highlighting.
 ==/UserStyle== */
+
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Rubik:wght@400;600&display=swap");
 
 @-moz-document domain("chatgpt.com"), domain("chat.openai.com") {
     @scope (html.dark) {
@@ -20,27 +22,26 @@
     :scope {
         color-scheme: dark;
 
-        /* Exact void base from the supplied terminal / NVIM palette */
-        --void-bg: #0f0f0f;
-        --void-bg-2: #0e0e0e;
-        --void-bg-glass: rgba(15, 15, 15, 0.94);
+        --void-bg: #17171c;
+        --void-bg-2: #121215;
+        --void-bg-glass: rgba(23, 23, 28, 0.94);
 
-        --void-surface: #181818;
-        --void-surface-2: #1b1b1b;
-        --void-surface-3: #212121;
+        --void-surface: #24232c;
+        --void-surface-2: #2e2b38;
+        --void-surface-3: #2e2b38;
         --void-surface-hover: var(--void-highlight-soft);
 
-        --void-code-bg: #181818;
-        --void-code-header-bg: #1b1b1b;
+        --void-code-bg: #282c34;
+        --void-code-header-bg: #24232c;
 
-        --void-border-soft: #252525;
-        --void-border: #303030;
-        --void-border-strong: #4c4c4c;
+        --void-border-soft: rgba(233, 228, 244, 0.10);
+        --void-border: rgba(233, 228, 244, 0.15);
+        --void-border-strong: rgba(233, 228, 244, 0.20);
 
-        --void-fg: #f0f0f5;
-        --void-fg-soft: #b8b8c0;
-        --void-muted: #4c4c4c;
-        --void-muted-dim: #313131;
+        --void-fg: #e9e4f4;
+        --void-fg-soft: #a39faa;
+        --void-muted: #8b8892;
+        --void-muted-dim: #74727a;
 
         --void-link: #29adff;
         --void-link-rgb: 41, 173, 255;
@@ -100,7 +101,7 @@
         --void-positive-border: rgba(66, 255, 151, 0.22);
         --void-positive-border-strong: rgba(66, 255, 151, 0.34);
 
-        --void-negative: #ff004b;
+        --void-negative: #f93a37;
         --void-negative-text: #ffd7df;
         --void-negative-bg: rgba(255, 0, 75, 0.10);
         --void-negative-bg-hover: rgba(255, 0, 75, 0.16);
@@ -116,9 +117,6 @@
         --void-radius-sm: 0.45rem;
         --void-radius: 0.75rem;
         --void-radius-lg: 1rem;
-        --void-chat-width: 1680px;
-        --void-composer-width: 1680px;
-        --void-user-bubble-width: min(86vw, 1120px);
 
         /* Legacy / Tailwind-ish tokens still used across ChatGPT builds */
         --black: var(--void-bg) !important;
@@ -173,8 +171,6 @@
         --border-heavy: var(--void-border) !important;
         --border-xheavy: var(--void-highlight-border-strong) !important;
 
-        --thread-content-max-width: var(--void-chat-width) !important;
-        --thread-content-container-width: var(--void-chat-width) !important;
     }
 
     /* ------------------------------------------------------------------ */
@@ -185,6 +181,9 @@
         background: var(--void-bg) !important;
         color: var(--void-fg) !important;
         font-family:
+            "Rubik",
+            "Noto Color Emoji",
+            "FiraCode Nerd Font",
             "Geist",
             "Inter",
             system-ui,
@@ -205,6 +204,7 @@
     :where(code, pre, kbd, samp) {
         font-family:
             "JetBrains Mono",
+            "FiraCode Nerd Font",
             "Geist Mono",
             "SFMono-Regular",
             Consolas,
@@ -375,105 +375,6 @@
             animation-iteration-count: 1 !important;
             scroll-behavior: auto !important;
             transition-duration: 0.001ms !important;
-        }
-    }
-
-    /* ------------------------------------------------------------------ */
-    /* Wide layout                                                         */
-    /* ------------------------------------------------------------------ */
-
-    :where([class*="chatContainer"], [class*="thread-content-max-width"], [class*="thread-content-container"]) {
-        width: min(100%, var(--void-chat-width)) !important;
-        max-width: var(--void-chat-width) !important;
-        margin-inline: auto !important;
-    }
-
-    :where(main [data-testid^="conversation-turn"] > div, main article[data-testid^="conversation-turn"] > div) {
-        width: min(100%, var(--void-chat-width)) !important;
-        max-width: var(--void-chat-width) !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-    }
-
-    [data-message-author-role] {
-        max-width: 100% !important;
-        color: var(--void-fg) !important;
-    }
-
-    :where([data-message-author-role="assistant"] .markdown, [data-message-author-role="assistant"] .prose) {
-        max-width: 100% !important;
-    }
-
-    :where(
-        [data-message-author-role="user"] .bg-token-message-surface,
-        [data-message-author-role="user"] [class*="bg-token-message-surface"],
-        .user-message-bubble-color
-    ) {
-        max-width: var(--void-user-bubble-width) !important;
-    }
-
-    :where(form:has([data-composer-surface="true"]), form:has(#prompt-textarea), form:has([contenteditable="true"])) {
-        width: min(100%, var(--void-composer-width)) !important;
-        max-width: var(--void-composer-width) !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-    }
-
-    :where(form:has([data-composer-surface="true"]) > div, form:has(#prompt-textarea) > div) {
-        max-width: 100% !important;
-    }
-
-    /* Authenticated width shells: keep turns and retained composer sub-shells aligned. */
-    #thread [data-testid^="conversation-turn"] [class~="group/turn-messages"][class~="max-w-(--thread-content-max-width)"] {
-        --thread-content-max-width: var(--void-chat-width) !important;
-        inline-size: min(100%, var(--void-chat-width)) !important;
-        max-inline-size: var(--void-chat-width) !important;
-        margin-inline: auto !important;
-    }
-
-    #thread-bottom-container [class~="max-w-(--thread-content-max-width)"]:has(form [data-composer-surface="true"], form #prompt-textarea, form [contenteditable="true"]) {
-        --thread-content-max-width: var(--void-composer-width) !important;
-        inline-size: min(100%, var(--void-composer-width)) !important;
-        max-inline-size: var(--void-composer-width) !important;
-        margin-inline: auto !important;
-    }
-
-    #thread-bottom-container [class~="max-w-(--thread-content-max-width)"]:has(form [data-composer-surface="true"], form #prompt-textarea, form [contenteditable="true"]) > [class~="w-full"],
-    #thread-bottom-container [class~="max-w-(--thread-content-max-width)"]:has(form [data-composer-surface="true"], form #prompt-textarea, form [contenteditable="true"]) div:has(form [data-composer-surface="true"], form #prompt-textarea, form [contenteditable="true"]) {
-        inline-size: 100% !important;
-        max-inline-size: 100% !important;
-        margin-inline: auto !important;
-    }
-
-    #thread-bottom-container [class~="max-w-(--thread-content-max-width)"]:has(form [data-composer-surface="true"], form #prompt-textarea, form [contenteditable="true"]) div:has(form [data-composer-surface="true"], form #prompt-textarea, form [contenteditable="true"]):has(> :is([data-testid*="attachment" i], [data-testid*="preview" i], img, picture)) {
-        align-items: stretch !important;
-        flex-direction: column !important;
-        inline-size: 100% !important;
-    }
-
-    #thread-bottom-container [class~="max-w-(--thread-content-max-width)"]:has(form [data-composer-surface="true"], form #prompt-textarea, form [contenteditable="true"]) div:has(form [data-composer-surface="true"], form #prompt-textarea, form [contenteditable="true"]):has(> :is([data-testid*="attachment" i], [data-testid*="preview" i], img, picture)) > :is([data-testid*="attachment" i], [data-testid*="preview" i], img, picture) {
-        order: -1 !important;
-    }
-
-    #thread [data-testid^="conversation-turn"] [class~="group/turn-messages"][class~="max-w-(--thread-content-max-width)"] [data-message-author-role="user"]:has(> :is(img, picture)) {
-        justify-content: flex-end !important;
-        max-inline-size: 100% !important;
-    }
-
-    #thread [data-testid^="conversation-turn"] [class~="group/turn-messages"][class~="max-w-(--thread-content-max-width)"] [data-message-author-role="user"] > :is(img, picture) {
-        max-inline-size: var(--void-user-bubble-width) !important;
-    }
-
-    @media (max-width: 820px) {
-        :scope {
-            --void-chat-width: 100vw;
-            --void-composer-width: 100vw;
-            --void-user-bubble-width: min(92vw, 100%);
-        }
-
-        :where(main [data-testid^="conversation-turn"] > div, main article[data-testid^="conversation-turn"] > div) {
-            padding-left: 0.75rem !important;
-            padding-right: 0.75rem !important;
         }
     }
 
@@ -651,6 +552,10 @@
         background: transparent !important;
     }
 
+    [data-message-author-role] {
+        color: var(--void-fg) !important;
+    }
+
     :where(
         [data-message-author-role="user"] .bg-token-message-surface,
         [data-message-author-role="user"] [class*="bg-token-message-surface"],
@@ -680,6 +585,27 @@
         background: var(--void-highlight-soft) !important;
         color: var(--void-fg) !important;
         border-color: var(--void-highlight-border) !important;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* Attachment / image guards                                          */
+    /* ------------------------------------------------------------------ */
+
+    #thread-bottom-container div:has(form [data-composer-surface="true"], form #prompt-textarea, form [contenteditable="true"]):has(> :is([data-testid*="attachment" i], [data-testid*="preview" i], img, picture)) {
+        align-items: stretch !important;
+        flex-direction: column !important;
+    }
+
+    #thread-bottom-container div:has(form [data-composer-surface="true"], form #prompt-textarea, form [contenteditable="true"]):has(> :is([data-testid*="attachment" i], [data-testid*="preview" i], img, picture)) > :is([data-testid*="attachment" i], [data-testid*="preview" i], img, picture) {
+        order: -1 !important;
+    }
+
+    #thread [data-testid^="conversation-turn"] [data-message-author-role="user"]:has(> :is(img, picture)) {
+        justify-content: flex-end !important;
+    }
+
+    #thread [data-testid^="conversation-turn"] [data-message-author-role="user"] > :is(img, picture) {
+        max-inline-size: 100% !important;
     }
 
     /* ------------------------------------------------------------------ */
@@ -1590,26 +1516,29 @@
 
     * {
         scrollbar-width: thin !important;
-        scrollbar-color: var(--void-border) var(--void-bg) !important;
+        scrollbar-color: rgba(192, 255, 209, 0.50) transparent !important;
     }
 
     *::-webkit-scrollbar {
-        width: 10px !important;
-        height: 10px !important;
+        width: 0.5em !important;
+        height: 0.5em !important;
     }
 
     *::-webkit-scrollbar-track {
-        background: var(--void-bg) !important;
+        background: transparent !important;
     }
 
     *::-webkit-scrollbar-thumb {
-        background: var(--void-border) !important;
-        border: 2px solid var(--void-bg) !important;
+        background: rgba(192, 255, 209, 0.50) !important;
         border-radius: 999px !important;
     }
 
     *::-webkit-scrollbar-thumb:hover {
-        background: rgba(var(--void-accent-rgb), 0.32) !important;
+        background: rgba(192, 255, 209, 0.65) !important;
+    }
+
+    *::-webkit-scrollbar-thumb:active {
+        background: rgba(100, 100, 100, 0.61) !important;
     }
     }
 }

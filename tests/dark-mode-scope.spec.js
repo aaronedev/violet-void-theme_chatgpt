@@ -36,10 +36,18 @@ function fixture(documentClass = '') {
             inline-size: 42rem;
             max-inline-size: 42rem;
           }
+          #vv-firefox-block-caret {
+            display: none;
+          }
         </style>
       </head>
       <body>
-        <main data-testid="main"><div class="thread-content-max-width" data-testid="layout">Native content</div></main>
+        <main data-testid="main">
+          <div class="thread-content-max-width" data-testid="layout">Native content</div>
+          <code data-testid="code">const violetVoid = true</code>
+          <div data-testid="composer" contenteditable="true">Compose</div>
+        </main>
+        <div id="vv-firefox-block-caret" data-visible="true" data-testid="firefox-block-caret"></div>
       </body>
     </html>`
 }
@@ -70,21 +78,29 @@ test('light documents retain native colors and content width', async ({ page }) 
   await expect(page.getByTestId('layout')).toHaveJSProperty('offsetLeft', 0)
 })
 
-test('dark documents receive the Violet Void palette and wide layout', async ({ page }) => {
+test('dark documents receive the Violet Void palette while retaining native layout', async ({ page }) => {
   await page.setViewportSize({ width: 1920, height: 1080 })
   await page.setContent(fixture('dark'))
 
-  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(15, 15, 15)')
-  await expect(page.locator('body')).toHaveCSS('color', 'rgb(240, 240, 245)')
-  await expect(page.getByTestId('main')).toHaveCSS('background-color', 'rgb(15, 15, 15)')
-  await expect(page.getByTestId('main')).toHaveCSS('color', 'rgb(240, 240, 245)')
-  await expectWidthBehavior(page.getByTestId('layout'), 1680)
+  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(23, 23, 28)')
+  await expect(page.locator('body')).toHaveCSS('color', 'rgb(233, 228, 244)')
+  await expect(page.getByTestId('main')).toHaveCSS('background-color', 'rgb(23, 23, 28)')
+  await expect(page.getByTestId('main')).toHaveCSS('color', 'rgb(233, 228, 244)')
+  await expectWidthBehavior(page.getByTestId('layout'), 672)
+  await expect(page.getByTestId('layout')).toHaveJSProperty('offsetLeft', 0)
 
-  const centers = await page.locator('[data-testid="layout"], [data-testid="main"]').evaluateAll((elements) =>
-    elements.map((element) => {
-      const rect = element.getBoundingClientRect()
-      return rect.left + rect.width / 2
-    })
-  )
-  expect(Math.abs(centers[0] - centers[1])).toBeLessThanOrEqual(1)
+  const uiFont = await page.locator('body').evaluate((element) => getComputedStyle(element).fontFamily)
+  expect(uiFont).toContain('Rubik')
+  const codeFont = await page.getByTestId('code').evaluate((element) => getComputedStyle(element).fontFamily)
+  expect(codeFont).toContain('JetBrains Mono')
+  await expect(page.getByTestId('composer')).toHaveCSS('caret-color', 'rgb(8, 189, 186)')
+  await expect(page.getByTestId('firefox-block-caret')).toHaveCSS('display', 'block')
+  await expect(page.getByTestId('firefox-block-caret')).toHaveCSS('background-color', 'rgb(8, 189, 186)')
+
+  const caret = await page.getByTestId('firefox-block-caret').evaluate((element) => {
+    const style = getComputedStyle(element)
+    return { minWidth: Number.parseFloat(style.minWidth), width: element.getBoundingClientRect().width }
+  })
+  expect(caret.minWidth).toBeGreaterThanOrEqual(8)
+  expect(caret.width).toBeGreaterThanOrEqual(8)
 })
