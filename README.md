@@ -35,7 +35,8 @@ The first `npm run dev:browser` run opens the isolated persistent profile. This 
 deliberately a plain child process, not Playwright-controlled: first close any stuck old QA window
 so its profile lock is released, then manually complete any Cloudflare “Verify you are human”
 challenge, ChatGPT login, and UserStyle confirmation. CAPTCHA handling and credentials are never
-automated. Later runs reuse that profile’s login cookies/session and locally installed dev UserStyle.
+automated. Later runs reuse that profile’s login cookies/session and locally installed dev
+UserStyle.
 Full live QA means opening a representative authenticated long code response, then scrolling and
 interacting with its Copy control. Fixture tests remain the Playwright CI gate. The launcher uses
 Playwright's bundled Chromium binary, but not Playwright browser automation; it serves the built

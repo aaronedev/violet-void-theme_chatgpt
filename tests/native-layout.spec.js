@@ -19,12 +19,15 @@ function userStyleBody() {
   return stylesheet.slice(openingBrace + 1, closingBrace)
 }
 
-function fixture({ disableAttachmentGuard = false, disableImageAlignment = false } = {}) {
+function fixture({ disableAttachmentGuard = false, disableImageAlignment = false, disableImageCap = false } = {}) {
   const attachmentControl = disableAttachmentGuard
     ? 'style="flex-direction: row !important"'
     : ''
   const imageControl = disableImageAlignment
     ? 'style="justify-content: flex-start !important"'
+    : ''
+  const imageCapControl = disableImageCap
+    ? 'style="max-inline-size: none !important"'
     : ''
   const imageSize = disableImageAlignment ? '16rem' : '100rem'
 
@@ -42,7 +45,7 @@ function fixture({ disableAttachmentGuard = false, disableImageAlignment = false
       .turn-shell { display: flex; flex-direction: column; max-inline-size: 48rem; }
       .composer-wrapper { background: #0f0b1e; max-inline-size: 40rem; padding: 0.75rem; }
       [data-message-author-role="user"] { display: flex; inline-size: 100%; }
-      #sent-image { block-size: 10rem; inline-size: ${imageSize}; object-fit: cover; }
+      #sent-image { block-size: 10rem; flex-shrink: 0; inline-size: ${imageSize}; object-fit: cover; }
       #thread-bottom-container { margin-block-start: 3rem; }
       #attachment-row { align-items: flex-start; display: flex; flex-direction: row; gap: 0.75rem; }
       #attachment-preview { background: #ad76d4; block-size: 5rem; flex: 0 0 7rem; inline-size: 7rem; }
@@ -57,7 +60,7 @@ function fixture({ disableAttachmentGuard = false, disableImageAlignment = false
       <div id="app"><aside id="sidebar"></aside><main id="main">
         <section id="thread">
           <article class="turn" data-testid="conversation-turn-1"><div class="turn-shell group/turn-messages max-w-(--thread-content-max-width)" data-testid="turn-shell">
-            <div data-message-author-role="user" data-testid="user-message" ${imageControl}><img id="sent-image" data-testid="sent-image" alt="Sent attachment" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="></div>
+            <div data-message-author-role="user" data-testid="user-message" ${imageControl}><img id="sent-image" data-testid="sent-image" alt="Sent attachment" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" ${imageCapControl}></div>
           </div></article>
         </section>
         <section id="thread-bottom-container"><div class="composer-wrapper max-w-(--thread-content-max-width)" data-testid="composer-wrapper">
@@ -148,4 +151,14 @@ test('explicitly disabling direct-image alignment removes its end alignment', as
 
   expect(layout.userJustifyContent).toBe('flex-start')
   expect(layout.sentImage.right).toBeLessThan(layout.turn.right - 8)
+})
+
+test('explicitly disabling only the direct-image cap exceeds the native turn width', async ({ page }) => {
+  await page.setViewportSize({ width: 1920, height: 1080 })
+  await page.setContent(fixture({ disableImageCap: true }))
+  const layout = await geometry(page)
+
+  expect(layout.userJustifyContent).toBe('flex-end')
+  expect(layout.sentImage.width).toBeGreaterThan(layout.turn.width + 1)
+  expect(layout.sentImage.left).toBeLessThan(layout.turn.left - 1)
 })
