@@ -95,9 +95,9 @@ test('dark documents receive the Violet Void palette while retaining native layo
   expect(uiFont).toContain('Rubik')
   const codeFont = await page.getByTestId('code').evaluate((element) => getComputedStyle(element).fontFamily)
   expect(codeFont).toContain('JetBrains Mono')
-  await expect(page.getByTestId('composer')).toHaveCSS('caret-color', 'rgb(255, 26, 103)')
+  await expect(page.getByTestId('composer')).toHaveCSS('caret-color', 'rgb(8, 189, 186)')
   await expect(page.getByTestId('firefox-block-caret')).toHaveCSS('display', 'block')
-  await expect(page.getByTestId('firefox-block-caret')).toHaveCSS('background-color', 'rgb(255, 26, 103)')
+  await expect(page.getByTestId('firefox-block-caret')).toHaveCSS('background-color', 'rgb(8, 189, 186)')
 
   const caret = await page.getByTestId('firefox-block-caret').evaluate((element) => {
     const style = getComputedStyle(element)

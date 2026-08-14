@@ -8,7 +8,7 @@
 @supportURL     https://github.com/aaronedev/violet-void-theme_chatgpt/issues
 @updateURL      https://raw.githubusercontent.com/aaronedev/violet-void-theme_chatgpt/main/dist/chatgpt-violet-void.user.css
 @downloadURL    https://raw.githubusercontent.com/aaronedev/violet-void-theme_chatgpt/main/dist/chatgpt-violet-void.user.css
-@description    Exact near-black Violet Void palette with native widths, a pink block caret, rounded focus, sticky Copy controls, and no custom syntax highlighting.
+@description    Exact near-black Violet Void palette with native widths, a teal block caret, rounded focus, sticky Copy controls, and no custom syntax highlighting.
 ==/UserStyle== */
 
 @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Rubik:wght@400;600&display=swap");
@@ -49,7 +49,7 @@
         --void-link-hover-rgb: 0, 255, 249;
         --void-active: #bb7cff;
         --void-active-rgb: 187, 124, 255;
-        --void-cursor: #ff1a67;
+        --void-cursor: #08bdba;
         --void-caret-width: 0.66ch;
         --void-caret-alpha: 0.92;
 
