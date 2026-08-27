@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT Violet Void
 @namespace      github.com/aaronedev/violet-void-theme
-@version        5.4.5
+@version        5.4.6
 @license        MIT
 @author         aaronedev
 @homepageURL    https://github.com/aaronedev/violet-void-theme_chatgpt
@@ -182,14 +182,13 @@
         color: var(--void-fg) !important;
         font-family:
             "Rubik",
-            "Noto Color Emoji",
-            "FiraCode Nerd Font",
-            "Geist",
-            "Inter",
             system-ui,
             -apple-system,
             BlinkMacSystemFont,
             "Segoe UI",
+            "Inter",
+            "Geist",
+            "Noto Color Emoji",
             sans-serif !important;
     }
 
@@ -1547,9 +1546,9 @@
 @-moz-document domain("learn.chatgpt.com") {
     @scope (html.dark) {
         :scope {
-            /* Learn surface bridge: retain docs semantics without its gray-token collision. */
-            --color-surface: var(--void-surface-3) !important;
-            --color-surface-secondary: var(--void-surface) !important;
+            /* Learn direct-token bridge: preserve dark utility surfaces without the gray collision. */
+            --gray-100: var(--void-surface) !important;
+            --gray-200: var(--void-surface-3) !important;
         }
     }
 }

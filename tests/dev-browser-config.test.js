@@ -90,6 +90,23 @@ test('dev browser rejects a new profile directory below an escaping symlink ance
   }
 })
 
+test('dev browser rejects an in-repository dangling profile symlink', async () => {
+  const inside = await fs.mkdtemp(path.join(root, '.violet-void-profile-test-'))
+  const outside = await fs.mkdtemp(path.join(os.tmpdir(), 'violet-void-profile-target-'))
+  const profilePath = path.join(inside, 'profile-link')
+
+  try {
+    await fs.symlink(path.join(outside, 'missing-profile'), profilePath)
+    assert.throws(() => resolveConfig({
+      VIOLET_VOID_FIREFOX_PATH: '/opt/firefox',
+      VIOLET_VOID_PROFILE_DIR: profilePath
+    }, cachedExtension, webExtCli), /remain inside this repository/)
+  } finally {
+    await fs.rm(inside, { recursive: true, force: true })
+    await fs.rm(outside, { recursive: true, force: true })
+  }
+})
+
 test('dev browser accepts a new nested profile directory inside the repository', () => {
   const profilePath = path.join(root, '.violet-void-profile-test-new', 'nested')
   const config = resolveConfig({
