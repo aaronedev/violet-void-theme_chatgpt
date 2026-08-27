@@ -1546,9 +1546,19 @@
 @-moz-document domain("learn.chatgpt.com") {
     @scope (html.dark) {
         :scope {
-            /* Learn direct-token bridge: preserve dark utility surfaces without the gray collision. */
-            --gray-100: var(--void-surface) !important;
-            --gray-200: var(--void-surface-3) !important;
+            /* Learn dark-scale bridge: preserve native gray-derived utility surfaces. */
+            --gray-50: #131313 !important;
+            --gray-100: #181818 !important;
+            --gray-200: #212121 !important;
+            --gray-300: #303030 !important;
+            --gray-400: #414141 !important;
+            --gray-500: #5d5d5d !important;
+            --gray-600: #8f8f8f !important;
+            --gray-700: #afafaf !important;
+            --gray-750: #b9b9b9 !important;
+            --gray-800: #cdcdcd !important;
+            --gray-900: #ededed !important;
+            --gray-950: #f3f3f3 !important;
         }
     }
 }
