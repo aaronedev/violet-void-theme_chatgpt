@@ -4,24 +4,25 @@ const fs = require('node:fs/promises')
 const os = require('node:os')
 const path = require('node:path')
 const test = require('node:test')
-const { cachedStatus, fetchOfficialRelease, resolveCachedExtension, selectChromiumMv3Asset, validateArchiveEntry, validateAssetUrl, validateExtensionManifest, verifyAssetBytes } = require('../scripts/setup-stylus')
+const { cachedStatus, fetchOfficialRelease, resolveCachedExtension, selectFirefoxAsset, validateArchiveEntry, validateAssetUrl, validateExtensionManifest, verifyAssetBytes } = require('../scripts/setup-stylus')
 
 const bytes = Buffer.from('verified Stylus fixture')
 const digest = `sha256:${crypto.createHash('sha256').update(bytes).digest('hex')}`
 const release = {
   tag_name: 'v2.4.9',
   assets: [{
-    name: 'stylus-chrome-mv3-v2.4.9-id.zip',
+    name: 'stylus-firefox-v2.4.9.zip',
     size: bytes.length,
     digest,
-    browser_download_url: 'https://github.com/openstyles/stylus/releases/download/v2.4.9/stylus-chrome-mv3-v2.4.9-id.zip'
+    browser_download_url: 'https://github.com/openstyles/stylus/releases/download/v2.4.9/stylus-firefox-v2.4.9.zip'
   }]
 }
 
-test('selects only the official Chromium MV3 release asset', () => {
-  assert.equal(selectChromiumMv3Asset(release).name, release.assets[0].name)
-  assert.throws(() => selectChromiumMv3Asset({ ...release, assets: [...release.assets, release.assets[0]] }), /exactly one/)
-  assert.throws(() => selectChromiumMv3Asset({ ...release, assets: [] }), /exactly one/)
+test('selects only the official Firefox release asset', () => {
+  assert.equal(selectFirefoxAsset(release).name, release.assets[0].name)
+  assert.throws(() => selectFirefoxAsset({ ...release, assets: [...release.assets, release.assets[0]] }), /exactly one/)
+  assert.throws(() => selectFirefoxAsset({ ...release, assets: [] }), /exactly one/)
+  assert.throws(() => selectFirefoxAsset({ ...release, assets: [{ ...release.assets[0], name: 'stylus-chrome-mv3-v2.4.9-id.zip' }] }), /exactly one/)
 })
 
 test('rejects non-official release URLs and unsafe ZIP paths', () => {
@@ -44,7 +45,11 @@ test('official release lookup is fully mockable', async () => {
 
 async function writeCurrentCache(directory, asset = release.assets[0]) {
   await fs.mkdir(path.join(directory, 'extension'), { recursive: true })
-  await fs.writeFile(path.join(directory, 'extension', 'manifest.json'), '{"manifest_version":3,"name":"Stylus"}')
+  await fs.writeFile(path.join(directory, 'extension', 'manifest.json'), JSON.stringify({
+    manifest_version: 2,
+    name: 'Stylus',
+    applications: { gecko: { id: '{7a7a4a92-a2a0-41d1-9fd7-1e92480d612d}' } }
+  }))
   await fs.writeFile(path.join(directory, 'archive.zip'), bytes)
   await fs.writeFile(path.join(directory, 'release.json'), JSON.stringify({
     tag_name: release.tag_name,
@@ -54,12 +59,16 @@ async function writeCurrentCache(directory, asset = release.assets[0]) {
   }))
 }
 
-test('cache freshness requires matching MV3 manifest, metadata, and verified archive', async () => {
+test('cache freshness requires matching Firefox manifest, metadata, and verified archive', async () => {
   const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'violet-void-stylus-test-'))
   try {
     await writeCurrentCache(directory)
     assert.equal(resolveCachedExtension(directory), path.join(directory, 'extension'))
     assert.equal(cachedStatus(release, release.assets[0], directory).state, 'current')
+    await fs.writeFile(path.join(directory, 'extension', 'manifest.json'), '{"manifest_version":3,"name":"Stylus"}')
+    assert.equal(resolveCachedExtension(directory), null)
+    assert.notEqual(cachedStatus(release, release.assets[0], directory).state, 'current')
+    await writeCurrentCache(directory)
     const sameTagReplacement = { ...release.assets[0], digest: `sha256:${'0'.repeat(64)}` }
     assert.equal(cachedStatus(release, sameTagReplacement, directory).state, 'outdated')
     await fs.writeFile(path.join(directory, 'release.json'), '{bad json')
@@ -78,7 +87,14 @@ test('cache freshness requires matching MV3 manifest, metadata, and verified arc
   }
 })
 
-test('an MV2 manifest is rejected before cache activation', () => {
-  assert.throws(() => validateExtensionManifest({ manifest_version: 2, name: 'Stylus' }), /MV3/)
-  assert.doesNotThrow(() => validateExtensionManifest({ manifest_version: 3, name: 'Stylus' }))
+test('only the stable Stylus Firefox MV2 manifest is accepted', () => {
+  const manifest = {
+    manifest_version: 2,
+    name: 'Stylus',
+    applications: { gecko: { id: '{7a7a4a92-a2a0-41d1-9fd7-1e92480d612d}' } }
+  }
+  assert.doesNotThrow(() => validateExtensionManifest(manifest))
+  assert.throws(() => validateExtensionManifest({ ...manifest, manifest_version: 3 }), /Firefox MV2/)
+  assert.throws(() => validateExtensionManifest({ ...manifest, applications: { gecko: { id: 'wrong@example.com' } } }), /Gecko ID/)
+  assert.throws(() => validateExtensionManifest({ manifest_version: 3, name: 'Stylus' }), /Firefox MV2/)
 })

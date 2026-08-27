@@ -11,9 +11,21 @@ module.exports = defineConfig({
   testDir: './tests',
   outputDir: 'test-results',
   fullyParallel: true,
-  use: {
-    browserName: 'chromium',
-    headless: true,
-    launchOptions: executablePath ? { executablePath } : {}
-  }
+  projects: [
+    {
+      name: 'chromium',
+      use: {
+        browserName: 'chromium',
+        headless: true,
+        launchOptions: executablePath ? { executablePath } : {}
+      }
+    },
+    {
+      name: 'firefox',
+      use: {
+        browserName: 'firefox',
+        headless: true
+      }
+    }
+  ]
 })

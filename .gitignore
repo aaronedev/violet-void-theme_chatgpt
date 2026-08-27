@@ -2,4 +2,5 @@ node_modules
 playwright-report
 test-results
 .violet-void-dev-profile
+.violet-void-firefox-profile
 .violet-void-stylus

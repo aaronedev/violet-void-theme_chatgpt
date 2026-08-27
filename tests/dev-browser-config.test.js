@@ -1,20 +1,15 @@
 const assert = require('node:assert/strict')
 const path = require('node:path')
 const test = require('node:test')
-const { buildBrowserArguments, buildLaunchArguments, localStyleUrl, resolveConfig } = require('../scripts/dev-browser')
+const { buildWebExtArguments, localStyleUrl, resolveConfig } = require('../scripts/dev-browser')
 
-test('dev browser Chromium arguments load only the supplied unpacked extension', () => {
-  const extension = '/tmp/unpacked-stylus'
-  assert.deepEqual(buildLaunchArguments(extension), [
-    '--disable-extensions-except=/tmp/unpacked-stylus',
-    '--load-extension=/tmp/unpacked-stylus'
-  ])
-})
-
-test('dev browser configuration binds the local UserStyle to loopback', () => {
-  const config = resolveConfig({ VIOLET_VOID_PORT: '4812' })
+test('dev browser configuration binds the local UserStyle to loopback and Firefox', () => {
+  const config = resolveConfig({ VIOLET_VOID_PORT: '4812', VIOLET_VOID_FIREFOX_PATH: '/opt/firefox' }, () => '/tmp/verified-stylus-cache/extension', () => '/repo/node_modules/web-ext/bin/web-ext.js')
   assert.equal(config.port, 4812)
   assert.equal(config.artifactPath, path.resolve(__dirname, '../dist/chatgpt-violet-void.user.css'))
+  assert.equal(config.browserPath, '/opt/firefox')
+  assert.equal(config.profilePath, path.resolve(__dirname, '../.violet-void-firefox-profile'))
+  assert.equal(config.webExtPath, '/repo/node_modules/web-ext/bin/web-ext.js')
   assert.equal(localStyleUrl(config.port), 'http://127.0.0.1:4812/chatgpt-violet-void.user.css')
 })
 
@@ -23,26 +18,34 @@ test('dev browser resolves the verified cache when no explicit extension path is
   assert.equal(config.extensionPath, '/tmp/verified-stylus-cache/extension')
 })
 
-test('manual QA arguments use only the isolated profile, extension, and start pages', () => {
-  const argumentsList = buildBrowserArguments({
+test('manual QA uses Firefox web-ext with only the isolated profile and approved start pages', () => {
+  const argumentsList = buildWebExtArguments({
+    browserPath: '/usr/bin/firefox',
     extensionPath: '/tmp/verified-stylus-cache/extension',
-    profilePath: '/repo/.violet-void-dev-profile',
+    profilePath: '/repo/.violet-void-firefox-profile',
     port: 4812
   })
   assert.deepEqual(argumentsList, [
-    '--user-data-dir=/repo/.violet-void-dev-profile',
-    '--disable-extensions-except=/tmp/verified-stylus-cache/extension',
-    '--load-extension=/tmp/verified-stylus-cache/extension',
-    '--no-first-run',
-    '--no-default-browser-check',
+    'run',
+    '--source-dir', '/tmp/verified-stylus-cache/extension',
+    '--target', 'firefox-desktop',
+    '--firefox', '/usr/bin/firefox',
+    '--firefox-profile', '/repo/.violet-void-firefox-profile',
+    '--profile-create-if-missing',
+    '--keep-profile-changes',
+    '--no-reload',
+    '--start-url',
     'http://127.0.0.1:4812/chatgpt-violet-void.user.css',
-    'https://chatgpt.com'
+    '--start-url',
+    'https://chatgpt.com',
+    '--start-url',
+    'https://learn.chatgpt.com/use-cases/refactor-your-codebase#introduction'
   ])
   assert.equal(argumentsList.some((value) => /automation|remote-debugging|webdriver/i.test(value)), false)
 })
 
-test('dev browser accepts only an absolute Chromium override', () => {
-  const config = resolveConfig({ VIOLET_VOID_BROWSER_PATH: '/opt/chromium', VIOLET_VOID_PORT: '4812' })
-  assert.equal(config.browserPath, '/opt/chromium')
-  assert.throws(() => resolveConfig({ VIOLET_VOID_BROWSER_PATH: 'chromium' }), /absolute Chromium/)
+test('dev browser accepts only an absolute Firefox override', () => {
+  const config = resolveConfig({ VIOLET_VOID_FIREFOX_PATH: '/opt/firefox', VIOLET_VOID_PORT: '4812' }, () => '/tmp/verified-stylus-cache/extension', () => '/repo/node_modules/web-ext/bin/web-ext.js')
+  assert.equal(config.browserPath, '/opt/firefox')
+  assert.throws(() => resolveConfig({ VIOLET_VOID_FIREFOX_PATH: 'firefox' }, () => '/tmp/verified-stylus-cache/extension', () => '/repo/node_modules/web-ext/bin/web-ext.js'), /absolute Firefox/)
 })

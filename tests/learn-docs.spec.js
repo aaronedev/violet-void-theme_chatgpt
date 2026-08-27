@@ -2,7 +2,7 @@ const { expect, test } = require('@playwright/test')
 
 const { userStyleBodiesForHostname } = require('./userstyle-document-bodies')
 
-function fixture() {
+function fixture(hostname) {
   return `<!doctype html>
     <html class="dark" data-theme="dark">
       <head>
@@ -20,7 +20,7 @@ function fixture() {
           .bg-surface-secondary { background-color: var(--color-surface-secondary); }
           .prompt-scroll-frame { background: inherit; }
 
-          ${userStyleBodiesForHostname('learn.chatgpt.com')}
+          ${userStyleBodiesForHostname(hostname)}
         </style>
       </head>
       <body>
@@ -33,9 +33,17 @@ function fixture() {
 }
 
 test('Learn dark documentation retains its native primary and secondary surfaces', async ({ page }) => {
-  await page.setContent(fixture())
+  await page.setContent(fixture('learn.chatgpt.com'))
 
   await expect(page.getByTestId('prompt-card')).toHaveCSS('background-color', 'rgb(33, 33, 33)')
   await expect(page.getByTestId('prompt-frame')).toHaveCSS('background-color', 'rgb(33, 33, 33)')
   await expect(page.getByTestId('secondary-surface')).toHaveCSS('background-color', 'rgb(24, 24, 24)')
+})
+
+test('the shared ChatGPT body alone reproduces Learn surface washout', async ({ page }) => {
+  await page.setContent(fixture('chatgpt.com'))
+
+  await expect(page.getByTestId('prompt-card')).toHaveCSS('background-color', 'rgb(184, 184, 192)')
+  await expect(page.getByTestId('prompt-frame')).toHaveCSS('background-color', 'rgb(184, 184, 192)')
+  await expect(page.getByTestId('secondary-surface')).toHaveCSS('background-color', 'rgb(184, 184, 192)')
 })
