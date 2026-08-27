@@ -16,10 +16,11 @@ URL migration is published they need one manual reinstall from `dist/`; future u
 URL.
 
 Use `npm run lint` for plain-CSS linting, `npm test` for the Playwright regression suite, and
-`npm run check` for the complete deterministic check. Browser fixtures cover dark-only palette and
-font scope, native ChatGPT thread/composer widths, block-caret behavior, attachment/image guards,
-and sticky, visible, clickable Copy controls. A legacy `overflow: hidden` control case proves the
-clipping regression the theme prevents.
+`npm run check` for the complete deterministic check. Browser fixtures run in Chromium and Firefox
+and cover dark-only palette and font scope, native ChatGPT thread/composer widths, block-caret
+behavior, attachment/image guards, and sticky, visible, clickable Copy controls. A legacy
+`overflow: hidden` control case proves the clipping regression the theme prevents. Install the
+managed Firefox fixture engine with `npx playwright install firefox` before running the full suite.
 
 ## Manual live-site QA
 
@@ -27,26 +28,27 @@ clipping regression the theme prevents.
 The extension comes only from the latest official
 [OpenStyles Stylus release](https://github.com/openstyles/stylus/releases): run
 `npm run setup:stylus -- --check` to compare the ignored cache to GitHub, `npm run setup:stylus` to
-download, verify, and unpack the official Chromium MV3 archive, or `npm run dev:browser:setup` to
-set it up and launch in one opt-in step. `npm run setup:stylus -- --dry-run` reads release metadata
-without downloading. An explicit `STYLUS_EXTENSION_PATH` still overrides the cache.
+download, verify, and unpack the official Firefox archive, or `npm run dev:browser:setup` to set it
+up and launch in one opt-in step. `npm run setup:stylus -- --dry-run` reads release metadata without
+downloading. An explicit `STYLUS_EXTENSION_PATH` still overrides the cache.
 
-The first `npm run dev:browser` run opens the isolated persistent profile. This live-QA Chromium is
-deliberately a plain child process, not Playwright-controlled: first close any stuck old QA window
-so its profile lock is released, then manually complete any Cloudflare “Verify you are human”
-challenge, ChatGPT login, and UserStyle confirmation. CAPTCHA handling and credentials are never
-automated. Later runs reuse that profile’s login cookies/session and locally installed dev
-UserStyle.
+The first `npm run dev:browser` run opens the isolated persistent Firefox profile through local
+`web-ext`. That profile is unsuitable for daily browsing. First close any stuck old QA window so its
+profile lock is released, then manually complete any Cloudflare “Verify you are human” challenge,
+ChatGPT login, and UserStyle confirmation. CAPTCHA handling and credentials are never automated.
+Later runs reuse that profile’s login cookies/session and locally installed dev UserStyle.
+
 Full live QA means opening a representative authenticated long code response, then scrolling and
-interacting with its Copy control. Fixture tests remain the Playwright CI gate. The launcher uses
-Playwright's bundled Chromium binary, but not Playwright browser automation; it serves the built
-`dist/chatgpt-violet-void.user.css` installer only on `127.0.0.1` at
-`/chatgpt-violet-void.user.css` and opens it alongside `https://chatgpt.com`. The unpacked extension
-is loaded only into the isolated QA profile, never into your normal browser.
+interacting with its Copy control. Fixture tests remain the Chromium and Firefox Playwright CI gate.
+The launcher serves the built `dist/chatgpt-violet-void.user.css` installer only on `127.0.0.1` at
+`/chatgpt-violet-void.user.css`, then opens it alongside `https://chatgpt.com` and the Learn
+refactor use case. The unpacked extension is loaded only into the isolated QA profile, never into
+your normal browser.
 
-The isolated profile defaults to `.violet-void-dev-profile` and persists login and the locally
-installed style between runs; the verified release cache is `.violet-void-stylus`. Both are ignored
-by Git. If verification still loops after this launcher change, close Chromium, inspect and remove
-only `.violet-void-dev-profile`, then rerun; that intentionally resets only isolated login/style
+The isolated Firefox profile defaults to `.violet-void-firefox-profile` and persists login and the
+locally installed style between runs; the verified release cache is `.violet-void-stylus`. Both the
+new profile and the retired `.violet-void-dev-profile` are ignored by Git. If verification still
+loops after this launcher change, close Firefox, inspect and remove only
+`.violet-void-firefox-profile`, then rerun; that intentionally resets only isolated login/style
 state. Use `node scripts/dev-browser.js --help` or `node scripts/setup-stylus.js --help` for exact
 behavior. The launcher never automates extension confirmation or credentials.

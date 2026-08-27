@@ -8,6 +8,7 @@ const yauzl = require('yauzl')
 const root = path.resolve(__dirname, '..')
 const cacheDir = path.join(root, '.violet-void-stylus')
 const releaseApiUrl = 'https://api.github.com/repos/openstyles/stylus/releases/latest'
+const stylusGeckoId = '{7a7a4a92-a2a0-41d1-9fd7-1e92480d612d}'
 
 function validateDigest(digest) {
   const match = /^sha256:([a-f0-9]{64})$/.exec(digest || '')
@@ -15,11 +16,11 @@ function validateDigest(digest) {
   return match[1]
 }
 
-function selectChromiumMv3Asset(release) {
+function selectFirefoxAsset(release) {
   if (!release || typeof release.tag_name !== 'string') throw new Error('Official release has no tag_name.')
-  const expectedName = `stylus-chrome-mv3-${release.tag_name}-id.zip`
+  const expectedName = `stylus-firefox-${release.tag_name}.zip`
   const matches = (release.assets || []).filter((asset) => asset?.name === expectedName)
-  if (matches.length !== 1) throw new Error(`Expected exactly one Chromium MV3 asset named ${expectedName}.`)
+  if (matches.length !== 1) throw new Error(`Expected exactly one Firefox asset named ${expectedName}.`)
   const asset = matches[0]
   if (!Number.isSafeInteger(asset.size) || asset.size <= 0) throw new Error('Official release asset has an invalid size.')
   validateDigest(asset.digest)
@@ -51,7 +52,7 @@ async function fetchOfficialRelease(fetcher = fetch) {
   })
   if (!response.ok) throw new Error(`Official release lookup failed: HTTP ${response.status}.`)
   const release = await response.json()
-  return { release, asset: selectChromiumMv3Asset(release) }
+  return { release, asset: selectFirefoxAsset(release) }
 }
 
 async function downloadAsset(asset, tag, fetcher = fetch) {
@@ -78,8 +79,12 @@ function verifyAssetBytes(bytes, asset) {
 }
 
 function validateExtensionManifest(manifest) {
-  if (!manifest || manifest.manifest_version !== 3 || typeof manifest.name !== 'string' || !manifest.name.trim()) {
-    throw new Error('Extension manifest must identify a Chromium MV3 extension.')
+  const geckoId = manifest?.applications?.gecko?.id ?? manifest?.browser_specific_settings?.gecko?.id
+  if (!manifest || manifest.manifest_version !== 2 || typeof manifest.name !== 'string' || !manifest.name.trim()) {
+    throw new Error('Extension manifest must identify a Firefox MV2 extension.')
+  }
+  if (geckoId !== stylusGeckoId) {
+    throw new Error('Extension manifest must use the stable Stylus Firefox Gecko ID.')
   }
   return manifest
 }
@@ -145,7 +150,7 @@ function metadataMatches(metadata, release, asset) {
 
 function cachedStatus(release, asset, directory = cacheDir) {
   const extension = resolveCachedExtension(directory)
-  if (!extension) return { state: 'missing', reason: 'valid MV3 extension is absent', extension: null }
+  if (!extension) return { state: 'missing', reason: 'valid Firefox MV2 extension is absent', extension: null }
   try {
     const metadata = JSON.parse(fs.readFileSync(path.join(directory, 'release.json'), 'utf8'))
     if (!metadataMatches(metadata, release, asset)) {
@@ -180,7 +185,7 @@ async function installRelease(release, asset, directory = cacheDir, fetcher = fe
 }
 
 function printHelp() {
-  console.log('Usage: npm run setup:stylus [--help|--dry-run|--check]\n\n--dry-run fetches and reports the official latest release without downloading.\n--check exits 0 when the verified cache matches latest, or 2 when it is missing/outdated.\nDefault downloads, verifies, and unpacks only the official Chromium MV3 asset into .violet-void-stylus/.')
+  console.log('Usage: npm run setup:stylus [--help|--dry-run|--check]\n\n--dry-run fetches and reports the official latest release without downloading.\n--check exits 0 when the verified cache matches latest, or 2 when it is missing/outdated.\nDefault downloads, verifies, and unpacks only the official Firefox asset into .violet-void-stylus/.')
 }
 
 async function main(args = process.argv.slice(2), fetcher = fetch) {
@@ -194,9 +199,9 @@ async function main(args = process.argv.slice(2), fetcher = fetch) {
     return status
   }
   await installRelease(release, asset, cacheDir, fetcher)
-  console.log(`Installed ${release.tag_name} Chromium MV3 extension in ${cacheDir}`)
+  console.log(`Installed ${release.tag_name} Firefox extension in ${cacheDir}`)
 }
 
 if (require.main === module) main().catch((error) => { console.error(`setup:stylus failed: ${error.message}`); process.exitCode = 1 })
 
-module.exports = { cachedStatus, downloadAsset, fetchOfficialRelease, installRelease, localCacheDir: cacheDir, metadataMatches, resolveCachedExtension, selectChromiumMv3Asset, validateArchiveEntry, validateAssetUrl, validateDigest, validateExtensionManifest, verifyAssetBytes }
+module.exports = { cachedStatus, downloadAsset, fetchOfficialRelease, installRelease, localCacheDir: cacheDir, metadataMatches, resolveCachedExtension, selectFirefoxAsset, validateArchiveEntry, validateAssetUrl, validateDigest, validateExtensionManifest, verifyAssetBytes }
