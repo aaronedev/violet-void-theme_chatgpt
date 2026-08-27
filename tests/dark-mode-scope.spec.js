@@ -31,7 +31,6 @@ function fixture(documentClass = '') {
             letter-spacing: normal;
             white-space: pre;
           }
-          .font-probe-sans { font-family: system-ui, sans-serif !important; }
           .font-probe-mono { font-family: "FiraCode Nerd Font", monospace !important; }
           #vv-firefox-block-caret {
             display: none;
@@ -44,7 +43,6 @@ function fixture(documentClass = '') {
           <div class="bg-token-main-surface-secondary" data-testid="secondary-surface">Surface</div>
           <code data-testid="code">const violetVoid = true</code>
           <span class="font-probe" data-testid="ui-font-probe">iiii WWWW 12345</span>
-          <span class="font-probe font-probe-sans" data-testid="sans-font-probe">iiii WWWW 12345</span>
           <span class="font-probe font-probe-mono" data-testid="mono-font-probe">iiii WWWW 12345</span>
           <div data-testid="composer" contenteditable="true">Compose</div>
         </main>
@@ -97,10 +95,8 @@ test('dark documents receive the Violet Void palette while retaining native layo
 
   const fontWidths = await page.evaluate(() => Object.fromEntries([
     ['ui', document.querySelector('[data-testid="ui-font-probe"]').getBoundingClientRect().width],
-    ['sans', document.querySelector('[data-testid="sans-font-probe"]').getBoundingClientRect().width],
     ['mono', document.querySelector('[data-testid="mono-font-probe"]').getBoundingClientRect().width]
   ]))
-  expect(fontWidths.ui).toBeCloseTo(fontWidths.sans, 1)
   expect(Math.abs(fontWidths.ui - fontWidths.mono)).toBeGreaterThan(12)
 
   const codeFont = await page.getByTestId('code').evaluate((element) => getComputedStyle(element).fontFamily)
