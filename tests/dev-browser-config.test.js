@@ -1,7 +1,13 @@
 const assert = require('node:assert/strict')
+const fs = require('node:fs/promises')
+const os = require('node:os')
 const path = require('node:path')
 const test = require('node:test')
 const { buildWebExtArguments, localStyleUrl, resolveConfig } = require('../scripts/dev-browser')
+
+const root = path.resolve(__dirname, '..')
+const cachedExtension = () => '/tmp/verified-stylus-cache/extension'
+const webExtCli = () => '/repo/node_modules/web-ext/bin/web-ext.js'
 
 test('dev browser configuration binds the local UserStyle to loopback and Firefox', () => {
   const config = resolveConfig({ VIOLET_VOID_PORT: '4812', VIOLET_VOID_FIREFOX_PATH: '/opt/firefox' }, () => '/tmp/verified-stylus-cache/extension', () => '/repo/node_modules/web-ext/bin/web-ext.js')
@@ -48,4 +54,47 @@ test('dev browser accepts only an absolute Firefox override', () => {
   const config = resolveConfig({ VIOLET_VOID_FIREFOX_PATH: '/opt/firefox', VIOLET_VOID_PORT: '4812' }, () => '/tmp/verified-stylus-cache/extension', () => '/repo/node_modules/web-ext/bin/web-ext.js')
   assert.equal(config.browserPath, '/opt/firefox')
   assert.throws(() => resolveConfig({ VIOLET_VOID_FIREFOX_PATH: 'firefox' }, () => '/tmp/verified-stylus-cache/extension', () => '/repo/node_modules/web-ext/bin/web-ext.js'), /absolute Firefox/)
+})
+
+test('dev browser rejects an in-repository profile symlink that targets outside the repository', async () => {
+  const inside = await fs.mkdtemp(path.join(root, '.violet-void-profile-test-'))
+  const outside = await fs.mkdtemp(path.join(os.tmpdir(), 'violet-void-profile-target-'))
+  const profilePath = path.join(inside, 'profile-link')
+
+  try {
+    await fs.symlink(outside, profilePath)
+    assert.throws(() => resolveConfig({
+      VIOLET_VOID_FIREFOX_PATH: '/opt/firefox',
+      VIOLET_VOID_PROFILE_DIR: profilePath
+    }, cachedExtension, webExtCli), /remain inside this repository/)
+  } finally {
+    await fs.rm(inside, { recursive: true, force: true })
+    await fs.rm(outside, { recursive: true, force: true })
+  }
+})
+
+test('dev browser rejects a new profile directory below an escaping symlink ancestor', async () => {
+  const inside = await fs.mkdtemp(path.join(root, '.violet-void-profile-test-'))
+  const outside = await fs.mkdtemp(path.join(os.tmpdir(), 'violet-void-profile-target-'))
+  const profilePath = path.join(inside, 'profile-link', 'new-profile')
+
+  try {
+    await fs.symlink(outside, path.join(inside, 'profile-link'))
+    assert.throws(() => resolveConfig({
+      VIOLET_VOID_FIREFOX_PATH: '/opt/firefox',
+      VIOLET_VOID_PROFILE_DIR: profilePath
+    }, cachedExtension, webExtCli), /remain inside this repository/)
+  } finally {
+    await fs.rm(inside, { recursive: true, force: true })
+    await fs.rm(outside, { recursive: true, force: true })
+  }
+})
+
+test('dev browser accepts a new nested profile directory inside the repository', () => {
+  const profilePath = path.join(root, '.violet-void-profile-test-new', 'nested')
+  const config = resolveConfig({
+    VIOLET_VOID_FIREFOX_PATH: '/opt/firefox',
+    VIOLET_VOID_PROFILE_DIR: profilePath
+  }, cachedExtension, webExtCli)
+  assert.equal(config.profilePath, profilePath)
 })
