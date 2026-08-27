@@ -7,7 +7,7 @@ authoritative. It intentionally adds no custom syntax highlighting.
 
 Run `npm run build` to copy the source, with normalized LF newlines, to the tracked installable
 artifact `dist/chatgpt-violet-void.user.css`. The artifact is deliberately byte-identical to its
-source; `npm run verify:artifact` checks that invariant, the v5.4.4 update metadata, and that the
+source; `npm run verify:artifact` checks that invariant, the v5.4.5 update metadata, and that the
 legacy root artifact is absent.
 
 Install the tracked [`dist/chatgpt-violet-void.user.css`](dist/chatgpt-violet-void.user.css)

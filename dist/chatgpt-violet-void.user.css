@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT Violet Void
 @namespace      github.com/aaronedev/violet-void-theme
-@version        5.4.4
+@version        5.4.5
 @license        MIT
 @author         aaronedev
 @homepageURL    https://github.com/aaronedev/violet-void-theme_chatgpt
@@ -1541,5 +1541,15 @@
     *::-webkit-scrollbar-thumb:active {
         background: rgba(var(--void-accent-rgb), 0.50) !important;
     }
+    }
+}
+
+@-moz-document domain("learn.chatgpt.com") {
+    @scope (html.dark) {
+        :scope {
+            /* Learn surface bridge: retain docs semantics without its gray-token collision. */
+            --color-surface: var(--void-surface-3) !important;
+            --color-surface-secondary: var(--void-surface) !important;
+        }
     }
 }
