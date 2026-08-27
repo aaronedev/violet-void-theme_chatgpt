@@ -1,20 +1,9 @@
-const fs = require('node:fs')
-const path = require('node:path')
 const { expect, test } = require('@playwright/test')
 
-const canonicalPath = path.resolve(__dirname, '../src/chatgpt-violet-void.user.css')
+const { userStyleBodiesForHostname } = require('./userstyle-document-bodies')
 
 function userStyleBody() {
-  const stylesheet = fs.readFileSync(canonicalPath, 'utf8')
-  const documentRule = stylesheet.indexOf('@-moz-document')
-  const openingBrace = stylesheet.indexOf('{', documentRule)
-  const closingBrace = stylesheet.lastIndexOf('}')
-
-  if (documentRule < 0 || openingBrace < 0 || closingBrace <= openingBrace) {
-    throw new Error('Unable to extract the canonical UserStyle document body.')
-  }
-
-  return stylesheet.slice(openingBrace + 1, closingBrace)
+  return userStyleBodiesForHostname('chatgpt.com')
 }
 
 function fixture(documentClass = '') {

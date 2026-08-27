@@ -17,7 +17,7 @@ if (fs.existsSync(legacyArtifact)) {
 }
 
 const requiredMetadata = [
-  '@version        5.4.4',
+  '@version        5.4.5',
   '@updateURL      https://raw.githubusercontent.com/aaronedev/violet-void-theme_chatgpt/main/dist/chatgpt-violet-void.user.css',
   '@downloadURL    https://raw.githubusercontent.com/aaronedev/violet-void-theme_chatgpt/main/dist/chatgpt-violet-void.user.css'
 ]
