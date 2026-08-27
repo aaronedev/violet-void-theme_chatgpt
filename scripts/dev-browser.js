@@ -35,12 +35,21 @@ function resolveFirefoxPath(environment = process.env, pathExists = fs.existsSyn
   return defaultPath
 }
 
+function hasFilesystemEntry(candidate) {
+  try {
+    fs.lstatSync(candidate)
+    return true
+  } catch {
+    return false
+  }
+}
+
 function canonicalProfilePath(profilePath) {
   const canonicalRoot = fs.realpathSync(root)
   const missing = []
   let ancestor = path.resolve(profilePath)
 
-  while (!fs.existsSync(ancestor)) {
+  while (!hasFilesystemEntry(ancestor)) {
     const parent = path.dirname(ancestor)
     if (parent === ancestor) {
       throw new Error('VIOLET_VOID_PROFILE_DIR has no existing filesystem ancestor.')
@@ -49,7 +58,14 @@ function canonicalProfilePath(profilePath) {
     ancestor = parent
   }
 
-  const canonicalCandidate = path.join(fs.realpathSync(ancestor), ...missing)
+  let canonicalAncestor
+  try {
+    canonicalAncestor = fs.realpathSync(ancestor)
+  } catch {
+    throw new Error('VIOLET_VOID_PROFILE_DIR must remain inside this repository to protect your normal Firefox profile.')
+  }
+
+  const canonicalCandidate = path.join(canonicalAncestor, ...missing)
   if (!canonicalCandidate.startsWith(`${canonicalRoot}${path.sep}`)) {
     throw new Error('VIOLET_VOID_PROFILE_DIR must remain inside this repository to protect your normal Firefox profile.')
   }
