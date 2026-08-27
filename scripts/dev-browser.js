@@ -28,7 +28,16 @@ function resolveFirefoxPath(environment = process.env, pathExists = fs.existsSyn
     return path.resolve(configured)
   }
 
-  const defaultPath = ['/usr/bin/firefox', '/usr/bin/firefox-developer-edition'].find(pathExists)
+  const defaultPath = [
+    ...(process.platform === 'win32'
+      ? [
+          path.join(environment.PROGRAMFILES || 'C:\\Program Files', 'Mozilla Firefox', 'firefox.exe'),
+          path.join(environment['PROGRAMFILES(X86)'] || 'C:\\Program Files (x86)', 'Mozilla Firefox', 'firefox.exe')
+        ]
+      : process.platform === 'darwin'
+        ? ['/Applications/Firefox.app/Contents/MacOS/firefox']
+        : ['/usr/bin/firefox', '/usr/bin/firefox-developer-edition', '/usr/bin/firefox-esr'])
+  ].find(pathExists)
   if (!defaultPath) {
     throw new Error('Firefox is unavailable. Set VIOLET_VOID_FIREFOX_PATH to an absolute Firefox executable path.')
   }
