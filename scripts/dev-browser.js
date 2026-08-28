@@ -1,5 +1,6 @@
 const fs = require('node:fs')
 const http = require('node:http')
+const os = require('node:os')
 const path = require('node:path')
 const { spawn } = require('node:child_process')
 
@@ -8,7 +9,7 @@ const { resolveCachedExtension } = require('./setup-stylus')
 const root = path.resolve(__dirname, '..')
 const startUrls = [
   'https://chatgpt.com',
-  'https://learn.chatgpt.com/use-cases/refactor-your-codebase#introduction'
+  'https://learn.chatgpt.com/use-cases/refactor-your-codebase#introduction',
 ]
 
 function localStyleUrl(port) {
@@ -16,30 +17,87 @@ function localStyleUrl(port) {
 }
 
 function resolveWebExtCli() {
-  return path.join(path.dirname(require.resolve('web-ext')), 'bin', 'web-ext.js')
+  return path.join(
+    path.dirname(require.resolve('web-ext')),
+    'bin',
+    'web-ext.js'
+  )
 }
 
-function resolveFirefoxPath(environment = process.env, pathExists = fs.existsSync) {
+function resolveFirefoxPath(
+  environment = process.env,
+  pathExists = fs.existsSync,
+  platform = process.platform
+) {
   const configured = environment.VIOLET_VOID_FIREFOX_PATH
   if (configured) {
     if (!path.isAbsolute(configured)) {
-      throw new Error('VIOLET_VOID_FIREFOX_PATH must be an absolute Firefox executable path.')
+      throw new Error(
+        'VIOLET_VOID_FIREFOX_PATH must be an absolute Firefox executable path.'
+      )
     }
     return path.resolve(configured)
   }
 
-  const defaultPath = [
-    ...(process.platform === 'win32'
-      ? [
-          path.join(environment.PROGRAMFILES || 'C:\\Program Files', 'Mozilla Firefox', 'firefox.exe'),
-          path.join(environment['PROGRAMFILES(X86)'] || 'C:\\Program Files (x86)', 'Mozilla Firefox', 'firefox.exe')
-        ]
-      : process.platform === 'darwin'
-        ? ['/Applications/Firefox.app/Contents/MacOS/firefox']
-        : ['/usr/bin/firefox', '/usr/bin/firefox-developer-edition', '/usr/bin/firefox-esr'])
-  ].find(pathExists)
+  const candidates = []
+  const delimiter = platform === 'win32' ? ';' : ':'
+  const pathValue = environment.PATH || environment.Path || ''
+  const pathDirs = pathValue.split(delimiter).filter(Boolean)
+  const join = platform === 'win32' ? path.win32.join : path.posix.join
+
+  function addPathCandidates(executables) {
+    for (const dir of pathDirs) {
+      for (const exe of executables) {
+        candidates.push(join(dir, exe))
+      }
+    }
+  }
+
+  if (platform === 'darwin') {
+    candidates.push(
+      '/Applications/Firefox.app/Contents/MacOS/firefox',
+      '/Applications/Firefox Developer Edition.app/Contents/MacOS/firefox',
+      '/Applications/Firefox Nightly.app/Contents/MacOS/firefox',
+      join(os.homedir(), 'Applications/Firefox.app/Contents/MacOS/firefox'),
+      join(
+        os.homedir(),
+        'Applications/Firefox Developer Edition.app/Contents/MacOS/firefox'
+      ),
+      '/opt/homebrew/bin/firefox',
+      '/usr/local/bin/firefox'
+    )
+    addPathCandidates(['firefox', 'firefox-developer-edition'])
+  } else if (platform === 'win32') {
+    const programFiles = environment.ProgramFiles || 'C:\\Program Files'
+    const programFilesX86 =
+      environment['ProgramFiles(x86)'] || 'C:\\Program Files (x86)'
+    const localAppData = environment.LOCALAPPDATA || ''
+    if (localAppData) {
+      candidates.push(join(localAppData, 'Mozilla Firefox', 'firefox.exe'))
+    }
+    candidates.push(
+      join(programFiles, 'Mozilla Firefox', 'firefox.exe'),
+      join(programFilesX86, 'Mozilla Firefox', 'firefox.exe')
+    )
+    addPathCandidates(['firefox.exe'])
+    addPathCandidates(['firefox'])
+  } else {
+    candidates.push(
+      '/usr/bin/firefox',
+      '/usr/bin/firefox-developer-edition',
+      '/usr/bin/firefox-esr',
+      '/snap/bin/firefox',
+      '/usr/local/bin/firefox',
+      '/opt/firefox/firefox'
+    )
+    addPathCandidates(['firefox', 'firefox-developer-edition', 'firefox-esr'])
+  }
+
+  const defaultPath = candidates.find(pathExists)
   if (!defaultPath) {
-    throw new Error('Firefox is unavailable. Set VIOLET_VOID_FIREFOX_PATH to an absolute Firefox executable path.')
+    throw new Error(
+      'Firefox is unavailable. Set VIOLET_VOID_FIREFOX_PATH to an absolute Firefox executable path.'
+    )
   }
   return defaultPath
 }
@@ -61,7 +119,9 @@ function canonicalProfilePath(profilePath) {
   while (!hasFilesystemEntry(ancestor)) {
     const parent = path.dirname(ancestor)
     if (parent === ancestor) {
-      throw new Error('VIOLET_VOID_PROFILE_DIR has no existing filesystem ancestor.')
+      throw new Error(
+        'VIOLET_VOID_PROFILE_DIR has no existing filesystem ancestor.'
+      )
     }
     missing.unshift(path.basename(ancestor))
     ancestor = parent
@@ -71,12 +131,16 @@ function canonicalProfilePath(profilePath) {
   try {
     canonicalAncestor = fs.realpathSync(ancestor)
   } catch {
-    throw new Error('VIOLET_VOID_PROFILE_DIR must remain inside this repository to protect your normal Firefox profile.')
+    throw new Error(
+      'VIOLET_VOID_PROFILE_DIR must remain inside this repository to protect your normal Firefox profile.'
+    )
   }
 
   const canonicalCandidate = path.join(canonicalAncestor, ...missing)
   if (!canonicalCandidate.startsWith(`${canonicalRoot}${path.sep}`)) {
-    throw new Error('VIOLET_VOID_PROFILE_DIR must remain inside this repository to protect your normal Firefox profile.')
+    throw new Error(
+      'VIOLET_VOID_PROFILE_DIR must remain inside this repository to protect your normal Firefox profile.'
+    )
   }
   return canonicalCandidate
 }
@@ -89,11 +153,14 @@ function resolveConfig(
 ) {
   const port = Number(environment.VIOLET_VOID_PORT || 4173)
   if (!Number.isInteger(port) || port < 1024 || port > 65535) {
-    throw new Error('VIOLET_VOID_PORT must be a non-privileged integer between 1024 and 65535.')
+    throw new Error(
+      'VIOLET_VOID_PORT must be a non-privileged integer between 1024 and 65535.'
+    )
   }
 
   const profilePath = canonicalProfilePath(
-    environment.VIOLET_VOID_PROFILE_DIR || path.join(root, '.violet-void-firefox-profile')
+    environment.VIOLET_VOID_PROFILE_DIR ||
+      path.join(root, '.violet-void-firefox-profile')
   )
 
   return {
@@ -104,50 +171,78 @@ function resolveConfig(
       : cachedExtensionResolver(),
     port,
     profilePath,
-    webExtPath: webExtResolver()
+    webExtPath: webExtResolver(),
   }
 }
 
 function buildWebExtArguments(config) {
   return [
     'run',
-    '--source-dir', config.extensionPath,
-    '--target', 'firefox-desktop',
-    '--firefox', config.browserPath,
-    '--firefox-profile', config.profilePath,
+    '--source-dir',
+    config.extensionPath,
+    '--target',
+    'firefox-desktop',
+    '--firefox',
+    config.browserPath,
+    '--firefox-profile',
+    config.profilePath,
     '--profile-create-if-missing',
     '--keep-profile-changes',
     '--no-reload',
-    '--start-url', localStyleUrl(config.port),
-    '--start-url', startUrls[0],
-    '--start-url', startUrls[1]
+    '--start-url',
+    localStyleUrl(config.port),
+    '--start-url',
+    startUrls[0],
+    '--start-url',
+    startUrls[1],
   ]
 }
 
 function validateConfig(config) {
   if (!config.extensionPath) {
-    throw new Error('Set STYLUS_EXTENSION_PATH to an unpacked Stylus Firefox extension directory before launching.')
+    throw new Error(
+      'Set STYLUS_EXTENSION_PATH to an unpacked Stylus Firefox extension directory before launching.'
+    )
   }
-  if (!fs.statSync(config.extensionPath, { throwIfNoEntry: false })?.isDirectory()) {
-    throw new Error(`Stylus extension directory is unavailable: ${config.extensionPath}`)
+  if (
+    !fs.statSync(config.extensionPath, { throwIfNoEntry: false })?.isDirectory()
+  ) {
+    throw new Error(
+      `Stylus extension directory is unavailable: ${config.extensionPath}`
+    )
   }
-  if (!fs.statSync(path.join(config.extensionPath, 'manifest.json'), { throwIfNoEntry: false })?.isFile()) {
-    throw new Error(`Stylus extension directory has no manifest.json: ${config.extensionPath}`)
+  if (
+    !fs
+      .statSync(path.join(config.extensionPath, 'manifest.json'), {
+        throwIfNoEntry: false,
+      })
+      ?.isFile()
+  ) {
+    throw new Error(
+      `Stylus extension directory has no manifest.json: ${config.extensionPath}`
+    )
   }
   if (!fs.statSync(config.artifactPath, { throwIfNoEntry: false })?.isFile()) {
-    throw new Error(`Build the local UserStyle before launching: ${config.artifactPath}`)
+    throw new Error(
+      `Build the local UserStyle before launching: ${config.artifactPath}`
+    )
   }
   if (!fs.statSync(config.browserPath, { throwIfNoEntry: false })?.isFile()) {
     throw new Error(`Firefox is unavailable: ${config.browserPath}`)
   }
   if (!fs.statSync(config.webExtPath, { throwIfNoEntry: false })?.isFile()) {
-    throw new Error(`Local web-ext CLI is unavailable: ${config.webExtPath}. Run npm install before dev:browser.`)
+    throw new Error(
+      `Local web-ext CLI is unavailable: ${config.webExtPath}. Run npm install before dev:browser.`
+    )
   }
 }
 
 function serveArtifact(artifactPath, port) {
   const server = http.createServer((request, response) => {
-    if (request.method !== 'GET' || request.url !== '/chatgpt-violet-void.user.css') {
+    if (
+      request.method !== 'GET' ||
+      request.url !== '/chatgpt-violet-void.user.css'
+    ) {
       response.writeHead(404)
       response.end('Not found')
       return
@@ -155,7 +250,7 @@ function serveArtifact(artifactPath, port) {
 
     response.writeHead(200, {
       'Cache-Control': 'no-store',
-      'Content-Type': 'text/css; charset=utf-8'
+      'Content-Type': 'text/css; charset=utf-8',
     })
     fs.createReadStream(artifactPath).pipe(response)
   })
@@ -183,12 +278,18 @@ function waitForWebExt(child) {
 }
 
 function launchBrowser(config, spawnProcess = spawn) {
-  return waitForWebExt(spawnProcess(process.execPath, [config.webExtPath, ...buildWebExtArguments(config)], {
-    cwd: root,
-    shell: false,
-    stdio: 'inherit',
-    windowsHide: false
-  }))
+  return waitForWebExt(
+    spawnProcess(
+      process.execPath,
+      [config.webExtPath, ...buildWebExtArguments(config)],
+      {
+        cwd: root,
+        shell: false,
+        stdio: 'inherit',
+        windowsHide: false,
+      }
+    )
+  )
 }
 
 function printHelp() {
@@ -206,7 +307,10 @@ confirmation manually. CAPTCHA handling and credentials are never automated. It 
 paths without launching.`)
 }
 
-async function main(cliArgs = process.argv.slice(2), environment = process.env) {
+async function main(
+  cliArgs = process.argv.slice(2),
+  environment = process.env
+) {
   if (cliArgs.includes('--help') || cliArgs.includes('-h')) {
     printHelp()
     return
@@ -216,19 +320,27 @@ async function main(cliArgs = process.argv.slice(2), environment = process.env) 
   validateConfig(config)
 
   if (cliArgs.includes('--dry-run')) {
-    console.log(JSON.stringify({
-      firefox: config.browserPath,
-      profile: config.profilePath,
-      styleUrl: localStyleUrl(config.port),
-      webExt: config.webExtPath,
-      webExtArguments: buildWebExtArguments(config)
-    }, null, 2))
+    console.log(
+      JSON.stringify(
+        {
+          firefox: config.browserPath,
+          profile: config.profilePath,
+          styleUrl: localStyleUrl(config.port),
+          webExt: config.webExtPath,
+          webExtArguments: buildWebExtArguments(config),
+        },
+        null,
+        2
+      )
+    )
     return
   }
 
   const server = await serveArtifact(config.artifactPath, config.port)
   try {
-    console.log(`Launching Firefox through web-ext with isolated profile: ${config.profilePath}`)
+    console.log(
+      `Launching Firefox through web-ext with isolated profile: ${config.profilePath}`
+    )
     await launchBrowser(config)
     console.log('Firefox closed; stopping the local UserStyle server.')
   } finally {
@@ -250,5 +362,5 @@ module.exports = {
   resolveConfig,
   resolveFirefoxPath,
   resolveWebExtCli,
-  waitForWebExt
+  waitForWebExt,
 }

@@ -4,3 +4,6 @@ test-results
 .violet-void-dev-profile
 .violet-void-firefox-profile
 .violet-void-stylus
+
+# Local Codex Desktop environment; canonical copy lives in a secret Gist.
+/.codex/environments/environment.toml
