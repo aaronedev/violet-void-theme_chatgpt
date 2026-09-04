@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT Violet Void
 @namespace      github.com/aaronedev/violet-void-theme
-@version        5.4.8
+@version        5.4.9
 @license        MIT
 @author         aaronedev
 @homepageURL    https://github.com/aaronedev/violet-void-theme_chatgpt
@@ -382,10 +382,8 @@
     /* ------------------------------------------------------------------ */
 
     :where(
-        [class*="bg-black/"],
         [class*="bg-gray-950"],
         [class*="bg-gray-900"],
-        [class*="dark:bg-black/"],
         [class*="dark:bg-gray-950"],
         [class*="dark:bg-gray-900"],
         [class*="bg-[#000"],
