@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT Violet Void
 @namespace      github.com/aaronedev/violet-void-theme
-@version        5.4.7
+@version        5.4.8
 @license        MIT
 @author         aaronedev
 @homepageURL    https://github.com/aaronedev/violet-void-theme_chatgpt
@@ -937,6 +937,23 @@
     :where([data-composer-surface="true"] button[aria-label*="add" i],
     [data-composer-surface="true"] button[aria-label*="attach" i],
     [data-composer-surface="true"] button[aria-label*="upload" i]):hover {
+        color: var(--void-positive-text) !important;
+        border-color: var(--void-positive-border) !important;
+        background: var(--void-positive-bg) !important;
+    }
+
+    /* Effort picker: same positive hover as add / attach */
+    :where(
+        [data-composer-surface="true"] button[aria-label*="effort" i],
+        [data-composer-surface="true"] button[aria-label*="thinking" i],
+        [data-composer-surface="true"] button[aria-label*="reasoning" i],
+        [data-composer-surface="true"] button[title*="effort" i],
+        [data-composer-surface="true"] button[title*="thinking" i],
+        [data-composer-surface="true"] button[title*="reasoning" i],
+        [data-composer-surface="true"] button[data-testid*="effort" i],
+        [data-composer-surface="true"] button[data-testid*="thinking" i],
+        [data-composer-surface="true"] button[data-testid*="reasoning" i]
+    ):is(:hover, [aria-expanded="true"]) {
         color: var(--void-positive-text) !important;
         border-color: var(--void-positive-border) !important;
         background: var(--void-positive-bg) !important;
