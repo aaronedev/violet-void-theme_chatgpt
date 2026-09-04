@@ -1339,9 +1339,36 @@
         box-shadow: var(--void-surface-glow-hover) !important;
     }
 
-    :where([role="menuitem"][aria-selected="true"], [role="option"][aria-selected="true"]) {
-        background-color: var(--void-highlight) !important;
-        color: var(--void-active) !important;
+    :where(
+        [role="menuitem"][aria-selected="true"],
+        [role="option"][aria-selected="true"],
+        [role="menuitemradio"][aria-checked="true"],
+        [role="option"][aria-checked="true"]
+    ) {
+        background-color: var(--void-positive) !important;
+        color: var(--void-bg) !important;
+        box-shadow: none !important;
+    }
+
+    :where(
+        [role="menuitem"][aria-selected="true"],
+        [role="option"][aria-selected="true"],
+        [role="menuitemradio"][aria-checked="true"],
+        [role="option"][aria-checked="true"]
+    ):hover {
+        background-color: var(--void-positive) !important;
+        color: var(--void-bg) !important;
+        box-shadow: none !important;
+    }
+
+    :where(
+        [role="menuitem"][aria-selected="true"] *,
+        [role="option"][aria-selected="true"] *,
+        [role="menuitemradio"][aria-checked="true"] *,
+        [role="option"][aria-checked="true"] *
+    ) {
+        color: var(--void-bg) !important;
+        stroke: currentColor !important;
     }
 
     :where(input, textarea, select) {
