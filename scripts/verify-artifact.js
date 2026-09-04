@@ -16,8 +16,17 @@ if (fs.existsSync(legacyArtifact)) {
   throw new Error('Legacy root UserStyle artifact must be absent.')
 }
 
+const manifest = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'))
+const expectedVersion = manifest && manifest.userStyle && manifest.userStyle.version
+if (!/^\d+\.\d+\.\d+$/.test(expectedVersion || '')) {
+  throw new Error('package.json userStyle.version must be plain semver')
+}
+
+if (!new RegExp(`@version\\s+${expectedVersion.replace(/\./g, '\\.')}(?!\\d)`).test(built)) {
+  throw new Error(`Dist UserStyle is missing required metadata: @version ${expectedVersion}`)
+}
+
 const requiredMetadata = [
-  '@version        5.4.6',
   '@updateURL      https://raw.githubusercontent.com/aaronedev/violet-void-theme_chatgpt/main/dist/chatgpt-violet-void.user.css',
   '@downloadURL    https://raw.githubusercontent.com/aaronedev/violet-void-theme_chatgpt/main/dist/chatgpt-violet-void.user.css'
 ]

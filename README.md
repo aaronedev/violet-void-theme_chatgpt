@@ -6,9 +6,11 @@ focus frames, and sticky Copy controls while leaving ChatGPT's native thread and
 authoritative. It intentionally adds no custom syntax highlighting.
 
 Run `npm run build` to copy the source, with normalized LF newlines, to the tracked installable
-artifact `dist/chatgpt-violet-void.user.css`. The artifact is deliberately byte-identical to its
-source; `npm run verify:artifact` checks that invariant, the v5.4.6 update metadata, and that the
-legacy root artifact is absent.
+artifact `dist/chatgpt-violet-void.user.css`. When the CSS changed since the last build, the patch
+version is bumped automatically in the `src/` header, `package.json`, and `dist/`; unchanged
+rebuilds bump nothing. Use `npm run bump` to force a patch bump. The artifact is deliberately
+byte-identical to its source; `npm run verify:artifact` checks that invariant, the version metadata
+(derived from `package.json`), and that the legacy root artifact is absent.
 
 Install the tracked [`dist/chatgpt-violet-void.user.css`](dist/chatgpt-violet-void.user.css)
 artifact. Existing v5.4.3 installs still point to the retired root update URL, so after the v5.4.4

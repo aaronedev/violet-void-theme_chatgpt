@@ -11,286 +11,273 @@
 @description    Exact near-black Violet Void palette with native widths, a teal block caret, rounded focus, sticky Copy controls, and no custom syntax highlighting.
 ==/UserStyle== */
 
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Rubik:wght@400;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Rubik:wght@400;600&display=swap");
 
 @-moz-document domain("chatgpt.com"), domain("chat.openai.com") {
-  @scope (html.dark) {
-    /* ------------------------------------------------------------------ */
-    /* Palette / ChatGPT token bridge                                      */
-    /* ------------------------------------------------------------------ */
+    @scope (html.dark) {
+        /* ------------------------------------------------------------------ */
+        /* Palette / ChatGPT token bridge                                      */
+        /* ------------------------------------------------------------------ */
 
     :scope {
-      color-scheme: dark;
+        color-scheme: dark;
 
-      --void-bg: #0f0f0f;
-      --void-bg-2: #0e0e0e;
-      --void-bg-glass: rgba(15, 15, 15, 0.94);
+        --void-bg: #0f0f0f;
+        --void-bg-2: #0e0e0e;
+        --void-bg-glass: rgba(15, 15, 15, 0.94);
 
-      --void-surface: #181818;
-      --void-surface-2: #1b1b1b;
-      --void-surface-3: #212121;
-      --void-surface-hover: var(--void-highlight-soft);
+        --void-surface: #181818;
+        --void-surface-2: #1b1b1b;
+        --void-surface-3: #212121;
+        --void-surface-hover: var(--void-highlight-soft);
 
-      --void-code-bg: #181818;
-      --void-code-header-bg: #1b1b1b;
+        --void-code-bg: #181818;
+        --void-code-header-bg: #1b1b1b;
 
-      --void-border-soft: #252525;
-      --void-border: #303030;
-      --void-border-strong: #4c4c4c;
+        --void-border-soft: #252525;
+        --void-border: #303030;
+        --void-border-strong: #4c4c4c;
 
-      --void-fg: #f0f0f5;
-      --void-fg-soft: #b8b8c0;
-      --void-muted: #4c4c4c;
-      --void-muted-dim: #313131;
+        --void-fg: #f0f0f5;
+        --void-fg-soft: #b8b8c0;
+        --void-muted: #4c4c4c;
+        --void-muted-dim: #313131;
 
-      --void-link: #29adff;
-      --void-link-rgb: 41, 173, 255;
-      --void-link-hover: #00fff9;
-      --void-link-hover-rgb: 0, 255, 249;
-      --void-active: #bb7cff;
-      --void-active-rgb: 187, 124, 255;
-      --void-cursor: #08bdba;
-      --void-caret-width: 0.66ch;
-      --void-caret-alpha: 0.92;
+        --void-link: #29adff;
+        --void-link-rgb: 41, 173, 255;
+        --void-link-hover: #00fff9;
+        --void-link-hover-rgb: 0, 255, 249;
+        --void-active: #bb7cff;
+        --void-active-rgb: 187, 124, 255;
+        --void-cursor: #08bdba;
+        --void-caret-width: 0.66ch;
+        --void-caret-alpha: 0.92;
 
-      /* Barely visible glow source: canonical terminal color6 teal. */
-      --void-glow: #00a8a4;
-      --void-glow-rgb: 0, 168, 164;
-      --void-glow-ghost: rgba(var(--void-glow-rgb), 0.012);
-      --void-glow-ambient: rgba(var(--void-glow-rgb), 0.02);
-      --void-glow-soft: rgba(var(--void-glow-rgb), 0.035);
-      --void-glow-line: rgba(var(--void-glow-rgb), 0.055);
-      --void-glow-border: rgba(var(--void-glow-rgb), 0.075);
-      --void-surface-glow-soft:
-        inset 0 0 0 1px rgba(var(--void-glow-rgb), 0.026),
-        0 0 16px var(--void-glow-ghost);
-      --void-surface-glow:
-        inset 0 0 0 1px var(--void-glow-line), 0 0 20px var(--void-glow-ghost);
-      --void-surface-glow-hover:
-        inset 0 0 0 1px var(--void-glow-border),
-        0 0 18px var(--void-glow-ambient);
-      --void-sidebar-glow:
-        inset -1px 0 0 var(--void-glow-border),
-        8px 0 28px var(--void-glow-ambient);
-      --void-header-glow:
-        inset 0 -1px 0 var(--void-glow-line), 0 8px 24px var(--void-glow-ghost);
+        /* Barely visible glow source: canonical terminal color6 teal. */
+        --void-glow: #00a8a4;
+        --void-glow-rgb: 0, 168, 164;
+        --void-glow-ghost: rgba(var(--void-glow-rgb), 0.012);
+        --void-glow-ambient: rgba(var(--void-glow-rgb), 0.020);
+        --void-glow-soft: rgba(var(--void-glow-rgb), 0.035);
+        --void-glow-line: rgba(var(--void-glow-rgb), 0.055);
+        --void-glow-border: rgba(var(--void-glow-rgb), 0.075);
+        --void-surface-glow-soft: inset 0 0 0 1px rgba(var(--void-glow-rgb), 0.026), 0 0 16px var(--void-glow-ghost);
+        --void-surface-glow: inset 0 0 0 1px var(--void-glow-line), 0 0 20px var(--void-glow-ghost);
+        --void-surface-glow-hover: inset 0 0 0 1px var(--void-glow-border), 0 0 18px var(--void-glow-ambient);
+        --void-sidebar-glow: inset -1px 0 0 var(--void-glow-border), 8px 0 28px var(--void-glow-ambient);
+        --void-header-glow: inset 0 -1px 0 var(--void-glow-line), 0 8px 24px var(--void-glow-ghost);
 
-      /* Neutral near-black interaction fills with teal retained for accents and focus. */
-      --void-accent: #00a8a4;
-      --void-accent-rgb: 0, 168, 164;
-      --void-highlight-mix-soft: #1b1b1b;
-      --void-highlight-mix: #191919;
-      --void-highlight-mix-strong: #212121;
-      --void-highlight-soft: var(--void-highlight-mix-soft);
-      --void-highlight: var(--void-highlight-mix);
-      --void-highlight-strong: var(--void-highlight-mix-strong);
-      --void-highlight-faint: rgba(var(--void-accent-rgb), 0.045);
-      --void-highlight-border: rgba(var(--void-accent-rgb), 0.24);
-      --void-highlight-border-strong: rgba(var(--void-accent-rgb), 0.4);
-      --void-selection-bg: #191919;
-      --void-selection-fg: #00fff9;
-      --void-hover-bg: #1b1b1b;
+        /* Neutral near-black interaction fills with teal retained for accents and focus. */
+        --void-accent: #00a8a4;
+        --void-accent-rgb: 0, 168, 164;
+        --void-highlight-mix-soft: #1b1b1b;
+        --void-highlight-mix: #191919;
+        --void-highlight-mix-strong: #212121;
+        --void-highlight-soft: var(--void-highlight-mix-soft);
+        --void-highlight: var(--void-highlight-mix);
+        --void-highlight-strong: var(--void-highlight-mix-strong);
+        --void-highlight-faint: rgba(var(--void-accent-rgb), 0.045);
+        --void-highlight-border: rgba(var(--void-accent-rgb), 0.24);
+        --void-highlight-border-strong: rgba(var(--void-accent-rgb), 0.40);
+        --void-selection-bg: #191919;
+        --void-selection-fg: #00fff9;
+        --void-hover-bg: #1b1b1b;
 
-      --void-shadow-soft:
-        0 14px 34px rgba(0, 0, 0, 0.34), 0 0 22px var(--void-glow-ambient);
-      --void-shadow-menu:
-        0 18px 48px rgba(0, 0, 0, 0.45), 0 0 28px var(--void-glow-soft);
-      --void-ring: 0 0 0 1px var(--void-highlight-border);
-      --void-focus-border: rgba(var(--void-accent-rgb), 0.34);
-      --void-focus-border-strong: rgba(var(--void-accent-rgb), 0.46);
-      --void-focus-fill: rgba(var(--void-accent-rgb), 0.032);
-      --void-focus-ring:
-        0 0 0 1px var(--void-focus-border), 0 0 0 4px var(--void-focus-fill),
-        0 0 20px var(--void-glow-ambient);
-      --void-focus-ring-strong:
-        0 0 0 1px var(--void-focus-border-strong),
-        0 0 0 4px var(--void-focus-fill), 0 0 24px var(--void-glow-soft);
-      --void-focus-ring-tight:
-        inset 0 0 0 1px var(--void-focus-border),
-        0 0 14px var(--void-glow-ambient);
+        --void-shadow-soft: 0 14px 34px rgba(0, 0, 0, 0.34), 0 0 22px var(--void-glow-ambient);
+        --void-shadow-menu: 0 18px 48px rgba(0, 0, 0, 0.45), 0 0 28px var(--void-glow-soft);
+        --void-ring: 0 0 0 1px var(--void-highlight-border);
+        --void-focus-border: rgba(var(--void-accent-rgb), 0.34);
+        --void-focus-border-strong: rgba(var(--void-accent-rgb), 0.46);
+        --void-focus-fill: rgba(var(--void-accent-rgb), 0.032);
+        --void-focus-ring: 0 0 0 1px var(--void-focus-border), 0 0 0 4px var(--void-focus-fill), 0 0 20px var(--void-glow-ambient);
+        --void-focus-ring-strong: 0 0 0 1px var(--void-focus-border-strong), 0 0 0 4px var(--void-focus-fill), 0 0 24px var(--void-glow-soft);
+        --void-focus-ring-tight: inset 0 0 0 1px var(--void-focus-border), 0 0 14px var(--void-glow-ambient);
 
-      /* Sparse semantic colors from the supplied palette */
-      --void-positive: #42ff97;
-      --void-positive-text: #e7fff2;
-      --void-positive-bg: rgba(66, 255, 151, 0.1);
-      --void-positive-bg-hover: rgba(66, 255, 151, 0.16);
-      --void-positive-border: rgba(66, 255, 151, 0.22);
-      --void-positive-border-strong: rgba(66, 255, 151, 0.34);
+        /* Sparse semantic colors from the supplied palette */
+        --void-positive: #42ff97;
+        --void-positive-text: #e7fff2;
+        --void-positive-bg: rgba(66, 255, 151, 0.10);
+        --void-positive-bg-hover: rgba(66, 255, 151, 0.16);
+        --void-positive-border: rgba(66, 255, 151, 0.22);
+        --void-positive-border-strong: rgba(66, 255, 151, 0.34);
 
-      --void-negative: #ff004b;
-      --void-negative-text: #ffd7df;
-      --void-negative-bg: rgba(255, 0, 75, 0.1);
-      --void-negative-bg-hover: rgba(255, 0, 75, 0.16);
-      --void-negative-border: rgba(255, 0, 75, 0.22);
-      --void-negative-border-strong: rgba(255, 0, 75, 0.34);
+        --void-negative: #ff004b;
+        --void-negative-text: #ffd7df;
+        --void-negative-bg: rgba(255, 0, 75, 0.10);
+        --void-negative-bg-hover: rgba(255, 0, 75, 0.16);
+        --void-negative-border: rgba(255, 0, 75, 0.22);
+        --void-negative-border-strong: rgba(255, 0, 75, 0.34);
 
-      --void-info: #00a8a4;
-      --void-info-text: #ddfffd;
-      --void-info-bg: rgba(var(--void-accent-rgb), 0.12);
-      --void-info-bg-hover: rgba(var(--void-accent-rgb), 0.18);
-      --void-info-border: rgba(var(--void-accent-rgb), 0.28);
+        --void-info: #00a8a4;
+        --void-info-text: #ddfffd;
+        --void-info-bg: rgba(var(--void-accent-rgb), 0.12);
+        --void-info-bg-hover: rgba(var(--void-accent-rgb), 0.18);
+        --void-info-border: rgba(var(--void-accent-rgb), 0.28);
 
-      --void-radius-sm: 0.45rem;
-      --void-radius: 0.75rem;
-      --void-radius-lg: 1rem;
+        --void-radius-sm: 0.45rem;
+        --void-radius: 0.75rem;
+        --void-radius-lg: 1rem;
 
-      /* Legacy / Tailwind-ish tokens still used across ChatGPT builds */
-      --black: var(--void-bg) !important;
-      --white: var(--void-fg) !important;
+        /* Legacy / Tailwind-ish tokens still used across ChatGPT builds */
+        --black: var(--void-bg) !important;
+        --white: var(--void-fg) !important;
 
-      --gray-50: var(--void-fg) !important;
-      --gray-100: var(--void-fg-soft) !important;
-      --gray-200: var(--void-fg-soft) !important;
-      --gray-300: var(--void-fg-soft) !important;
-      --gray-400: var(--void-muted) !important;
-      --gray-500: var(--void-muted) !important;
-      --gray-600: var(--void-border-strong) !important;
-      --gray-700: var(--void-surface-3) !important;
-      --gray-750: var(--void-surface-2) !important;
-      --gray-800: var(--void-surface) !important;
-      --gray-900: var(--void-bg) !important;
-      --gray-950: var(--void-bg) !important;
+        --gray-50: var(--void-fg) !important;
+        --gray-100: var(--void-fg-soft) !important;
+        --gray-200: var(--void-fg-soft) !important;
+        --gray-300: var(--void-fg-soft) !important;
+        --gray-400: var(--void-muted) !important;
+        --gray-500: var(--void-muted) !important;
+        --gray-600: var(--void-border-strong) !important;
+        --gray-700: var(--void-surface-3) !important;
+        --gray-750: var(--void-surface-2) !important;
+        --gray-800: var(--void-surface) !important;
+        --gray-900: var(--void-bg) !important;
+        --gray-950: var(--void-bg) !important;
 
-      --bg-primary: var(--void-bg) !important;
-      --bg-secondary: var(--void-surface) !important;
-      --bg-tertiary: var(--void-surface-2) !important;
-      --bg-elevated-primary: var(--void-surface-2) !important;
-      --bg-elevated-secondary: var(--void-surface) !important;
+        --bg-primary: var(--void-bg) !important;
+        --bg-secondary: var(--void-surface) !important;
+        --bg-tertiary: var(--void-surface-2) !important;
+        --bg-elevated-primary: var(--void-surface-2) !important;
+        --bg-elevated-secondary: var(--void-surface) !important;
 
-      --main-surface-primary: var(--void-bg) !important;
-      --main-surface-secondary: var(--void-surface) !important;
-      --main-surface-tertiary: var(--void-surface-2) !important;
-      --main-surface-quaternary: var(--void-surface-3) !important;
-      --main-surface-error: var(--void-negative-bg) !important;
+        --main-surface-primary: var(--void-bg) !important;
+        --main-surface-secondary: var(--void-surface) !important;
+        --main-surface-tertiary: var(--void-surface-2) !important;
+        --main-surface-quaternary: var(--void-surface-3) !important;
+        --main-surface-error: var(--void-negative-bg) !important;
 
-      --sidebar-surface-primary: var(--void-bg-2) !important;
-      --sidebar-surface-secondary: var(--void-surface) !important;
-      --sidebar-surface-tertiary: var(--void-surface-2) !important;
+        --sidebar-surface-primary: var(--void-bg-2) !important;
+        --sidebar-surface-secondary: var(--void-surface) !important;
+        --sidebar-surface-tertiary: var(--void-surface-2) !important;
 
-      --message-surface: var(--void-surface) !important;
-      --composer-surface-primary: var(--void-surface) !important;
-      --composer-surface-secondary: var(--void-surface-2) !important;
-      --composer-surface-tertiary: var(--void-surface-3) !important;
+        --message-surface: var(--void-surface) !important;
+        --composer-surface-primary: var(--void-surface) !important;
+        --composer-surface-secondary: var(--void-surface-2) !important;
+        --composer-surface-tertiary: var(--void-surface-3) !important;
 
-      --text-primary: var(--void-fg) !important;
-      --text-secondary: var(--void-fg-soft) !important;
-      --text-tertiary: var(--void-muted) !important;
-      --text-quaternary: var(--void-muted-dim) !important;
-      --text-placeholder: var(--void-muted-dim) !important;
-      --text-error: var(--void-negative-text) !important;
+        --text-primary: var(--void-fg) !important;
+        --text-secondary: var(--void-fg-soft) !important;
+        --text-tertiary: var(--void-muted) !important;
+        --text-quaternary: var(--void-muted-dim) !important;
+        --text-placeholder: var(--void-muted-dim) !important;
+        --text-error: var(--void-negative-text) !important;
 
-      --link: var(--void-link) !important;
-      --link-hover: var(--void-link-hover) !important;
+        --link: var(--void-link) !important;
+        --link-hover: var(--void-link-hover) !important;
 
-      --border-light: var(--void-border-soft) !important;
-      --border-medium: var(--void-border) !important;
-      --border-heavy: var(--void-border) !important;
-      --border-xheavy: var(--void-highlight-border-strong) !important;
+        --border-light: var(--void-border-soft) !important;
+        --border-medium: var(--void-border) !important;
+        --border-heavy: var(--void-border) !important;
+        --border-xheavy: var(--void-highlight-border-strong) !important;
+
     }
 
     /* ------------------------------------------------------------------ */
     /* Base / accessibility                                                */
     /* ------------------------------------------------------------------ */
 
-    :where(html, body, #__next, main, [role='main']) {
-      background: var(--void-bg) !important;
-      color: var(--void-fg) !important;
-      font-family:
-        'Rubik',
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        'Segoe UI',
-        'Inter',
-        'Geist',
-        'Noto Color Emoji',
-        sans-serif !important;
+    :where(html, body, #__next, main, [role="main"]) {
+        background: var(--void-bg) !important;
+        color: var(--void-fg) !important;
+        font-family:
+            "Rubik",
+            system-ui,
+            -apple-system,
+            BlinkMacSystemFont,
+            "Segoe UI",
+            "Inter",
+            "Geist",
+            "Noto Color Emoji",
+            sans-serif !important;
     }
 
     :where(html, body) {
-      overflow-x: hidden !important;
+        overflow-x: hidden !important;
     }
 
     body {
-      letter-spacing: -0.01em;
+        letter-spacing: -0.01em;
     }
 
     :where(code, pre, kbd, samp) {
-      font-family:
-        'JetBrains Mono', 'FiraCode Nerd Font', 'Geist Mono', 'SFMono-Regular',
-        Consolas, 'Liberation Mono', monospace !important;
+        font-family:
+            "JetBrains Mono",
+            "FiraCode Nerd Font",
+            "Geist Mono",
+            "SFMono-Regular",
+            Consolas,
+            "Liberation Mono",
+            monospace !important;
     }
 
     ::selection {
-      background: var(--void-selection-bg) !important;
-      color: var(--void-selection-fg) !important;
+        background: var(--void-selection-bg) !important;
+        color: var(--void-selection-fg) !important;
     }
 
-    :where(input, textarea, [contenteditable='true']),
-    :where(input, textarea, [contenteditable='true']) * {
-      caret-color: var(--void-cursor) !important;
-      caret-shape: block !important;
-      caret: var(--void-cursor) block !important;
+    :where(input, textarea, [contenteditable="true"]),
+    :where(input, textarea, [contenteditable="true"]) * {
+        caret-color: var(--void-cursor) !important;
+        caret-shape: block !important;
+        caret: var(--void-cursor) block !important;
     }
+
 
     /* Firefox block-caret bridge
        Firefox currently ignores native caret-shape:block. The CSS below gives
        CodeMirror/editor cursors a block shape and exposes hooks used by the
        optional firefox-block-caret.user.js shim for the ChatGPT composer. */
-    :where(
-      .vv-firefox-block-caret-native-off,
-      .vv-firefox-block-caret-native-off *
-    ) {
-      caret-color: transparent !important;
+    :where(.vv-firefox-block-caret-native-off, .vv-firefox-block-caret-native-off *) {
+        caret-color: transparent !important;
     }
 
     #vv-firefox-block-caret {
-      position: fixed !important;
-      z-index: 2147483647 !important;
-      display: none !important;
-      width: var(--void-caret-width) !important;
-      min-width: 8px !important;
-      background: var(--void-cursor) !important;
-      border-radius: 0.08rem !important;
-      box-shadow:
-        0 0 0 1px rgba(15, 15, 15, 0.36),
-        0 0 10px rgba(var(--void-glow-rgb), 0.1) !important;
-      pointer-events: none !important;
-      mix-blend-mode: normal !important;
-      opacity: var(--void-caret-alpha) !important;
-      animation: vv-block-caret-blink 1.06s steps(1, end) infinite !important;
-    }
-
-    #vv-firefox-block-caret[data-visible='true'] {
-      display: block !important;
-    }
-  }
-
-  @keyframes vv-block-caret-blink {
-    0%,
-    49% {
-      opacity: var(--void-caret-alpha);
-    }
-
-    50%,
-    100% {
-      opacity: 0;
-    }
-  }
-
-  @scope (html.dark) {
-    @supports (-moz-appearance: none) {
-      :where(.cm-editor.cm-focused .cm-cursor, .cm-focused .cm-cursor) {
-        border-left: 0 !important;
+        position: fixed !important;
+        z-index: 2147483647 !important;
+        display: none !important;
         width: var(--void-caret-width) !important;
         min-width: 8px !important;
-        margin-left: -0.08ch !important;
         background: var(--void-cursor) !important;
         border-radius: 0.08rem !important;
-        opacity: var(--void-caret-alpha) !important;
+        box-shadow: 0 0 0 1px rgba(15, 15, 15, 0.36), 0 0 10px rgba(var(--void-glow-rgb), 0.10) !important;
+        pointer-events: none !important;
         mix-blend-mode: normal !important;
+        opacity: var(--void-caret-alpha) !important;
         animation: vv-block-caret-blink 1.06s steps(1, end) infinite !important;
-      }
+    }
+
+    #vv-firefox-block-caret[data-visible="true"] {
+        display: block !important;
+    }
+
+    }
+
+    @keyframes vv-block-caret-blink {
+        0%,
+        49% {
+            opacity: var(--void-caret-alpha);
+        }
+
+        50%,
+        100% {
+            opacity: 0;
+        }
+    }
+
+    @scope (html.dark) {
+    @supports (-moz-appearance: none) {
+        :where(.cm-editor.cm-focused .cm-cursor, .cm-focused .cm-cursor) {
+            border-left: 0 !important;
+            width: var(--void-caret-width) !important;
+            min-width: 8px !important;
+            margin-left: -0.08ch !important;
+            background: var(--void-cursor) !important;
+            border-radius: 0.08rem !important;
+            opacity: var(--void-caret-alpha) !important;
+            mix-blend-mode: normal !important;
+            animation: vv-block-caret-blink 1.06s steps(1, end) infinite !important;
+        }
     }
 
     /* ------------------------------------------------------------------ */
@@ -301,106 +288,93 @@
        frames on ChatGPT's nested rounded wrappers. Keep focus visible, but
        draw it with rounded box-shadows on the themed shell instead. */
     :where(
-      a,
-      button,
-      textarea,
-      input,
-      select,
-      summary,
-      [role='button'],
-      [role='link'],
-      [role='textbox'],
-      [role='combobox'],
-      [role='menuitem'],
-      [role='option'],
-      [tabindex]:not([tabindex='-1']),
-      [contenteditable='true']
-    ):is(:focus, :focus-visible) {
-      outline: none !important;
-      outline-color: transparent !important;
-      outline-offset: 0 !important;
-      --tw-ring-color: transparent !important;
-      --tw-ring-shadow: 0 0 #0000 !important;
-      --tw-ring-offset-color: transparent !important;
-      --tw-ring-offset-shadow: 0 0 #0000 !important;
-    }
-
-    :where(
-      a,
-      button,
-      summary,
-      [role='button'],
-      [role='link'],
-      [role='menuitem'],
-      [role='option'],
-      [tabindex]:not([tabindex='-1'])
-    ):focus-visible {
-      border-color: var(--void-focus-border) !important;
-      box-shadow: var(--void-focus-ring-tight) !important;
-    }
-
-    :where(
-      input,
-      textarea,
-      select,
-      [role='textbox'],
-      [role='combobox'],
-      [contenteditable='true']
-    ):focus-visible {
-      border-color: var(--void-focus-border-strong) !important;
-      border-radius: var(--void-radius-sm) !important;
-      box-shadow: var(--void-focus-ring) !important;
-    }
-
-    :where(
+        a,
         button,
-        [role='button'],
+        textarea,
+        input,
+        select,
         summary,
-        [role='menuitem'],
-        [role='option']
-      ):focus-visible:not([class*='rounded-full']) {
-      border-radius: 0.6rem !important;
+        [role="button"],
+        [role="link"],
+        [role="textbox"],
+        [role="combobox"],
+        [role="menuitem"],
+        [role="option"],
+        [tabindex]:not([tabindex="-1"]),
+        [contenteditable="true"]
+    ):is(:focus, :focus-visible) {
+        outline: none !important;
+        outline-color: transparent !important;
+        outline-offset: 0 !important;
+        --tw-ring-color: transparent !important;
+        --tw-ring-shadow: 0 0 #0000 !important;
+        --tw-ring-offset-color: transparent !important;
+        --tw-ring-offset-shadow: 0 0 #0000 !important;
     }
 
     :where(
-      [class*='outline-'],
-      [class*='ring-'],
-      [class*='focus:outline'],
-      [class*='focus-visible:outline'],
-      [class*='focus-within:outline'],
-      [class*='focus:ring'],
-      [class*='focus-visible:ring'],
-      [class*='focus-within:ring'],
-      [class*='focus:border'],
-      [class*='focus-within:border'],
-      [class*='focus-visible:border']
-    ):is(:focus, :focus-visible, :focus-within) {
-      outline: none !important;
-      outline-color: transparent !important;
-      outline-offset: 0 !important;
-      --tw-ring-color: transparent !important;
-      --tw-ring-shadow: 0 0 #0000 !important;
-      --tw-ring-offset-color: transparent !important;
-      --tw-ring-offset-shadow: 0 0 #0000 !important;
+        a,
+        button,
+        summary,
+        [role="button"],
+        [role="link"],
+        [role="menuitem"],
+        [role="option"],
+        [tabindex]:not([tabindex="-1"])
+    ):focus-visible {
+        border-color: var(--void-focus-border) !important;
+        box-shadow: var(--void-focus-ring-tight) !important;
     }
 
-    :where(button, [role='button'], a) {
-      transition:
-        background-color 120ms ease,
-        border-color 120ms ease,
-        color 120ms ease,
-        opacity 120ms ease !important;
+    :where(input, textarea, select, [role="textbox"], [role="combobox"], [contenteditable="true"]):focus-visible {
+        border-color: var(--void-focus-border-strong) !important;
+        border-radius: var(--void-radius-sm) !important;
+        box-shadow: var(--void-focus-ring) !important;
+    }
+
+    :where(button, [role="button"], summary, [role="menuitem"], [role="option"]):focus-visible:not([class*="rounded-full"]) {
+        border-radius: 0.6rem !important;
+    }
+
+    :where(
+        [class*="outline-"],
+        [class*="ring-"],
+        [class*="focus:outline"],
+        [class*="focus-visible:outline"],
+        [class*="focus-within:outline"],
+        [class*="focus:ring"],
+        [class*="focus-visible:ring"],
+        [class*="focus-within:ring"],
+        [class*="focus:border"],
+        [class*="focus-within:border"],
+        [class*="focus-visible:border"]
+    ):is(:focus, :focus-visible, :focus-within) {
+        outline: none !important;
+        outline-color: transparent !important;
+        outline-offset: 0 !important;
+        --tw-ring-color: transparent !important;
+        --tw-ring-shadow: 0 0 #0000 !important;
+        --tw-ring-offset-color: transparent !important;
+        --tw-ring-offset-shadow: 0 0 #0000 !important;
+    }
+
+    :where(button, [role="button"], a) {
+        transition:
+            background-color 120ms ease,
+            border-color 120ms ease,
+            color 120ms ease,
+            opacity 120ms ease !important;
     }
 
     @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        animation-duration: 0.001ms !important;
-        animation-iteration-count: 1 !important;
-        scroll-behavior: auto !important;
-        transition-duration: 0.001ms !important;
-      }
+        *,
+        *::before,
+        *::after {
+            animation-duration: 0.001ms !important;
+            animation-iteration-count: 1 !important;
+            scroll-behavior: auto !important;
+            transition-duration: 0.001ms !important;
+        }
     }
 
     /* ------------------------------------------------------------------ */
@@ -408,281 +382,229 @@
     /* ------------------------------------------------------------------ */
 
     :where(
-      [class*='bg-black/'],
-      [class*='bg-gray-950'],
-      [class*='bg-gray-900'],
-      [class*='dark:bg-black/'],
-      [class*='dark:bg-gray-950'],
-      [class*='dark:bg-gray-900'],
-      [class*='bg-[#000'],
-      [class*='bg-[#050505'],
-      [class*='bg-[#0A0A0A'],
-      [class*='bg-[#0a0a0a']
+        [class*="bg-black/"],
+        [class*="bg-gray-950"],
+        [class*="bg-gray-900"],
+        [class*="dark:bg-black/"],
+        [class*="dark:bg-gray-950"],
+        [class*="dark:bg-gray-900"],
+        [class*="bg-[#000"],
+        [class*="bg-[#050505"],
+        [class*="bg-[#0A0A0A"],
+        [class*="bg-[#0a0a0a"]
     ) {
-      background-color: var(--void-bg) !important;
+        background-color: var(--void-bg) !important;
     }
 
     :where(
-      [class*='bg-gray-800'],
-      [class*='dark:bg-gray-800'],
-      [class*='bg-token-main-surface-secondary'],
-      [class*='bg-token-sidebar-surface-secondary']
+        [class*="bg-gray-800"],
+        [class*="dark:bg-gray-800"],
+        [class*="bg-token-main-surface-secondary"],
+        [class*="bg-token-sidebar-surface-secondary"]
     ) {
-      background-color: var(--void-surface) !important;
+        background-color: var(--void-surface) !important;
     }
 
     :where(
-      [class*='bg-[#303030]'],
-      [class*='dark:bg-[#303030]'],
-      [class*='bg-token-main-surface-tertiary'],
-      [class*='bg-token-sidebar-surface-tertiary']
+        [class*="bg-[#303030]"],
+        [class*="dark:bg-[#303030]"],
+        [class*="bg-token-main-surface-tertiary"],
+        [class*="bg-token-sidebar-surface-tertiary"]
     ) {
-      background-color: var(--void-surface-3) !important;
+        background-color: var(--void-surface-3) !important;
     }
 
     :where(
-      [class*='border-black/'],
-      [class*='border-gray-950'],
-      [class*='border-gray-900'],
-      [class*='border-gray-800'],
-      [class*='dark:border-black/'],
-      [class*='dark:border-gray-950'],
-      [class*='dark:border-gray-900'],
-      [class*='dark:border-gray-800'],
-      .border-token-border-light,
-      .border-token-border-medium,
-      .border-token-border-heavy
+        [class*="border-black/"],
+        [class*="border-gray-950"],
+        [class*="border-gray-900"],
+        [class*="border-gray-800"],
+        [class*="dark:border-black/"],
+        [class*="dark:border-gray-950"],
+        [class*="dark:border-gray-900"],
+        [class*="dark:border-gray-800"],
+        .border-token-border-light,
+        .border-token-border-medium,
+        .border-token-border-heavy
     ) {
-      border-color: var(--void-border-soft) !important;
+        border-color: var(--void-border-soft) !important;
     }
 
     :where(
-      main [class*='bg-gradient'],
-      header [class*='bg-gradient'],
-      aside [class*='bg-gradient'],
-      [role='dialog'] [class*='bg-gradient'],
-      [data-radix-popper-content-wrapper] [class*='bg-gradient']
+        main [class*="bg-gradient"],
+        header [class*="bg-gradient"],
+        aside [class*="bg-gradient"],
+        [role="dialog"] [class*="bg-gradient"],
+        [data-radix-popper-content-wrapper] [class*="bg-gradient"]
     ) {
-      background-image: none !important;
+        background-image: none !important;
     }
 
     :where(
-      [style*='background-color: black'],
-      [style*='background: black'],
-      [style*='background-color: rgb(0, 0, 0)'],
-      [style*='background: rgb(0, 0, 0)']
+        [style*="background-color: black"],
+        [style*="background: black"],
+        [style*="background-color: rgb(0, 0, 0)"],
+        [style*="background: rgb(0, 0, 0)"]
     ) {
-      background-color: var(--void-bg) !important;
+        background-color: var(--void-bg) !important;
     }
 
     /* Micro glow for black app chrome. Tiny alpha, no neon wash. */
     :where(
-        [class*='bg-token-sidebar-surface-primary'],
-        [class*='bg-token-sidebar-surface-secondary'],
-        [class*='bg-token-sidebar-surface-tertiary'],
-        [class*='bg-token-main-surface-primary'],
-        [class*='bg-token-main-surface-secondary'],
-        [class*='bg-gray-950'],
-        [class*='bg-gray-900'],
-        [class*='dark:bg-gray-950'],
-        [class*='dark:bg-gray-900'],
-        [class*='bg-[#000'],
-        [class*='bg-[#050505'],
-        [class*='bg-[#0A0A0A'],
-        [class*='bg-[#0a0a0a']
-      ):not(svg):not(path) {
-      box-shadow: var(--void-surface-glow-soft) !important;
+        [class*="bg-token-sidebar-surface-primary"],
+        [class*="bg-token-sidebar-surface-secondary"],
+        [class*="bg-token-sidebar-surface-tertiary"],
+        [class*="bg-token-main-surface-primary"],
+        [class*="bg-token-main-surface-secondary"],
+        [class*="bg-gray-950"],
+        [class*="bg-gray-900"],
+        [class*="dark:bg-gray-950"],
+        [class*="dark:bg-gray-900"],
+        [class*="bg-[#000"],
+        [class*="bg-[#050505"],
+        [class*="bg-[#0A0A0A"],
+        [class*="bg-[#0a0a0a"]
+    ):not(svg):not(path) {
+        box-shadow: var(--void-surface-glow-soft) !important;
     }
 
     hr {
-      border-color: var(--void-border-soft) !important;
+        border-color: var(--void-border-soft) !important;
     }
 
     .rounded-3xl {
-      border-radius: var(--void-radius) !important;
+        border-radius: var(--void-radius) !important;
     }
 
     /* ------------------------------------------------------------------ */
     /* Header / top navigation                                             */
     /* ------------------------------------------------------------------ */
 
-    :where(header, [class*='sticky'][class*='top-0']) {
-      background: var(--void-bg-glass) !important;
-      border-color: var(--void-border-soft) !important;
-      box-shadow: var(--void-header-glow) !important;
-      backdrop-filter: blur(14px) !important;
-      -webkit-backdrop-filter: blur(14px) !important;
+    :where(header, [class*="sticky"][class*="top-0"]) {
+        background: var(--void-bg-glass) !important;
+        border-color: var(--void-border-soft) !important;
+        box-shadow: var(--void-header-glow) !important;
+        backdrop-filter: blur(14px) !important;
+        -webkit-backdrop-filter: blur(14px) !important;
     }
 
-    :where(header button, header [role='button'], header a) {
-      color: var(--void-fg-soft) !important;
+    :where(header button, header [role="button"], header a) {
+        color: var(--void-fg-soft) !important;
     }
 
-    :where(header button, header [role='button'], header a):hover {
-      background: var(--void-highlight-soft) !important;
-      color: var(--void-fg) !important;
+    :where(header button, header [role="button"], header a):hover {
+        background: var(--void-highlight-soft) !important;
+        color: var(--void-fg) !important;
     }
 
     /* ------------------------------------------------------------------ */
     /* Sidebar                                                             */
     /* ------------------------------------------------------------------ */
 
-    :where([data-testid='left-sidebar'], aside) {
-      background:
-        linear-gradient(
-          90deg,
-          rgba(var(--void-glow-rgb), 0.018),
-          transparent 72%
-        ),
-        var(--void-bg-2) !important;
-      background-color: var(--void-bg-2) !important;
-      border-color: var(--void-border-soft) !important;
-      box-shadow: var(--void-sidebar-glow) !important;
+    :where([data-testid="left-sidebar"], aside) {
+        background:
+            linear-gradient(90deg, rgba(var(--void-glow-rgb), 0.018), transparent 72%),
+            var(--void-bg-2) !important;
+        background-color: var(--void-bg-2) !important;
+        border-color: var(--void-border-soft) !important;
+        box-shadow: var(--void-sidebar-glow) !important;
     }
 
-    :where([data-testid='left-sidebar'] a, aside a, nav a) {
-      color: var(--void-fg-soft) !important;
-      border-radius: 0.6rem !important;
+    :where([data-testid="left-sidebar"] a, aside a, nav a) {
+        color: var(--void-fg-soft) !important;
+        border-radius: 0.6rem !important;
     }
 
-    :where([data-testid='left-sidebar'] a, aside a, nav a):hover,
-    [data-sidebar-item='true']:hover {
-      background-color: var(--void-highlight-soft) !important;
-      color: var(--void-fg) !important;
-      box-shadow: var(--void-surface-glow-hover) !important;
+    :where([data-testid="left-sidebar"] a, aside a, nav a):hover,
+    [data-sidebar-item="true"]:hover {
+        background-color: var(--void-highlight-soft) !important;
+        color: var(--void-fg) !important;
+        box-shadow: var(--void-surface-glow-hover) !important;
     }
 
-    :where([aria-current='page'], [data-active='true']) {
-      background-color: var(--void-highlight) !important;
-      color: var(--void-active) !important;
-      box-shadow:
-        inset 2px 0 0 var(--void-highlight-border-strong),
-        0 0 18px var(--void-glow-ambient) !important;
+    :where([aria-current="page"], [data-active="true"]) {
+        background-color: var(--void-highlight) !important;
+        color: var(--void-active) !important;
+        box-shadow: inset 2px 0 0 var(--void-highlight-border-strong), 0 0 18px var(--void-glow-ambient) !important;
     }
 
-    [data-sidebar-item='true'] {
-      border-radius: 0.6rem !important;
+    [data-sidebar-item="true"] {
+        border-radius: 0.6rem !important;
     }
 
-    :where(
-      [data-testid='left-sidebar'] a,
-      aside a,
-      nav a,
-      [data-sidebar-item='true']
-    ):is(:focus, :focus-visible, :focus-within) {
-      outline: none !important;
-      outline-color: transparent !important;
-      border-radius: 0.6rem !important;
-      box-shadow: var(--void-focus-ring-tight) !important;
-      --tw-ring-color: transparent !important;
-      --tw-ring-shadow: 0 0 #0000 !important;
-      --tw-ring-offset-color: transparent !important;
-      --tw-ring-offset-shadow: 0 0 #0000 !important;
+    :where([data-testid="left-sidebar"] a, aside a, nav a, [data-sidebar-item="true"]):is(:focus, :focus-visible, :focus-within) {
+        outline: none !important;
+        outline-color: transparent !important;
+        border-radius: 0.6rem !important;
+        box-shadow: var(--void-focus-ring-tight) !important;
+        --tw-ring-color: transparent !important;
+        --tw-ring-shadow: 0 0 #0000 !important;
+        --tw-ring-offset-color: transparent !important;
+        --tw-ring-offset-shadow: 0 0 #0000 !important;
     }
 
     /* ------------------------------------------------------------------ */
     /* Messages                                                            */
     /* ------------------------------------------------------------------ */
 
-    [data-message-author-role='assistant'] {
-      background: transparent !important;
+    [data-message-author-role="assistant"] {
+        background: transparent !important;
     }
 
     [data-message-author-role] {
-      color: var(--void-fg) !important;
+        color: var(--void-fg) !important;
     }
 
     :where(
-      [data-message-author-role='user'] .bg-token-message-surface,
-      [data-message-author-role='user'] [class*='bg-token-message-surface'],
-      .user-message-bubble-color
+        [data-message-author-role="user"] .bg-token-message-surface,
+        [data-message-author-role="user"] [class*="bg-token-message-surface"],
+        .user-message-bubble-color
     ) {
-      background:
-        linear-gradient(180deg, var(--void-highlight-faint), transparent),
-        var(--void-surface) !important;
-      border: 1px solid var(--void-highlight-border) !important;
-      box-shadow: var(--void-surface-glow-soft) !important;
+        background:
+            linear-gradient(180deg, var(--void-highlight-faint), transparent),
+            var(--void-surface) !important;
+        border: 1px solid var(--void-highlight-border) !important;
+        box-shadow: var(--void-surface-glow-soft) !important;
     }
 
-    :where([data-message-author-role] [class*='text-token-text-secondary']) {
-      color: var(--void-fg-soft) !important;
+    :where([data-message-author-role] [class*="text-token-text-secondary"]) {
+        color: var(--void-fg-soft) !important;
     }
 
-    :where([data-message-author-role] [class*='text-token-text-tertiary']) {
-      color: var(--void-muted) !important;
+    :where([data-message-author-role] [class*="text-token-text-tertiary"]) {
+        color: var(--void-muted) !important;
     }
 
-    :where(
-      [data-message-author-role] button,
-      [data-message-author-role] [role='button']
-    ) {
-      color: var(--void-fg-soft) !important;
-      border-color: transparent !important;
+    :where([data-message-author-role] button, [data-message-author-role] [role="button"]) {
+        color: var(--void-fg-soft) !important;
+        border-color: transparent !important;
     }
 
-    :where(
-      [data-message-author-role] button,
-      [data-message-author-role] [role='button']
-    ):hover {
-      background: var(--void-highlight-soft) !important;
-      color: var(--void-fg) !important;
-      border-color: var(--void-highlight-border) !important;
+    :where([data-message-author-role] button, [data-message-author-role] [role="button"]):hover {
+        background: var(--void-highlight-soft) !important;
+        color: var(--void-fg) !important;
+        border-color: var(--void-highlight-border) !important;
     }
 
     /* ------------------------------------------------------------------ */
     /* Attachment / image guards                                          */
     /* ------------------------------------------------------------------ */
 
-    #thread-bottom-container
-      div:has(
-        form [data-composer-surface='true'],
-        form #prompt-textarea,
-        form [contenteditable='true']
-      ):has(
-        > :is(
-          [data-testid*='attachment' i],
-          [data-testid*='preview' i],
-          img,
-          picture
-        )
-      ) {
-      align-items: stretch !important;
-      flex-direction: column !important;
+    #thread-bottom-container div:has(form [data-composer-surface="true"], form #prompt-textarea, form [contenteditable="true"]):has(> :is([data-testid*="attachment" i], [data-testid*="preview" i], img, picture)) {
+        align-items: stretch !important;
+        flex-direction: column !important;
     }
 
-    #thread-bottom-container
-      div:has(
-        form [data-composer-surface='true'],
-        form #prompt-textarea,
-        form [contenteditable='true']
-      ):has(
-        > :is(
-          [data-testid*='attachment' i],
-          [data-testid*='preview' i],
-          img,
-          picture
-        )
-      )
-      > :is(
-        [data-testid*='attachment' i],
-        [data-testid*='preview' i],
-        img,
-        picture
-      ) {
-      order: -1 !important;
+    #thread-bottom-container div:has(form [data-composer-surface="true"], form #prompt-textarea, form [contenteditable="true"]):has(> :is([data-testid*="attachment" i], [data-testid*="preview" i], img, picture)) > :is([data-testid*="attachment" i], [data-testid*="preview" i], img, picture) {
+        order: -1 !important;
     }
 
-    #thread
-      [data-testid^='conversation-turn']
-      [data-message-author-role='user']:has(> :is(img, picture)) {
-      justify-content: flex-end !important;
+    #thread [data-testid^="conversation-turn"] [data-message-author-role="user"]:has(> :is(img, picture)) {
+        justify-content: flex-end !important;
     }
 
-    #thread
-      [data-testid^='conversation-turn']
-      [data-message-author-role='user']
-      > :is(img, picture) {
-      max-inline-size: 100% !important;
+    #thread [data-testid^="conversation-turn"] [data-message-author-role="user"] > :is(img, picture) {
+        max-inline-size: 100% !important;
     }
 
     /* ------------------------------------------------------------------ */
@@ -693,513 +615,481 @@
        utility wrappers can still receive focus, but they must not draw square
        translucent outlines/rings. */
     :where(
-      form:has(#prompt-textarea),
-      form:has([contenteditable='true']),
-      form:has([data-composer-surface='true']),
-      form:has(#prompt-textarea) > div,
-      form:has([contenteditable='true']) > div,
-      form:has([data-composer-surface='true']) > div,
-      [data-composer-surface='true'],
-      [data-composer-surface='true'] > div,
-      [data-composer-surface='true'] [class*='rounded']
+        form:has(#prompt-textarea),
+        form:has([contenteditable="true"]),
+        form:has([data-composer-surface="true"]),
+        form:has(#prompt-textarea) > div,
+        form:has([contenteditable="true"]) > div,
+        form:has([data-composer-surface="true"]) > div,
+        [data-composer-surface="true"],
+        [data-composer-surface="true"] > div,
+        [data-composer-surface="true"] [class*="rounded"]
     ) {
-      border-radius: var(--void-radius-lg) !important;
-    }
-
-    :where(
-      form:has(#prompt-textarea):focus-within,
-      form:has(#prompt-textarea):focus-within *,
-      form:has([contenteditable='true']):focus-within,
-      form:has([contenteditable='true']):focus-within *,
-      form:has([data-composer-surface='true']):focus-within,
-      form:has([data-composer-surface='true']):focus-within *,
-      [data-composer-surface='true']:focus-within,
-      [data-composer-surface='true']:focus-within *
-    ) {
-      outline: none !important;
-      outline-color: transparent !important;
-      outline-offset: 0 !important;
-      --tw-ring-color: transparent !important;
-      --tw-ring-shadow: 0 0 #0000 !important;
-      --tw-ring-offset-color: transparent !important;
-      --tw-ring-offset-width: 0px !important;
-      --tw-ring-offset-shadow: 0 0 #0000 !important;
-    }
-
-    :where(
-      form:has(#prompt-textarea):focus-within
-        > div:not([data-composer-surface='true']),
-      form:has([contenteditable='true']):focus-within
-        > div:not([data-composer-surface='true']),
-      form:has([data-composer-surface='true']):focus-within
-        > div:not([data-composer-surface='true'])
-    ) {
-      outline: none !important;
-      outline-color: transparent !important;
-      box-shadow: none !important;
-      border-color: transparent !important;
-    }
-
-    [data-composer-surface='true'] {
-      background:
-        linear-gradient(180deg, var(--void-highlight-faint), transparent),
-        var(--void-surface) !important;
-      border: 1px solid var(--void-border) !important;
-      border-radius: var(--void-radius-lg) !important;
-      box-shadow: var(--void-shadow-soft) !important;
-      overflow: hidden !important;
-      position: relative !important;
-      isolation: isolate !important;
-      background-clip: padding-box !important;
-
-      --tw-ring-color: transparent !important;
-      --tw-ring-shadow: 0 0 #0000 !important;
-      --tw-ring-offset-shadow: 0 0 #0000 !important;
-    }
-
-    :where(
-      [data-composer-surface='true']:focus-within,
-      form:has(#prompt-textarea):focus-within [data-composer-surface='true'],
-      form:has([contenteditable='true']):focus-within
-        [data-composer-surface='true']
-    ) {
-      border-color: var(--void-focus-border-strong) !important;
-      border-radius: var(--void-radius-lg) !important;
-      outline: none !important;
-      outline-color: transparent !important;
-      box-shadow:
-        var(--void-focus-ring-strong),
-        0 14px 34px rgba(0, 0, 0, 0.42),
-        0 0 30px var(--void-glow-soft) !important;
-
-      --tw-ring-color: transparent !important;
-      --tw-ring-offset-color: transparent !important;
-      --tw-ring-offset-width: 0px !important;
-      --tw-ring-shadow: 0 0 #0000 !important;
-      --tw-ring-offset-shadow: 0 0 #0000 !important;
-    }
-
-    :where(
-      form:has(#prompt-textarea):focus-within
-        > div:not([data-composer-surface='true']),
-      form:has([contenteditable='true']):focus-within
-        > div:not([data-composer-surface='true']),
-      form:has([data-composer-surface='true']):focus-within
-        > div:not([data-composer-surface='true'])
-    ) {
-      border-color: transparent !important;
-      outline: none !important;
-      outline-color: transparent !important;
-      box-shadow: none !important;
-      border-radius: var(--void-radius-lg) !important;
-
-      --tw-ring-color: transparent !important;
-      --tw-ring-offset-color: transparent !important;
-      --tw-ring-offset-width: 0px !important;
-      --tw-ring-offset-shadow: 0 0 #0000 !important;
-      --tw-ring-shadow: 0 0 #0000 !important;
-    }
-
-    :where(
-      form:has(#prompt-textarea):focus-within,
-      form:has(#prompt-textarea):focus-within *,
-      form:has([contenteditable='true']):focus-within,
-      form:has([contenteditable='true']):focus-within *
-    ) {
-      --tw-ring-color: transparent !important;
-      --tw-ring-offset-color: transparent !important;
-      --tw-ring-offset-width: 0px !important;
-      --tw-ring-shadow: 0 0 #0000 !important;
-      --tw-ring-offset-shadow: 0 0 #0000 !important;
+        border-radius: var(--void-radius-lg) !important;
     }
 
     :where(
         form:has(#prompt-textarea):focus-within,
-        form:has([contenteditable='true']):focus-within,
-        form:has([data-composer-surface='true']):focus-within
-      )
-      :is(
-        [class*='border-blue'],
-        [class*='ring-blue'],
-        [class*='outline-blue'],
-        [class*='focus-within:border-blue'],
-        [class*='focus-within:ring-blue'],
-        [class*='focus:border-blue'],
-        [class*='focus:ring-blue'],
-        [class*='focus-within:ring'],
-        [class*='focus-visible:ring'],
-        [class*='ring-offset']
-      ):not([data-composer-surface='true']) {
-      border-color: transparent !important;
-      outline: none !important;
-      outline-color: transparent !important;
-      box-shadow: none !important;
-      --tw-ring-color: transparent !important;
-      --tw-ring-shadow: 0 0 #0000 !important;
-      --tw-ring-offset-color: transparent !important;
-      --tw-ring-offset-shadow: 0 0 #0000 !important;
-    }
-
-    :where(
-        form:has(#prompt-textarea):focus-within,
-        form:has([contenteditable='true']):focus-within,
-        form:has([data-composer-surface='true']):focus-within
-      )
-      :is(
-        [class*='border-blue'],
-        [class*='ring-blue'],
-        [class*='outline-blue'],
-        [class*='focus-within:border-blue'],
-        [class*='focus-within:ring-blue'],
-        [class*='focus:border-blue'],
-        [class*='focus:ring-blue'],
-        [class*='focus-within:ring'],
-        [class*='focus-visible:ring'],
-        [class*='ring-offset']
-      ):not([data-composer-surface='true'])::before,
-    :where(
-        form:has(#prompt-textarea):focus-within,
-        form:has([contenteditable='true']):focus-within,
-        form:has([data-composer-surface='true']):focus-within
-      )
-      :is(
-        [class*='border-blue'],
-        [class*='ring-blue'],
-        [class*='outline-blue'],
-        [class*='focus-within:border-blue'],
-        [class*='focus-within:ring-blue'],
-        [class*='focus:border-blue'],
-        [class*='focus:ring-blue'],
-        [class*='focus-within:ring'],
-        [class*='focus-visible:ring'],
-        [class*='ring-offset']
-      ):not([data-composer-surface='true'])::after {
-      border-color: transparent !important;
-      outline: none !important;
-      outline-color: transparent !important;
-      box-shadow: none !important;
-    }
-
-    :where(
-      #prompt-textarea,
-      #prompt-textarea *,
-      #prompt-textarea:focus,
-      #prompt-textarea:focus-visible,
-      [data-composer-surface='true'] textarea,
-      [data-composer-surface='true'] textarea:focus,
-      [data-composer-surface='true'] textarea:focus-visible,
-      [data-composer-surface='true'] [contenteditable='true'],
-      [data-composer-surface='true'] [contenteditable='true'] *,
-      [data-composer-surface='true'] [contenteditable='true']:focus,
-      [data-composer-surface='true'] [contenteditable='true']:focus-visible,
-      [data-composer-surface='true'] [role='textbox'],
-      [data-composer-surface='true'] [role='textbox'] *,
-      [data-composer-surface='true'] [role='textbox']:focus,
-      [data-composer-surface='true'] [role='textbox']:focus-visible,
-      [data-composer-surface='true'] .ProseMirror,
-      [data-composer-surface='true'] .ProseMirror:focus,
-      [data-composer-surface='true'] .ProseMirror-focused
+        form:has(#prompt-textarea):focus-within *,
+        form:has([contenteditable="true"]):focus-within,
+        form:has([contenteditable="true"]):focus-within *,
+        form:has([data-composer-surface="true"]):focus-within,
+        form:has([data-composer-surface="true"]):focus-within *,
+        [data-composer-surface="true"]:focus-within,
+        [data-composer-surface="true"]:focus-within *
     ) {
-      background: transparent !important;
-      color: var(--void-fg) !important;
-      caret-color: var(--void-cursor) !important;
-      caret-shape: block !important;
-      caret: var(--void-cursor) block !important;
-      outline: none !important;
-      box-shadow: none !important;
-      border-color: transparent !important;
+        outline: none !important;
+        outline-color: transparent !important;
+        outline-offset: 0 !important;
+        --tw-ring-color: transparent !important;
+        --tw-ring-shadow: 0 0 #0000 !important;
+        --tw-ring-offset-color: transparent !important;
+        --tw-ring-offset-width: 0px !important;
+        --tw-ring-offset-shadow: 0 0 #0000 !important;
+    }
+
+    :where(
+        form:has(#prompt-textarea):focus-within > div:not([data-composer-surface="true"]),
+        form:has([contenteditable="true"]):focus-within > div:not([data-composer-surface="true"]),
+        form:has([data-composer-surface="true"]):focus-within > div:not([data-composer-surface="true"])
+    ) {
+        outline: none !important;
+        outline-color: transparent !important;
+        box-shadow: none !important;
+        border-color: transparent !important;
+    }
+
+    [data-composer-surface="true"] {
+        background:
+            linear-gradient(180deg, var(--void-highlight-faint), transparent),
+            var(--void-surface) !important;
+        border: 1px solid var(--void-border) !important;
+        border-radius: var(--void-radius-lg) !important;
+        box-shadow: var(--void-shadow-soft) !important;
+        overflow: hidden !important;
+        position: relative !important;
+        isolation: isolate !important;
+        background-clip: padding-box !important;
+
+        --tw-ring-color: transparent !important;
+        --tw-ring-shadow: 0 0 #0000 !important;
+        --tw-ring-offset-shadow: 0 0 #0000 !important;
+    }
+
+    :where(
+        [data-composer-surface="true"]:focus-within,
+        form:has(#prompt-textarea):focus-within [data-composer-surface="true"],
+        form:has([contenteditable="true"]):focus-within [data-composer-surface="true"]
+    ) {
+        border-color: var(--void-focus-border-strong) !important;
+        border-radius: var(--void-radius-lg) !important;
+        outline: none !important;
+        outline-color: transparent !important;
+        box-shadow: var(--void-focus-ring-strong), 0 14px 34px rgba(0, 0, 0, 0.42), 0 0 30px var(--void-glow-soft) !important;
+
+        --tw-ring-color: transparent !important;
+        --tw-ring-offset-color: transparent !important;
+        --tw-ring-offset-width: 0px !important;
+        --tw-ring-shadow: 0 0 #0000 !important;
+        --tw-ring-offset-shadow: 0 0 #0000 !important;
+    }
+
+    :where(
+        form:has(#prompt-textarea):focus-within > div:not([data-composer-surface="true"]),
+        form:has([contenteditable="true"]):focus-within > div:not([data-composer-surface="true"]),
+        form:has([data-composer-surface="true"]):focus-within > div:not([data-composer-surface="true"])
+    ) {
+        border-color: transparent !important;
+        outline: none !important;
+        outline-color: transparent !important;
+        box-shadow: none !important;
+        border-radius: var(--void-radius-lg) !important;
+
+        --tw-ring-color: transparent !important;
+        --tw-ring-offset-color: transparent !important;
+        --tw-ring-offset-width: 0px !important;
+        --tw-ring-offset-shadow: 0 0 #0000 !important;
+        --tw-ring-shadow: 0 0 #0000 !important;
+    }
+
+    :where(
+        form:has(#prompt-textarea):focus-within,
+        form:has(#prompt-textarea):focus-within *,
+        form:has([contenteditable="true"]):focus-within,
+        form:has([contenteditable="true"]):focus-within *
+    ) {
+        --tw-ring-color: transparent !important;
+        --tw-ring-offset-color: transparent !important;
+        --tw-ring-offset-width: 0px !important;
+        --tw-ring-shadow: 0 0 #0000 !important;
+        --tw-ring-offset-shadow: 0 0 #0000 !important;
+    }
+
+    :where(
+        form:has(#prompt-textarea):focus-within,
+        form:has([contenteditable="true"]):focus-within,
+        form:has([data-composer-surface="true"]):focus-within
+    ) :is(
+        [class*="border-blue"],
+        [class*="ring-blue"],
+        [class*="outline-blue"],
+        [class*="focus-within:border-blue"],
+        [class*="focus-within:ring-blue"],
+        [class*="focus:border-blue"],
+        [class*="focus:ring-blue"],
+        [class*="focus-within:ring"],
+        [class*="focus-visible:ring"],
+        [class*="ring-offset"]
+    ):not([data-composer-surface="true"]) {
+        border-color: transparent !important;
+        outline: none !important;
+        outline-color: transparent !important;
+        box-shadow: none !important;
+        --tw-ring-color: transparent !important;
+        --tw-ring-shadow: 0 0 #0000 !important;
+        --tw-ring-offset-color: transparent !important;
+        --tw-ring-offset-shadow: 0 0 #0000 !important;
+    }
+
+    :where(
+        form:has(#prompt-textarea):focus-within,
+        form:has([contenteditable="true"]):focus-within,
+        form:has([data-composer-surface="true"]):focus-within
+    ) :is(
+        [class*="border-blue"],
+        [class*="ring-blue"],
+        [class*="outline-blue"],
+        [class*="focus-within:border-blue"],
+        [class*="focus-within:ring-blue"],
+        [class*="focus:border-blue"],
+        [class*="focus:ring-blue"],
+        [class*="focus-within:ring"],
+        [class*="focus-visible:ring"],
+        [class*="ring-offset"]
+    ):not([data-composer-surface="true"])::before,
+    :where(
+        form:has(#prompt-textarea):focus-within,
+        form:has([contenteditable="true"]):focus-within,
+        form:has([data-composer-surface="true"]):focus-within
+    ) :is(
+        [class*="border-blue"],
+        [class*="ring-blue"],
+        [class*="outline-blue"],
+        [class*="focus-within:border-blue"],
+        [class*="focus-within:ring-blue"],
+        [class*="focus:border-blue"],
+        [class*="focus:ring-blue"],
+        [class*="focus-within:ring"],
+        [class*="focus-visible:ring"],
+        [class*="ring-offset"]
+    ):not([data-composer-surface="true"])::after {
+        border-color: transparent !important;
+        outline: none !important;
+        outline-color: transparent !important;
+        box-shadow: none !important;
+    }
+
+    :where(
+        #prompt-textarea,
+        #prompt-textarea *,
+        #prompt-textarea:focus,
+        #prompt-textarea:focus-visible,
+        [data-composer-surface="true"] textarea,
+        [data-composer-surface="true"] textarea:focus,
+        [data-composer-surface="true"] textarea:focus-visible,
+        [data-composer-surface="true"] [contenteditable="true"],
+        [data-composer-surface="true"] [contenteditable="true"] *,
+        [data-composer-surface="true"] [contenteditable="true"]:focus,
+        [data-composer-surface="true"] [contenteditable="true"]:focus-visible,
+        [data-composer-surface="true"] [role="textbox"],
+        [data-composer-surface="true"] [role="textbox"] *,
+        [data-composer-surface="true"] [role="textbox"]:focus,
+        [data-composer-surface="true"] [role="textbox"]:focus-visible,
+        [data-composer-surface="true"] .ProseMirror,
+        [data-composer-surface="true"] .ProseMirror:focus,
+        [data-composer-surface="true"] .ProseMirror-focused
+    ) {
+        background: transparent !important;
+        color: var(--void-fg) !important;
+        caret-color: var(--void-cursor) !important;
+        caret-shape: block !important;
+        caret: var(--void-cursor) block !important;
+        outline: none !important;
+        box-shadow: none !important;
+        border-color: transparent !important;
     }
 
     #prompt-textarea::selection,
     #prompt-textarea *::selection,
-    [data-composer-surface='true'] textarea::selection,
-    [data-composer-surface='true'] [contenteditable='true']::selection,
-    [data-composer-surface='true'] [contenteditable='true'] *::selection {
-      background: var(--void-selection-bg) !important;
-      color: var(--void-selection-fg) !important;
+    [data-composer-surface="true"] textarea::selection,
+    [data-composer-surface="true"] [contenteditable="true"]::selection,
+    [data-composer-surface="true"] [contenteditable="true"] *::selection {
+        background: var(--void-selection-bg) !important;
+        color: var(--void-selection-fg) !important;
     }
 
     #prompt-textarea::placeholder,
-    [data-composer-surface='true'] textarea::placeholder,
-    [data-composer-surface='true'] input::placeholder {
-      color: var(--void-muted-dim) !important;
+    [data-composer-surface="true"] textarea::placeholder,
+    [data-composer-surface="true"] input::placeholder {
+        color: var(--void-muted-dim) !important;
     }
 
     /* ------------------------------------------------------------------ */
     /* Composer actions                                                    */
     /* ------------------------------------------------------------------ */
 
-    :where(
-      [data-composer-surface='true'] button,
-      [data-composer-surface='true'] [role='button']
-    ) {
-      background: transparent !important;
-      color: var(--void-muted) !important;
-      border-color: transparent !important;
-      box-shadow: none !important;
+    :where([data-composer-surface="true"] button, [data-composer-surface="true"] [role="button"]) {
+        background: transparent !important;
+        color: var(--void-muted) !important;
+        border-color: transparent !important;
+        box-shadow: none !important;
     }
 
-    :where(
-      [data-composer-surface='true'] button,
-      [data-composer-surface='true'] [role='button']
-    ):hover {
-      background: var(--void-highlight-soft) !important;
-      color: var(--void-fg-soft) !important;
-      border-color: var(--void-highlight-border) !important;
+    :where([data-composer-surface="true"] button, [data-composer-surface="true"] [role="button"]):hover {
+        background: var(--void-highlight-soft) !important;
+        color: var(--void-fg-soft) !important;
+        border-color: var(--void-highlight-border) !important;
     }
 
     /* Positive check / done / confirm buttons, including dictation accept */
-    :where(
-        [data-composer-surface='true'],
-        [role='dialog'],
-        [data-radix-popper-content-wrapper]
-      )
-      :is(
-        button[aria-label*='check' i],
-        button[aria-label*='done' i],
-        button[aria-label*='confirm' i],
-        button[aria-label*='accept' i],
-        button[aria-label*='apply' i],
-        button[aria-label*='save' i],
-        button[aria-label*='fertig' i],
-        button[aria-label*='bestätig' i],
-        button[title*='check' i],
-        button[title*='done' i],
-        button[title*='confirm' i],
-        button[title*='accept' i],
-        button[title*='apply' i],
-        button[title*='save' i],
-        button[data-testid*='check' i],
-        button[data-testid*='done' i],
-        button[data-testid*='confirm' i],
-        button[data-testid*='accept' i],
-        button:has(svg[class*='check' i]),
-        button:has(svg[data-icon*='check' i]),
-        button:has(svg[aria-label*='check' i]),
-        button:has(path[d*='17l-5-5']),
-        button:has(path[d*='M20 6 9 17']),
-        button:has(path[d*='M9 16.17'])
-      ) {
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent),
-        var(--void-positive-bg) !important;
-      color: var(--void-positive-text) !important;
-      border-color: var(--void-positive-border) !important;
-      box-shadow: none !important;
+    :where([data-composer-surface="true"], [role="dialog"], [data-radix-popper-content-wrapper]) :is(
+        button[aria-label*="check" i],
+        button[aria-label*="done" i],
+        button[aria-label*="confirm" i],
+        button[aria-label*="accept" i],
+        button[aria-label*="apply" i],
+        button[aria-label*="save" i],
+        button[aria-label*="fertig" i],
+        button[aria-label*="bestätig" i],
+        button[title*="check" i],
+        button[title*="done" i],
+        button[title*="confirm" i],
+        button[title*="accept" i],
+        button[title*="apply" i],
+        button[title*="save" i],
+        button[data-testid*="check" i],
+        button[data-testid*="done" i],
+        button[data-testid*="confirm" i],
+        button[data-testid*="accept" i],
+        button:has(svg[class*="check" i]),
+        button:has(svg[data-icon*="check" i]),
+        button:has(svg[aria-label*="check" i]),
+        button:has(path[d*="17l-5-5"]),
+        button:has(path[d*="M20 6 9 17"]),
+        button:has(path[d*="M9 16.17"])
+    ) {
+        background:
+            linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent),
+            var(--void-positive-bg) !important;
+        color: var(--void-positive-text) !important;
+        border-color: var(--void-positive-border) !important;
+        box-shadow: none !important;
     }
 
-    :where(
-        [data-composer-surface='true'],
-        [role='dialog'],
-        [data-radix-popper-content-wrapper]
-      )
-      :is(
-        button[aria-label*='check' i],
-        button[aria-label*='done' i],
-        button[aria-label*='confirm' i],
-        button[aria-label*='accept' i],
-        button[aria-label*='apply' i],
-        button[aria-label*='save' i],
-        button[aria-label*='fertig' i],
-        button[aria-label*='bestätig' i],
-        button[title*='check' i],
-        button[title*='done' i],
-        button[title*='confirm' i],
-        button[title*='accept' i],
-        button[title*='apply' i],
-        button[title*='save' i],
-        button[data-testid*='check' i],
-        button[data-testid*='done' i],
-        button[data-testid*='confirm' i],
-        button[data-testid*='accept' i],
-        button:has(svg[class*='check' i]),
-        button:has(svg[data-icon*='check' i]),
-        button:has(svg[aria-label*='check' i]),
-        button:has(path[d*='17l-5-5']),
-        button:has(path[d*='M20 6 9 17']),
-        button:has(path[d*='M9 16.17'])
-      ):hover {
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent),
-        var(--void-positive-bg-hover) !important;
-      color: var(--void-positive-text) !important;
-      border-color: var(--void-positive-border-strong) !important;
+    :where([data-composer-surface="true"], [role="dialog"], [data-radix-popper-content-wrapper]) :is(
+        button[aria-label*="check" i],
+        button[aria-label*="done" i],
+        button[aria-label*="confirm" i],
+        button[aria-label*="accept" i],
+        button[aria-label*="apply" i],
+        button[aria-label*="save" i],
+        button[aria-label*="fertig" i],
+        button[aria-label*="bestätig" i],
+        button[title*="check" i],
+        button[title*="done" i],
+        button[title*="confirm" i],
+        button[title*="accept" i],
+        button[title*="apply" i],
+        button[title*="save" i],
+        button[data-testid*="check" i],
+        button[data-testid*="done" i],
+        button[data-testid*="confirm" i],
+        button[data-testid*="accept" i],
+        button:has(svg[class*="check" i]),
+        button:has(svg[data-icon*="check" i]),
+        button:has(svg[aria-label*="check" i]),
+        button:has(path[d*="17l-5-5"]),
+        button:has(path[d*="M20 6 9 17"]),
+        button:has(path[d*="M9 16.17"])
+    ):hover {
+        background:
+            linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent),
+            var(--void-positive-bg-hover) !important;
+        color: var(--void-positive-text) !important;
+        border-color: var(--void-positive-border-strong) !important;
     }
 
-    :where(
-        [data-composer-surface='true'],
-        [role='dialog'],
-        [data-radix-popper-content-wrapper]
-      )
-      :is(
-        svg[class*='check' i],
-        svg[data-icon*='check' i],
-        svg[aria-label*='check' i]
-      ),
-    :where(
-        [data-composer-surface='true'],
-        [role='dialog'],
-        [data-radix-popper-content-wrapper]
-      )
-      :is(path[d*='17l-5-5'], path[d*='M20 6 9 17'], path[d*='M9 16.17']) {
-      color: var(--void-positive-text) !important;
-      stroke: currentColor !important;
+    :where([data-composer-surface="true"], [role="dialog"], [data-radix-popper-content-wrapper]) :is(
+        svg[class*="check" i],
+        svg[data-icon*="check" i],
+        svg[aria-label*="check" i]
+    ),
+    :where([data-composer-surface="true"], [role="dialog"], [data-radix-popper-content-wrapper]) :is(
+        path[d*="17l-5-5"],
+        path[d*="M20 6 9 17"],
+        path[d*="M9 16.17"]
+    ) {
+        color: var(--void-positive-text) !important;
+        stroke: currentColor !important;
     }
 
     /* Add / attach / upload: positive only on hover */
-    :where(
-      [data-composer-surface='true'] button[aria-label*='add' i],
-      [data-composer-surface='true'] button[aria-label*='attach' i],
-      [data-composer-surface='true'] button[aria-label*='upload' i]
-    ):hover {
-      color: var(--void-positive-text) !important;
-      border-color: var(--void-positive-border) !important;
-      background: var(--void-positive-bg) !important;
+    :where([data-composer-surface="true"] button[aria-label*="add" i],
+    [data-composer-surface="true"] button[aria-label*="attach" i],
+    [data-composer-surface="true"] button[aria-label*="upload" i]):hover {
+        color: var(--void-positive-text) !important;
+        border-color: var(--void-positive-border) !important;
+        background: var(--void-positive-bg) !important;
     }
 
     /* Voice / mic / dictate: subtle info tint */
     :where(
-      [data-composer-surface='true'] button[aria-label*='voice' i],
-      [data-composer-surface='true'] button[aria-label*='dictat' i],
-      [data-composer-surface='true'] button[aria-label*='microphone' i],
-      [data-composer-surface='true'] button[aria-label*='mic' i],
-      [data-composer-surface='true'] button[title*='voice' i],
-      [data-composer-surface='true'] button[title*='dictat' i],
-      [data-composer-surface='true'] button[title*='microphone' i],
-      [data-composer-surface='true'] button[title*='mic' i]
+        [data-composer-surface="true"] button[aria-label*="voice" i],
+        [data-composer-surface="true"] button[aria-label*="dictat" i],
+        [data-composer-surface="true"] button[aria-label*="microphone" i],
+        [data-composer-surface="true"] button[aria-label*="mic" i],
+        [data-composer-surface="true"] button[title*="voice" i],
+        [data-composer-surface="true"] button[title*="dictat" i],
+        [data-composer-surface="true"] button[title*="microphone" i],
+        [data-composer-surface="true"] button[title*="mic" i]
     ):hover {
-      color: var(--void-info-text) !important;
-      border-color: var(--void-info-border) !important;
-      background: var(--void-info-bg) !important;
+        color: var(--void-info-text) !important;
+        border-color: var(--void-info-border) !important;
+        background: var(--void-info-bg) !important;
     }
 
     /* Remove / delete / close / cancel: red only on hover */
     :where(
-      [data-composer-surface='true'] button[aria-label*='remove' i],
-      [data-composer-surface='true'] button[aria-label*='delete' i],
-      [data-composer-surface='true'] button[aria-label*='close' i],
-      [data-composer-surface='true'] button[aria-label*='cancel' i]
+        [data-composer-surface="true"] button[aria-label*="remove" i],
+        [data-composer-surface="true"] button[aria-label*="delete" i],
+        [data-composer-surface="true"] button[aria-label*="close" i],
+        [data-composer-surface="true"] button[aria-label*="cancel" i]
     ):hover {
-      color: var(--void-negative-text) !important;
-      border-color: var(--void-negative-border) !important;
-      background: var(--void-negative-bg) !important;
+        color: var(--void-negative-text) !important;
+        border-color: var(--void-negative-border) !important;
+        background: var(--void-negative-bg) !important;
     }
 
     /* Active toggles: purple text over dark color6-teal, not green/red */
-    [data-composer-surface='true'] [aria-pressed='true'] {
-      color: var(--void-active) !important;
-      border-color: var(--void-highlight-border-strong) !important;
-      background: var(--void-highlight) !important;
+    [data-composer-surface="true"] [aria-pressed="true"] {
+        color: var(--void-active) !important;
+        border-color: var(--void-highlight-border-strong) !important;
+        background: var(--void-highlight) !important;
     }
 
     /* Send: positive but translucent */
-    :where([data-testid='send-button'], button[data-testid*='send' i]) {
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent),
-        var(--void-positive-bg) !important;
-      color: var(--void-positive-text) !important;
-      border: 1px solid var(--void-positive-border-strong) !important;
-      box-shadow: none !important;
+    :where([data-testid="send-button"], button[data-testid*="send" i]) {
+        background:
+            linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent),
+            var(--void-positive-bg) !important;
+        color: var(--void-positive-text) !important;
+        border: 1px solid var(--void-positive-border-strong) !important;
+        box-shadow: none !important;
     }
 
-    :where([data-testid='send-button'], button[data-testid*='send' i]) svg {
-      color: var(--void-positive-text) !important;
-      stroke: currentColor !important;
+    :where([data-testid="send-button"], button[data-testid*="send" i]) svg {
+        color: var(--void-positive-text) !important;
+        stroke: currentColor !important;
     }
 
-    :where([data-testid='send-button'], button[data-testid*='send' i]):hover {
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent),
-        var(--void-positive-bg-hover) !important;
-      color: var(--void-positive-text) !important;
-      border-color: var(--void-positive-border-strong) !important;
-      filter: none !important;
+    :where([data-testid="send-button"], button[data-testid*="send" i]):hover {
+        background:
+            linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent),
+            var(--void-positive-bg-hover) !important;
+        color: var(--void-positive-text) !important;
+        border-color: var(--void-positive-border-strong) !important;
+        filter: none !important;
     }
 
     /* Stop: destructive but translucent */
-    :where([data-testid='stop-button'], button[data-testid*='stop' i]) {
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent),
-        var(--void-negative-bg) !important;
-      color: var(--void-negative-text) !important;
-      border: 1px solid var(--void-negative-border-strong) !important;
-      box-shadow: none !important;
+    :where([data-testid="stop-button"], button[data-testid*="stop" i]) {
+        background:
+            linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent),
+            var(--void-negative-bg) !important;
+        color: var(--void-negative-text) !important;
+        border: 1px solid var(--void-negative-border-strong) !important;
+        box-shadow: none !important;
     }
 
-    :where([data-testid='stop-button'], button[data-testid*='stop' i]) svg {
-      color: var(--void-negative-text) !important;
-      stroke: currentColor !important;
+    :where([data-testid="stop-button"], button[data-testid*="stop" i]) svg {
+        color: var(--void-negative-text) !important;
+        stroke: currentColor !important;
     }
 
-    :where([data-testid='stop-button'], button[data-testid*='stop' i]):hover {
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent),
-        var(--void-negative-bg-hover) !important;
-      color: var(--void-negative-text) !important;
-      border-color: var(--void-negative-border-strong) !important;
-      filter: none !important;
-    }
-
-    :where(
-      [data-testid='send-button']:disabled,
-      button[data-testid*='send' i]:disabled,
-      [data-composer-surface='true'] button:disabled,
-      [data-composer-surface='true'] button[aria-disabled='true']
-    ) {
-      background: var(--void-surface-2) !important;
-      color: var(--void-muted-dim) !important;
-      border-color: var(--void-border-soft) !important;
-      filter: none !important;
-      opacity: 0.75 !important;
-      box-shadow: none !important;
+    :where([data-testid="stop-button"], button[data-testid*="stop" i]):hover {
+        background:
+            linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent),
+            var(--void-negative-bg-hover) !important;
+        color: var(--void-negative-text) !important;
+        border-color: var(--void-negative-border-strong) !important;
+        filter: none !important;
     }
 
     :where(
-      [data-composer-surface='true'] [class*='border-token-border'],
-      [data-composer-surface='true'] [class*='bg-token-main-surface'],
-      [data-composer-surface='true'] [data-testid*='attachment' i],
-      [data-composer-surface='true'] [data-testid*='file' i]
+        [data-testid="send-button"]:disabled,
+        button[data-testid*="send" i]:disabled,
+        [data-composer-surface="true"] button:disabled,
+        [data-composer-surface="true"] button[aria-disabled="true"]
     ) {
-      background: var(--void-surface-2) !important;
-      border-color: var(--void-border-soft) !important;
+        background: var(--void-surface-2) !important;
+        color: var(--void-muted-dim) !important;
+        border-color: var(--void-border-soft) !important;
+        filter: none !important;
+        opacity: 0.75 !important;
+        box-shadow: none !important;
+    }
+
+    :where(
+        [data-composer-surface="true"] [class*="border-token-border"],
+        [data-composer-surface="true"] [class*="bg-token-main-surface"],
+        [data-composer-surface="true"] [data-testid*="attachment" i],
+        [data-composer-surface="true"] [data-testid*="file" i]
+    ) {
+        background: var(--void-surface-2) !important;
+        border-color: var(--void-border-soft) !important;
     }
 
     /* ------------------------------------------------------------------ */
     /* Semantic status surfaces                                             */
     /* ------------------------------------------------------------------ */
 
-    :where([role='status'], [data-testid*='toast' i], [class*='toast' i]) {
-      background-color: var(--void-surface) !important;
-      color: var(--void-fg) !important;
-      border-color: var(--void-border) !important;
+    :where([role="status"], [data-testid*="toast" i], [class*="toast" i]) {
+        background-color: var(--void-surface) !important;
+        color: var(--void-fg) !important;
+        border-color: var(--void-border) !important;
     }
 
-    :where([role='status'], [data-testid*='toast' i], [class*='toast' i])
-      :is(
-        [class*='text-green' i],
-        [class*='text-emerald' i],
-        svg[class*='check' i],
-        svg[data-icon*='check' i]
-      ) {
-      color: var(--void-positive-text) !important;
-      stroke: currentColor !important;
+    :where([role="status"], [data-testid*="toast" i], [class*="toast" i]) :is(
+        [class*="text-green" i],
+        [class*="text-emerald" i],
+        svg[class*="check" i],
+        svg[data-icon*="check" i]
+    ) {
+        color: var(--void-positive-text) !important;
+        stroke: currentColor !important;
     }
 
-    :where([role='status'], [data-testid*='toast' i], [class*='toast' i])
-      :is([class*='bg-green' i], [class*='bg-emerald' i]) {
-      background-color: var(--void-positive-bg) !important;
-      border-color: var(--void-positive-border) !important;
+    :where([role="status"], [data-testid*="toast" i], [class*="toast" i]) :is(
+        [class*="bg-green" i],
+        [class*="bg-emerald" i]
+    ) {
+        background-color: var(--void-positive-bg) !important;
+        border-color: var(--void-positive-border) !important;
     }
 
-    :where([role='status'], [data-testid*='toast' i], [class*='toast' i])
-      :is([class*='text-red' i], [class*='text-rose' i]) {
-      color: var(--void-negative-text) !important;
+    :where([role="status"], [data-testid*="toast" i], [class*="toast" i]) :is(
+        [class*="text-red" i],
+        [class*="text-rose" i]
+    ) {
+        color: var(--void-negative-text) !important;
     }
 
-    :where([role='status'], [data-testid*='toast' i], [class*='toast' i])
-      :is([class*='bg-red' i], [class*='bg-rose' i]) {
-      background-color: var(--void-negative-bg) !important;
-      border-color: var(--void-negative-border) !important;
+    :where([role="status"], [data-testid*="toast" i], [class*="toast" i]) :is(
+        [class*="bg-red" i],
+        [class*="bg-rose" i]
+    ) {
+        background-color: var(--void-negative-bg) !important;
+        border-color: var(--void-negative-border) !important;
     }
 
     /* ------------------------------------------------------------------ */
@@ -1207,76 +1097,76 @@
     /* ------------------------------------------------------------------ */
 
     :where(.markdown, .prose) {
-      color: var(--void-fg) !important;
+        color: var(--void-fg) !important;
     }
 
     :where(.markdown, .prose) :where(p, li, td, th, dd, dt, summary) {
-      color: var(--void-fg) !important;
+        color: var(--void-fg) !important;
     }
 
     :where(.markdown, .prose) :where(h1, h2, h3, h4, h5, h6, strong) {
-      color: var(--void-fg) !important;
+        color: var(--void-fg) !important;
     }
 
     :where(.markdown, .prose) :where(em, figcaption, caption) {
-      color: var(--void-fg-soft) !important;
+        color: var(--void-fg-soft) !important;
     }
 
     :where(.markdown, .prose) :where(a) {
-      color: var(--void-link) !important;
-      text-decoration-color: rgba(var(--void-link-rgb), 0.46) !important;
-      text-underline-offset: 0.18em !important;
+        color: var(--void-link) !important;
+        text-decoration-color: rgba(var(--void-link-rgb), 0.46) !important;
+        text-underline-offset: 0.18em !important;
     }
 
     :where(.markdown, .prose) :where(a):hover {
-      color: var(--void-link-hover) !important;
-      text-decoration-color: rgba(var(--void-link-hover-rgb), 0.5) !important;
+        color: var(--void-link-hover) !important;
+        text-decoration-color: rgba(var(--void-link-hover-rgb), 0.50) !important;
     }
 
     :where(.markdown, .prose) blockquote {
-      background:
-        linear-gradient(90deg, var(--void-highlight), transparent 74%),
-        var(--void-surface) !important;
-      border-left: 3px solid var(--void-highlight-border-strong) !important;
-      color: var(--void-fg-soft) !important;
-      border-radius: var(--void-radius-sm) !important;
-      padding: 0.7rem 1rem !important;
+        background:
+            linear-gradient(90deg, var(--void-highlight), transparent 74%),
+            var(--void-surface) !important;
+        border-left: 3px solid var(--void-highlight-border-strong) !important;
+        color: var(--void-fg-soft) !important;
+        border-radius: var(--void-radius-sm) !important;
+        padding: 0.7rem 1rem !important;
     }
 
     :where(.markdown, .prose) mark {
-      background: var(--void-highlight-strong) !important;
-      color: var(--void-fg) !important;
-      border-radius: 0.25rem !important;
-      padding: 0.05em 0.2em !important;
+        background: var(--void-highlight-strong) !important;
+        color: var(--void-fg) !important;
+        border-radius: 0.25rem !important;
+        padding: 0.05em 0.2em !important;
     }
 
     :where(.markdown, .prose) :where(table, th, td) {
-      border-color: var(--void-border-soft) !important;
+        border-color: var(--void-border-soft) !important;
     }
 
     :where(.markdown, .prose) table {
-      background: var(--void-bg) !important;
+        background: var(--void-bg) !important;
     }
 
     :where(.markdown, .prose) th {
-      background:
-        linear-gradient(180deg, var(--void-highlight-faint), transparent),
-        var(--void-surface-2) !important;
-      color: var(--void-fg) !important;
+        background:
+            linear-gradient(180deg, var(--void-highlight-faint), transparent),
+            var(--void-surface-2) !important;
+        color: var(--void-fg) !important;
     }
 
     :where(.markdown, .prose) tr:nth-child(even) {
-      background-color: rgba(var(--void-accent-rgb), 0.025) !important;
+        background-color: rgba(var(--void-accent-rgb), 0.025) !important;
     }
 
     :where(.markdown, .prose) :where(del, s) {
-      color: var(--void-muted) !important;
-      text-decoration-color: var(--void-negative-border) !important;
+        color: var(--void-muted) !important;
+        text-decoration-color: var(--void-negative-border) !important;
     }
 
     :where(.markdown, .prose) ins {
-      color: var(--void-positive-text) !important;
-      text-decoration-color: var(--void-positive-border) !important;
+        color: var(--void-positive-text) !important;
+        text-decoration-color: var(--void-positive-border) !important;
     }
 
     /* ------------------------------------------------------------------ */
@@ -1285,299 +1175,226 @@
 
     :where(.markdown, .prose) pre,
     [data-message-author-role] pre {
-      background: var(--void-code-bg) !important;
-      border: 0 !important;
-      border-radius: 0 !important;
-      box-shadow: none !important;
-      margin: 0 !important;
+        background: var(--void-code-bg) !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        margin: 0 !important;
     }
 
     :where(.markdown, .prose) pre code,
     [data-message-author-role] pre code {
-      background: transparent !important;
-      border: 0 !important;
+        background: transparent !important;
+        border: 0 !important;
     }
 
-    :where(.markdown, .prose)
-      [class*='overflow-hidden'][class*='rounded']:has(pre),
-    [data-message-author-role]
-      [class*='overflow-hidden'][class*='rounded']:has(pre),
-    :where(.markdown, .prose) [class*='contain-inline-size']:has(pre),
-    [data-message-author-role] [class*='contain-inline-size']:has(pre) {
-      background: var(--void-code-bg) !important;
-      border: 1px solid var(--void-border-soft) !important;
-      border-radius: 0.85rem !important;
-      box-shadow: var(--void-surface-glow-soft) !important;
-      overflow: clip !important;
-      max-width: 100% !important;
+    :where(.markdown, .prose) [class*="overflow-hidden"][class*="rounded"]:has(pre),
+    [data-message-author-role] [class*="overflow-hidden"][class*="rounded"]:has(pre),
+    :where(.markdown, .prose) [class*="contain-inline-size"]:has(pre),
+    [data-message-author-role] [class*="contain-inline-size"]:has(pre) {
+        background: var(--void-code-bg) !important;
+        border: 1px solid var(--void-border-soft) !important;
+        border-radius: 0.85rem !important;
+        box-shadow: var(--void-surface-glow-soft) !important;
+        overflow: clip !important;
+        max-width: 100% !important;
     }
 
-    :where(.markdown, .prose)
-      [class*='overflow-hidden'][class*='rounded']:has(pre)
-      > :first-child,
-    [data-message-author-role]
-      [class*='overflow-hidden'][class*='rounded']:has(pre)
-      > :first-child,
-    :where(.markdown, .prose)
-      [class*='contain-inline-size']:has(pre)
-      > :first-child,
-    [data-message-author-role]
-      [class*='contain-inline-size']:has(pre)
-      > :first-child {
-      background:
-        linear-gradient(180deg, var(--void-highlight-faint), transparent),
-        var(--void-code-header-bg) !important;
-      border-bottom: 1px solid var(--void-border-soft) !important;
-      color: var(--void-fg-soft) !important;
-      position: sticky !important;
-      top: 0 !important;
-      z-index: 2 !important;
+    :where(.markdown, .prose) [class*="overflow-hidden"][class*="rounded"]:has(pre) > :first-child,
+    [data-message-author-role] [class*="overflow-hidden"][class*="rounded"]:has(pre) > :first-child,
+    :where(.markdown, .prose) [class*="contain-inline-size"]:has(pre) > :first-child,
+    [data-message-author-role] [class*="contain-inline-size"]:has(pre) > :first-child {
+        background:
+            linear-gradient(180deg, var(--void-highlight-faint), transparent),
+            var(--void-code-header-bg) !important;
+        border-bottom: 1px solid var(--void-border-soft) !important;
+        color: var(--void-fg-soft) !important;
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 2 !important;
     }
 
-    :where(.markdown, .prose)
-      [class*='overflow-hidden'][class*='rounded']:has(pre)
-      *,
-    [data-message-author-role]
-      [class*='overflow-hidden'][class*='rounded']:has(pre)
-      *,
-    :where(.markdown, .prose) [class*='contain-inline-size']:has(pre) *,
-    [data-message-author-role] [class*='contain-inline-size']:has(pre) * {
-      box-shadow: none !important;
+    :where(.markdown, .prose) [class*="overflow-hidden"][class*="rounded"]:has(pre) *,
+    [data-message-author-role] [class*="overflow-hidden"][class*="rounded"]:has(pre) *,
+    :where(.markdown, .prose) [class*="contain-inline-size"]:has(pre) *,
+    [data-message-author-role] [class*="contain-inline-size"]:has(pre) * {
+        box-shadow: none !important;
     }
 
-    :where(.markdown, .prose)
-      [class*='overflow-hidden'][class*='rounded']:has(pre)
-      [class*='border'],
-    [data-message-author-role]
-      [class*='overflow-hidden'][class*='rounded']:has(pre)
-      [class*='border'],
-    :where(.markdown, .prose)
-      [class*='contain-inline-size']:has(pre)
-      [class*='border'],
-    [data-message-author-role]
-      [class*='contain-inline-size']:has(pre)
-      [class*='border'] {
-      border-color: var(--void-border-soft) !important;
+    :where(.markdown, .prose) [class*="overflow-hidden"][class*="rounded"]:has(pre) [class*="border"],
+    [data-message-author-role] [class*="overflow-hidden"][class*="rounded"]:has(pre) [class*="border"],
+    :where(.markdown, .prose) [class*="contain-inline-size"]:has(pre) [class*="border"],
+    [data-message-author-role] [class*="contain-inline-size"]:has(pre) [class*="border"] {
+        border-color: var(--void-border-soft) !important;
     }
 
     /* Current authenticated ChatGPT code-block DOM families. */
-    :where(.markdown, .prose)
-      pre[class~='overflow-visible!'][class~='px-0!']
-      [class~='relative'][class~='h-full'][class~='w-full'][class~='overflow-clip'][class~='rounded-3xl']:has(
-        > [class~='select-none'][class~='sticky'][class~='z-2'][class~='top-(--sticky-padding-top)']
-          button[aria-label='Copy']
-      ),
-    [data-message-author-role]
-      pre[class~='overflow-visible!'][class~='px-0!']
-      [class~='relative'][class~='h-full'][class~='w-full'][class~='overflow-clip'][class~='rounded-3xl']:has(
-        > [class~='select-none'][class~='sticky'][class~='z-2'][class~='top-(--sticky-padding-top)']
-          button[aria-label='Copy']
-      ),
-    :where(.markdown, .prose)
-      pre[class~='overflow-visible!'][class~='px-0!']
-      [class~='h-full'][class~='w-full'][class~='overflow-clip'][class~='rounded-3xl']:has(
-        > [class~='pointer-events-none'][class~='absolute'][class~='end-1.5'][class~='top-1'][class~='z-2'][class~='md:end-2'][class~='md:top-1']
-          > button[aria-label='Copy']
-      ),
-    [data-message-author-role]
-      pre[class~='overflow-visible!'][class~='px-0!']
-      [class~='h-full'][class~='w-full'][class~='overflow-clip'][class~='rounded-3xl']:has(
-        > [class~='pointer-events-none'][class~='absolute'][class~='end-1.5'][class~='top-1'][class~='z-2'][class~='md:end-2'][class~='md:top-1']
-          > button[aria-label='Copy']
-      ) {
-      max-inline-size: 100% !important;
-      overflow: clip !important;
-      position: relative !important;
+    :where(.markdown, .prose) pre[class~="overflow-visible!"][class~="px-0!"] [class~="relative"][class~="h-full"][class~="w-full"][class~="overflow-clip"][class~="rounded-3xl"]:has(> [class~="select-none"][class~="sticky"][class~="z-2"][class~="top-(--sticky-padding-top)"] button[aria-label="Copy"]),
+    [data-message-author-role] pre[class~="overflow-visible!"][class~="px-0!"] [class~="relative"][class~="h-full"][class~="w-full"][class~="overflow-clip"][class~="rounded-3xl"]:has(> [class~="select-none"][class~="sticky"][class~="z-2"][class~="top-(--sticky-padding-top)"] button[aria-label="Copy"]),
+    :where(.markdown, .prose) pre[class~="overflow-visible!"][class~="px-0!"] [class~="h-full"][class~="w-full"][class~="overflow-clip"][class~="rounded-3xl"]:has(> [class~="pointer-events-none"][class~="absolute"][class~="end-1.5"][class~="top-1"][class~="z-2"][class~="md:end-2"][class~="md:top-1"] > button[aria-label="Copy"]),
+    [data-message-author-role] pre[class~="overflow-visible!"][class~="px-0!"] [class~="h-full"][class~="w-full"][class~="overflow-clip"][class~="rounded-3xl"]:has(> [class~="pointer-events-none"][class~="absolute"][class~="end-1.5"][class~="top-1"][class~="z-2"][class~="md:end-2"][class~="md:top-1"] > button[aria-label="Copy"]) {
+        max-inline-size: 100% !important;
+        overflow: clip !important;
+        position: relative !important;
     }
 
-    :where(.markdown, .prose)
-      pre[class~='overflow-visible!'][class~='px-0!']
-      [class~='relative'][class~='h-full'][class~='w-full'][class~='overflow-clip'][class~='rounded-3xl']
-      > [class~='select-none'][class~='sticky'][class~='z-2'][class~='top-(--sticky-padding-top)']:has(
-        button[aria-label='Copy']
-      ),
-    [data-message-author-role]
-      pre[class~='overflow-visible!'][class~='px-0!']
-      [class~='relative'][class~='h-full'][class~='w-full'][class~='overflow-clip'][class~='rounded-3xl']
-      > [class~='select-none'][class~='sticky'][class~='z-2'][class~='top-(--sticky-padding-top)']:has(
-        button[aria-label='Copy']
-      ) {
-      background:
-        linear-gradient(180deg, var(--void-highlight-faint), transparent),
-        var(--void-code-header-bg) !important;
-      border-bottom: 1px solid var(--void-border-soft) !important;
-      color: var(--void-fg-soft) !important;
-      position: sticky !important;
-      top: 0 !important;
-      z-index: 2 !important;
+    :where(.markdown, .prose) pre[class~="overflow-visible!"][class~="px-0!"] [class~="relative"][class~="h-full"][class~="w-full"][class~="overflow-clip"][class~="rounded-3xl"] > [class~="select-none"][class~="sticky"][class~="z-2"][class~="top-(--sticky-padding-top)"]:has(button[aria-label="Copy"]),
+    [data-message-author-role] pre[class~="overflow-visible!"][class~="px-0!"] [class~="relative"][class~="h-full"][class~="w-full"][class~="overflow-clip"][class~="rounded-3xl"] > [class~="select-none"][class~="sticky"][class~="z-2"][class~="top-(--sticky-padding-top)"]:has(button[aria-label="Copy"]) {
+        background:
+            linear-gradient(180deg, var(--void-highlight-faint), transparent),
+            var(--void-code-header-bg) !important;
+        border-bottom: 1px solid var(--void-border-soft) !important;
+        color: var(--void-fg-soft) !important;
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 2 !important;
     }
 
-    :where(.markdown, .prose)
-      pre[class~='overflow-visible!'][class~='px-0!']
-      [class~='h-full'][class~='w-full'][class~='overflow-clip'][class~='rounded-3xl']
-      > [class~='pointer-events-none'][class~='absolute'][class~='end-1.5'][class~='top-1'][class~='z-2'][class~='md:end-2'][class~='md:top-1']:has(
-        > button[aria-label='Copy']
-      ),
-    [data-message-author-role]
-      pre[class~='overflow-visible!'][class~='px-0!']
-      [class~='h-full'][class~='w-full'][class~='overflow-clip'][class~='rounded-3xl']
-      > [class~='pointer-events-none'][class~='absolute'][class~='end-1.5'][class~='top-1'][class~='z-2'][class~='md:end-2'][class~='md:top-1']:has(
-        > button[aria-label='Copy']
-      ) {
-      align-items: center !important;
-      display: flex !important;
-      inline-size: 36px !important;
-      block-size: 36px !important;
-      margin-inline-start: auto !important;
-      margin-bottom: -36px !important;
-      pointer-events: none !important;
-      position: sticky !important;
-      top: 0.25rem !important;
-      z-index: 3 !important;
+    :where(.markdown, .prose) pre[class~="overflow-visible!"][class~="px-0!"] [class~="h-full"][class~="w-full"][class~="overflow-clip"][class~="rounded-3xl"] > [class~="pointer-events-none"][class~="absolute"][class~="end-1.5"][class~="top-1"][class~="z-2"][class~="md:end-2"][class~="md:top-1"]:has(> button[aria-label="Copy"]),
+    [data-message-author-role] pre[class~="overflow-visible!"][class~="px-0!"] [class~="h-full"][class~="w-full"][class~="overflow-clip"][class~="rounded-3xl"] > [class~="pointer-events-none"][class~="absolute"][class~="end-1.5"][class~="top-1"][class~="z-2"][class~="md:end-2"][class~="md:top-1"]:has(> button[aria-label="Copy"]) {
+        align-items: center !important;
+        display: flex !important;
+        inline-size: 36px !important;
+        block-size: 36px !important;
+        margin-inline-start: auto !important;
+        margin-bottom: -36px !important;
+        pointer-events: none !important;
+        position: sticky !important;
+        top: 0.25rem !important;
+        z-index: 3 !important;
     }
 
-    :where(.markdown, .prose)
-      pre[class~='overflow-visible!'][class~='px-0!']
-      [class~='h-full'][class~='w-full'][class~='overflow-clip'][class~='rounded-3xl']
-      button[aria-label='Copy'],
-    [data-message-author-role]
-      pre[class~='overflow-visible!'][class~='px-0!']
-      [class~='h-full'][class~='w-full'][class~='overflow-clip'][class~='rounded-3xl']
-      button[aria-label='Copy'] {
-      background: var(--void-code-header-bg) !important;
-      color: var(--void-fg) !important;
-      pointer-events: auto !important;
-      position: relative !important;
-      z-index: 1 !important;
+    :where(.markdown, .prose) pre[class~="overflow-visible!"][class~="px-0!"] [class~="h-full"][class~="w-full"][class~="overflow-clip"][class~="rounded-3xl"] button[aria-label="Copy"],
+    [data-message-author-role] pre[class~="overflow-visible!"][class~="px-0!"] [class~="h-full"][class~="w-full"][class~="overflow-clip"][class~="rounded-3xl"] button[aria-label="Copy"] {
+        background: var(--void-code-header-bg) !important;
+        color: var(--void-fg) !important;
+        pointer-events: auto !important;
+        position: relative !important;
+        z-index: 1 !important;
     }
 
     :where(.markdown, .prose) code:not(pre code) {
-      background:
-        linear-gradient(180deg, var(--void-highlight-faint), transparent),
-        var(--void-surface-2) !important;
-      color: var(--void-fg-soft) !important;
-      border: 1px solid var(--void-highlight-border) !important;
-      border-radius: 0.35rem !important;
-      padding: 0.1em 0.35em !important;
+        background:
+            linear-gradient(180deg, var(--void-highlight-faint), transparent),
+            var(--void-surface-2) !important;
+        color: var(--void-fg-soft) !important;
+        border: 1px solid var(--void-highlight-border) !important;
+        border-radius: 0.35rem !important;
+        padding: 0.1em 0.35em !important;
     }
 
     :where(.markdown, .prose) code::before,
     :where(.markdown, .prose) code::after {
-      content: '' !important;
+        content: "" !important;
     }
 
     /* ------------------------------------------------------------------ */
     /* Buttons / menus / dialogs / forms                                   */
     /* ------------------------------------------------------------------ */
 
-    :where(button, [role='button']) {
-      border-color: var(--void-border-soft) !important;
+    :where(button, [role="button"]) {
+        border-color: var(--void-border-soft) !important;
     }
 
-    :where(button, [role='button']):hover {
-      border-color: var(--void-highlight-border) !important;
+    :where(button, [role="button"]):hover {
+        border-color: var(--void-highlight-border) !important;
     }
 
-    :where([role='dialog'], [role='menu'], [role='listbox'], [popover]) {
-      background-color: var(--void-surface) !important;
-      color: var(--void-fg) !important;
-      border-color: var(--void-border) !important;
-      box-shadow: var(--void-shadow-menu) !important;
+    :where([role="dialog"], [role="menu"], [role="listbox"], [popover]) {
+        background-color: var(--void-surface) !important;
+        color: var(--void-fg) !important;
+        border-color: var(--void-border) !important;
+        box-shadow: var(--void-shadow-menu) !important;
     }
 
-    :where([role='dialog'], [role='menu'], [role='listbox'], [popover]):is(
-      :focus,
-      :focus-visible,
-      :focus-within
-    ) {
-      outline: none !important;
-      outline-color: transparent !important;
-      border-radius: var(--void-radius) !important;
-      --tw-ring-color: transparent !important;
-      --tw-ring-shadow: 0 0 #0000 !important;
-      --tw-ring-offset-color: transparent !important;
-      --tw-ring-offset-shadow: 0 0 #0000 !important;
+    :where([role="dialog"], [role="menu"], [role="listbox"], [popover]):is(:focus, :focus-visible, :focus-within) {
+        outline: none !important;
+        outline-color: transparent !important;
+        border-radius: var(--void-radius) !important;
+        --tw-ring-color: transparent !important;
+        --tw-ring-shadow: 0 0 #0000 !important;
+        --tw-ring-offset-color: transparent !important;
+        --tw-ring-offset-shadow: 0 0 #0000 !important;
     }
 
     [data-radix-popper-content-wrapper] > * {
-      background-color: var(--void-surface) !important;
-      color: var(--void-fg) !important;
-      border-color: var(--void-border) !important;
-      box-shadow: var(--void-shadow-menu) !important;
+        background-color: var(--void-surface) !important;
+        color: var(--void-fg) !important;
+        border-color: var(--void-border) !important;
+        box-shadow: var(--void-shadow-menu) !important;
     }
 
-    [data-radix-popper-content-wrapper]
-      > *:is(:focus, :focus-visible, :focus-within) {
-      outline: none !important;
-      outline-color: transparent !important;
-      border-radius: var(--void-radius) !important;
-      --tw-ring-color: transparent !important;
-      --tw-ring-shadow: 0 0 #0000 !important;
-      --tw-ring-offset-color: transparent !important;
-      --tw-ring-offset-shadow: 0 0 #0000 !important;
+    [data-radix-popper-content-wrapper] > *:is(:focus, :focus-visible, :focus-within) {
+        outline: none !important;
+        outline-color: transparent !important;
+        border-radius: var(--void-radius) !important;
+        --tw-ring-color: transparent !important;
+        --tw-ring-shadow: 0 0 #0000 !important;
+        --tw-ring-offset-color: transparent !important;
+        --tw-ring-offset-shadow: 0 0 #0000 !important;
     }
 
-    :where([role='menuitem'], [role='option']):hover {
-      background-color: var(--void-highlight-soft) !important;
-      box-shadow: var(--void-surface-glow-hover) !important;
+    :where([role="menuitem"], [role="option"]):hover {
+        background-color: var(--void-highlight-soft) !important;
+        box-shadow: var(--void-surface-glow-hover) !important;
     }
 
     :where(
-      [role='menuitem'][aria-selected='true'],
-      [role='option'][aria-selected='true'],
-      [role='menuitemradio'][aria-checked='true'],
-      [role='option'][aria-checked='true']
+        [role="menuitem"][aria-selected="true"],
+        [role="option"][aria-selected="true"],
+        [role="menuitemradio"][aria-checked="true"],
+        [role="option"][aria-checked="true"]
     ) {
-      background-color: var(--void-positive) !important;
-      color: var(--void-bg) !important;
-      box-shadow: none !important;
+        background-color: var(--void-positive) !important;
+        color: var(--void-bg) !important;
+        box-shadow: none !important;
     }
 
     :where(
-      [role='menuitem'][aria-selected='true'],
-      [role='option'][aria-selected='true'],
-      [role='menuitemradio'][aria-checked='true'],
-      [role='option'][aria-checked='true']
+        [role="menuitem"][aria-selected="true"],
+        [role="option"][aria-selected="true"],
+        [role="menuitemradio"][aria-checked="true"],
+        [role="option"][aria-checked="true"]
     ):hover {
-      background-color: var(--void-positive) !important;
-      color: var(--void-bg) !important;
-      box-shadow: none !important;
+        background-color: var(--void-positive) !important;
+        color: var(--void-bg) !important;
+        box-shadow: none !important;
     }
 
     :where(
-      [role='menuitem'][aria-selected='true'] *,
-      [role='option'][aria-selected='true'] *,
-      [role='menuitemradio'][aria-checked='true'] *,
-      [role='option'][aria-checked='true'] *
+        [role="menuitem"][aria-selected="true"] *,
+        [role="option"][aria-selected="true"] *,
+        [role="menuitemradio"][aria-checked="true"] *,
+        [role="option"][aria-checked="true"] *
     ) {
-      color: var(--void-bg) !important;
-      stroke: currentColor !important;
+        color: var(--void-bg) !important;
+        stroke: currentColor !important;
     }
 
     :where(input, textarea, select) {
-      background-color: var(--void-surface) !important;
-      color: var(--void-fg) !important;
-      border-color: var(--void-border) !important;
+        background-color: var(--void-surface) !important;
+        color: var(--void-fg) !important;
+        border-color: var(--void-border) !important;
     }
 
     :where(input, textarea, select)::placeholder {
-      color: var(--void-muted-dim) !important;
+        color: var(--void-muted-dim) !important;
     }
 
-    :where(input, textarea, select, [role='textbox'], [role='combobox']):focus {
-      border-color: var(--void-focus-border-strong) !important;
-      border-radius: var(--void-radius-sm) !important;
-      outline: none !important;
-      outline-color: transparent !important;
-      box-shadow: var(--void-focus-ring-tight) !important;
+    :where(input, textarea, select, [role="textbox"], [role="combobox"]):focus {
+        border-color: var(--void-focus-border-strong) !important;
+        border-radius: var(--void-radius-sm) !important;
+        outline: none !important;
+        outline-color: transparent !important;
+        box-shadow: var(--void-focus-ring-tight) !important;
     }
 
     input:-webkit-autofill,
     input:-webkit-autofill:hover,
     input:-webkit-autofill:focus {
-      -webkit-text-fill-color: var(--void-fg) !important;
-      box-shadow: 0 0 0 1000px var(--void-surface) inset !important;
-      caret-color: var(--void-cursor) !important;
+        -webkit-text-fill-color: var(--void-fg) !important;
+        box-shadow: 0 0 0 1000px var(--void-surface) inset !important;
+        caret-color: var(--void-cursor) !important;
     }
 
     /* ------------------------------------------------------------------ */
@@ -1585,27 +1402,23 @@
     /* ------------------------------------------------------------------ */
 
     :where(.text-token-text-primary) {
-      color: var(--void-fg) !important;
+        color: var(--void-fg) !important;
     }
 
     :where(.text-token-text-secondary, .text-token-text-tertiary) {
-      color: var(--void-fg-soft) !important;
+        color: var(--void-fg-soft) !important;
     }
 
     :where(.text-token-text-quaternary) {
-      color: var(--void-muted) !important;
+        color: var(--void-muted) !important;
     }
 
-    :where(
-      .text-token-text-error,
-      [class*='text-red' i],
-      [class*='text-rose' i]
-    ) {
-      color: var(--void-negative-text) !important;
+    :where(.text-token-text-error, [class*="text-red" i], [class*="text-rose" i]) {
+        color: var(--void-negative-text) !important;
     }
 
-    :where([class*='text-green' i], [class*='text-emerald' i]) {
-      color: var(--void-positive-text) !important;
+    :where([class*="text-green" i], [class*="text-emerald" i]) {
+        color: var(--void-positive-text) !important;
     }
 
     /* ------------------------------------------------------------------ */
@@ -1613,35 +1426,30 @@
     /* ------------------------------------------------------------------ */
 
     :where(
-      [data-testid*='card' i],
-      [data-testid*='attachment' i],
-      [data-testid*='file' i],
-      [data-testid*='citation' i],
-      [class*='citation' i]
+        [data-testid*="card" i],
+        [data-testid*="attachment" i],
+        [data-testid*="file" i],
+        [data-testid*="citation" i],
+        [class*="citation" i]
     ) {
-      border-color: var(--void-border-soft) !important;
-      box-shadow: var(--void-surface-glow-soft) !important;
+        border-color: var(--void-border-soft) !important;
+        box-shadow: var(--void-surface-glow-soft) !important;
     }
 
     :where(
-      [data-testid*='card' i]:hover,
-      [data-testid*='attachment' i]:hover,
-      [data-testid*='file' i]:hover,
-      [data-testid*='citation' i]:hover,
-      [class*='citation' i]:hover
+        [data-testid*="card" i]:hover,
+        [data-testid*="attachment" i]:hover,
+        [data-testid*="file" i]:hover,
+        [data-testid*="citation" i]:hover,
+        [class*="citation" i]:hover
     ) {
-      background-color: var(--void-highlight-soft) !important;
-      border-color: var(--void-highlight-border) !important;
-      box-shadow: var(--void-surface-glow-hover) !important;
+        background-color: var(--void-highlight-soft) !important;
+        border-color: var(--void-highlight-border) !important;
+        box-shadow: var(--void-surface-glow-hover) !important;
     }
 
-    :where(
-        [data-testid*='sources' i],
-        [data-testid*='citation' i],
-        [class*='citation' i]
-      )
-      a {
-      color: var(--void-link) !important;
+    :where([data-testid*="sources" i], [data-testid*="citation" i], [class*="citation" i]) a {
+        color: var(--void-link) !important;
     }
 
     /* ------------------------------------------------------------------ */
@@ -1649,41 +1457,41 @@
     /* ------------------------------------------------------------------ */
 
     :where(
-      [data-testid*='canvas' i],
-      [data-testid*='artifact' i],
-      [class*='canvas' i],
-      [class*='artifact' i]
+        [data-testid*="canvas" i],
+        [data-testid*="artifact" i],
+        [class*="canvas" i],
+        [class*="artifact" i]
     ) {
-      background-color: var(--void-bg) !important;
-      color: var(--void-fg) !important;
-      border-color: var(--void-border-soft) !important;
-      box-shadow: var(--void-surface-glow-soft) !important;
+        background-color: var(--void-bg) !important;
+        color: var(--void-fg) !important;
+        border-color: var(--void-border-soft) !important;
+        box-shadow: var(--void-surface-glow-soft) !important;
     }
 
     :where(.cm-editor, .cm-scroller) {
-      background: var(--void-code-bg) !important;
-      color: var(--void-fg) !important;
-      box-shadow: var(--void-surface-glow-soft) !important;
+        background: var(--void-code-bg) !important;
+        color: var(--void-fg) !important;
+        box-shadow: var(--void-surface-glow-soft) !important;
     }
 
     :where(.cm-gutters) {
-      background: var(--void-code-header-bg) !important;
-      color: var(--void-muted) !important;
-      border-color: var(--void-border-soft) !important;
+        background: var(--void-code-header-bg) !important;
+        color: var(--void-muted) !important;
+        border-color: var(--void-border-soft) !important;
     }
 
     :where(.cm-activeLine, .cm-activeLineGutter) {
-      background: var(--void-highlight-faint) !important;
+        background: var(--void-highlight-faint) !important;
     }
 
     :where(.cm-cursor) {
-      border-left-color: var(--void-cursor) !important;
-      caret-color: var(--void-cursor) !important;
+        border-left-color: var(--void-cursor) !important;
+        caret-color: var(--void-cursor) !important;
     }
 
     .cm-selectionBackground,
     .cm-content ::selection {
-      background: var(--void-highlight) !important;
+        background: var(--void-highlight) !important;
     }
 
     /* ------------------------------------------------------------------ */
@@ -1691,41 +1499,41 @@
     /* ------------------------------------------------------------------ */
 
     :where(
-      [data-sidebar-item='true'],
-      [aria-current='page'],
-      [data-active='true'],
-      [data-testid*='attachment' i],
-      [data-testid*='citation' i],
-      [class*='citation' i],
-      [class*='card' i],
-      [data-testid*='card' i],
-      [data-radix-popper-content-wrapper] > *
+        [data-sidebar-item="true"],
+        [aria-current="page"],
+        [data-active="true"],
+        [data-testid*="attachment" i],
+        [data-testid*="citation" i],
+        [class*="citation" i],
+        [class*="card" i],
+        [data-testid*="card" i],
+        [data-radix-popper-content-wrapper] > *
     ):is(:focus, :focus-visible, :focus-within) {
-      outline: none !important;
-      outline-color: transparent !important;
-      border-radius: var(--void-radius) !important;
-      --tw-ring-color: transparent !important;
-      --tw-ring-shadow: 0 0 #0000 !important;
-      --tw-ring-offset-color: transparent !important;
-      --tw-ring-offset-shadow: 0 0 #0000 !important;
+        outline: none !important;
+        outline-color: transparent !important;
+        border-radius: var(--void-radius) !important;
+        --tw-ring-color: transparent !important;
+        --tw-ring-shadow: 0 0 #0000 !important;
+        --tw-ring-offset-color: transparent !important;
+        --tw-ring-offset-shadow: 0 0 #0000 !important;
     }
 
     :where(
-      [class*='ring-token'],
-      [class*='ring-white'],
-      [class*='ring-black'],
-      [class*='ring-gray'],
-      [class*='focus-visible:ring'],
-      [class*='focus-within:ring'],
-      [class*='focus-visible:outline'],
-      [class*='focus-within:outline']
+        [class*="ring-token"],
+        [class*="ring-white"],
+        [class*="ring-black"],
+        [class*="ring-gray"],
+        [class*="focus-visible:ring"],
+        [class*="focus-within:ring"],
+        [class*="focus-visible:outline"],
+        [class*="focus-within:outline"]
     ):is(:focus, :focus-visible, :focus-within, :active) {
-      outline: none !important;
-      outline-color: transparent !important;
-      --tw-ring-color: transparent !important;
-      --tw-ring-shadow: 0 0 #0000 !important;
-      --tw-ring-offset-color: transparent !important;
-      --tw-ring-offset-shadow: 0 0 #0000 !important;
+        outline: none !important;
+        outline-color: transparent !important;
+        --tw-ring-color: transparent !important;
+        --tw-ring-shadow: 0 0 #0000 !important;
+        --tw-ring-offset-color: transparent !important;
+        --tw-ring-offset-shadow: 0 0 #0000 !important;
     }
 
     /* ------------------------------------------------------------------ */
@@ -1733,51 +1541,51 @@
     /* ------------------------------------------------------------------ */
 
     * {
-      scrollbar-width: thin !important;
-      scrollbar-color: var(--void-border) var(--void-bg) !important;
+        scrollbar-width: thin !important;
+        scrollbar-color: var(--void-border) var(--void-bg) !important;
     }
 
     *::-webkit-scrollbar {
-      width: 10px !important;
-      height: 10px !important;
+        width: 10px !important;
+        height: 10px !important;
     }
 
     *::-webkit-scrollbar-track {
-      background: var(--void-bg) !important;
+        background: var(--void-bg) !important;
     }
 
     *::-webkit-scrollbar-thumb {
-      background: var(--void-border) !important;
-      border: 2px solid var(--void-bg) !important;
-      border-radius: 999px !important;
+        background: var(--void-border) !important;
+        border: 2px solid var(--void-bg) !important;
+        border-radius: 999px !important;
     }
 
     *::-webkit-scrollbar-thumb:hover {
-      background: rgba(var(--void-accent-rgb), 0.32) !important;
+        background: rgba(var(--void-accent-rgb), 0.32) !important;
     }
 
     *::-webkit-scrollbar-thumb:active {
-      background: rgba(var(--void-accent-rgb), 0.5) !important;
+        background: rgba(var(--void-accent-rgb), 0.50) !important;
     }
-  }
+    }
 }
 
 @-moz-document domain("learn.chatgpt.com") {
-  @scope (html.dark) {
-    :scope {
-      /* Learn dark-scale bridge: preserve native gray-derived utility surfaces. */
-      --gray-50: #131313 !important;
-      --gray-100: #181818 !important;
-      --gray-200: #212121 !important;
-      --gray-300: #303030 !important;
-      --gray-400: #414141 !important;
-      --gray-500: #5d5d5d !important;
-      --gray-600: #8f8f8f !important;
-      --gray-700: #afafaf !important;
-      --gray-750: #b9b9b9 !important;
-      --gray-800: #cdcdcd !important;
-      --gray-900: #ededed !important;
-      --gray-950: #f3f3f3 !important;
+    @scope (html.dark) {
+        :scope {
+            /* Learn dark-scale bridge: preserve native gray-derived utility surfaces. */
+            --gray-50: #131313 !important;
+            --gray-100: #181818 !important;
+            --gray-200: #212121 !important;
+            --gray-300: #303030 !important;
+            --gray-400: #414141 !important;
+            --gray-500: #5d5d5d !important;
+            --gray-600: #8f8f8f !important;
+            --gray-700: #afafaf !important;
+            --gray-750: #b9b9b9 !important;
+            --gray-800: #cdcdcd !important;
+            --gray-900: #ededed !important;
+            --gray-950: #f3f3f3 !important;
+        }
     }
-  }
 }

@@ -11,10 +11,11 @@
   },
   "userStyle": {
     "namespace": "github.com/aaronedev/violet-void-theme_chatgpt",
-    "version": "5.4.6"
+    "version": "5.4.7"
   },
   "scripts": {
     "build": "node scripts/build.js",
+    "bump": "node scripts/build.js --bump",
     "verify:artifact": "node scripts/verify-artifact.js",
     "lint": "stylelint \"src/**/*.css\" \"dist/chatgpt-violet-void.user.css\"",
     "test:unit": "node --test tests/*.test.js",
