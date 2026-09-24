@@ -13,16 +13,32 @@ byte-identical to its source; `npm run verify:artifact` checks that invariant, t
 (derived from `package.json`), and that the legacy root artifact is absent.
 
 Install the tracked [`dist/chatgpt-violet-void.user.css`](dist/chatgpt-violet-void.user.css)
-artifact. Existing v5.4.3 installs still point to the retired root update URL, so after the v5.4.4
-URL migration is published they need one manual reinstall from `dist/`; future updates use the new
-URL.
+artifact. Existing v5.4.3 installs still point to the retired root update URL and need one manual
+reinstall from `dist/`; future updates use the new URL. In Stylus, check for updates and confirm the
+installed version is at least **5.4.11**, then reload ChatGPT. If the installed style still uses the
+retired root URL or was pasted manually, open the raw `dist/` UserStyle to update that installation.
+
+## Theme activation compatibility
+
+Version 5.4.11 republishes the previously stale installable artifact and supports explicit `dark`
+classes, `data-theme="dark"`, and `data-color-scheme="dark"` on `html` or `body`. Explicit light
+markers win during theme switches; dark classes inside a code preview do not activate the entire
+page. The document background and native color tokens also reach `body` and the app root without
+changing ChatGPT's layout. The Learn site keeps its separate palette and native typography.
+
+The new activation tests use synthetic compatibility fixtures, not a captured authenticated
+ChatGPT rollout. They exercise the shipped `dist/` CSS, typing, native widths, root backgrounds,
+light-mode exclusions, and theme changes without reload. Live-site verification remains a separate
+step below; selector compatibility alone cannot diagnose a disabled extension or a stale local install.
 
 Use `npm run lint` for plain-CSS linting, `npm test` for the Playwright regression suite, and
-`npm run check` for the complete deterministic check. Browser fixtures run in Chromium and Firefox
-and cover dark-only palette and font scope, native ChatGPT thread/composer widths, block-caret
-behavior, attachment/image guards, and sticky, visible, clickable Copy controls. A legacy
-`overflow: hidden` control case proves the clipping regression the theme prevents. Install the
-managed Firefox fixture engine with `npx playwright install firefox` before running the full suite.
+`npm run build && npm run check` before publishing. `check` does not rebuild or repair files: it
+must reject stale source/dist/version combinations rather than conceal an unpublished change.
+Browser fixtures run in Chromium and Firefox and cover dark-only palette and font scope, native
+ChatGPT thread/composer widths, block-caret behavior, attachment/image guards, and sticky, visible,
+clickable Copy controls. A legacy `overflow: hidden` control case proves the clipping regression
+the theme prevents. Install the managed Firefox fixture engine with `npx playwright install firefox`
+before running the full suite.
 
 ## Manual live-site QA
 

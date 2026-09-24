@@ -52,11 +52,14 @@ function matchingBrace(stylesheet, openingBrace) {
 
 function appliesToHostname(header, hostname) {
   const domains = [...header.matchAll(/domain\(\s*["']([^"']+)["']\s*\)/g)].map((match) => match[1])
-  return domains.some((domain) => hostname === domain || hostname.endsWith(`.${domain}`))
+  const prefixes = [...header.matchAll(/url-prefix\(\s*["']([^"']+)["']\s*\)/g)].map((match) => match[1])
+  const url = `https://${hostname}/`
+  return domains.some((domain) => hostname === domain || hostname.endsWith(`.${domain}`)) ||
+    prefixes.some((prefix) => url.startsWith(prefix))
 }
 
-function userStyleBodiesForHostname(hostname) {
-  const stylesheet = fs.readFileSync(canonicalPath, 'utf8')
+function userStyleBodiesForHostname(hostname, stylesheetPath = canonicalPath) {
+  const stylesheet = fs.readFileSync(stylesheetPath, 'utf8')
   const bodies = []
   const marker = '@-moz-document'
   let cursor = 0

@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT Violet Void
 @namespace      github.com/aaronedev/violet-void-theme
-@version        5.4.10
+@version        5.4.11
 @license        MIT
 @author         aaronedev
 @homepageURL    https://github.com/aaronedev/violet-void-theme_chatgpt
@@ -16,12 +16,30 @@
 /* Exact app origins: domain() also matches Learn and other subdomains. */
 @-moz-document url-prefix("https://chatgpt.com/"), url-prefix("https://chat.openai.com/")
 {
-  @scope (html.dark) {
+  /* Accept explicit document/body theme markers instead of depending on one
+     framework class. Light wins during switches; a dark code block or preview
+     deeper in the page must not activate the whole document. */
+  @scope (
+    html:is(
+      .dark,
+      [data-theme='dark'],
+      [data-color-scheme='dark'],
+      :has(> body:is(.dark, [data-theme='dark'], [data-color-scheme='dark']))
+    ):not(
+      .light,
+      [data-theme='light'],
+      [data-color-scheme='light'],
+      :has(> body:is(.light, [data-theme='light'], [data-color-scheme='light']))
+    )
+  ) {
     /* ------------------------------------------------------------------ */
     /* Palette / ChatGPT token bridge                                      */
     /* ------------------------------------------------------------------ */
 
-    :scope {
+    /* Some shells define native tokens on body or the app root, not html. */
+    :scope,
+    :scope > body,
+    :scope > body > :is(#__next, #root) {
       color-scheme: dark;
 
       --void-bg: #0f0f0f;
@@ -194,7 +212,8 @@
     /* Base / accessibility                                                */
     /* ------------------------------------------------------------------ */
 
-    :where(html, body, #__next, main, [role='main']) {
+    :scope,
+    :where(html, body, #__next, #root, main, [role='main']) {
       background: var(--void-bg) !important;
       color: var(--void-fg) !important;
       font-family:
@@ -280,7 +299,19 @@
     }
   }
 
-  @scope (html.dark) {
+  @scope (
+    html:is(
+      .dark,
+      [data-theme='dark'],
+      [data-color-scheme='dark'],
+      :has(> body:is(.dark, [data-theme='dark'], [data-color-scheme='dark']))
+    ):not(
+      .light,
+      [data-theme='light'],
+      [data-color-scheme='light'],
+      :has(> body:is(.light, [data-theme='light'], [data-color-scheme='light']))
+    )
+  ) {
     @supports (-moz-appearance: none) {
       :where(.cm-editor.cm-focused .cm-cursor, .cm-focused .cm-cursor) {
         border-left: 0 !important;
